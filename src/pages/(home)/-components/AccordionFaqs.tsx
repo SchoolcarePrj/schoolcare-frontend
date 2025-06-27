@@ -5,25 +5,22 @@ import { Accordion } from "@/components/ui";
 const FAQs = [
 	{
 		answer:
-			"SchoolCare allows students from registered schools to check their results online, both termly results,  annual results and entrance exam results with ease.",
+			"SchoolCare is a school management system that allows you to register your school for free. After registration, your school will be verified and given an independent portal where you can seamlessly compute students' results and track their academic performance in real time.",
 		question: "How does SchoolCare work?",
 	},
 	{
-		answer: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+		answer:
+			"To access your result, kindly request a result-checking PIN from your school admin (provided at a minimal cost). This PIN, along with your registration number, will be required to view your results.",
 		question: "Can I get a printed copy or official transcript of my result?",
 	},
 	{
-		answer: "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+		answer:
+			"Yes. Once you view your result, you can always print a hard copy by clicking the “Print” button.",
 		question: "Is there a fee for checking my result?",
 	},
 	{
 		answer:
-			"lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-		question: "I see an “Incomplete” or “Absent” status on my result. What does it mean?",
-	},
-	{
-		answer:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
+			"SchoolCare uses a cloud-based database, so your results will remain available online for as long as the school retains them on the platform.",
 		question: "How long will my result be available online?",
 	},
 ];
