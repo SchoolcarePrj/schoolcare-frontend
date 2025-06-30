@@ -5,6 +5,21 @@ import { Accordion } from "@/components/ui";
 const FAQs = [
 	{
 		answer:
+			"We have made the process very easy for you. Simply visit the schoolcare.com.ng homepage and click on the Register School button to get started.",
+		question: "How do I sign up for my school?",
+	},
+	{
+		answer:
+			"Registration and use of schoolcare is totally FREE. However, to cover additional services like the result-checking scratch card model, blog posts/promotions, and system maintenance, schoolcare charges 800 naira per student per term.",
+		question: "How Much Does It Cost To Use SchoolCare?",
+	},
+	{
+		answer:
+			"Yes. All we need is temporary permission to access your website, and we will make the necessary changes to integrate the Schoolcare system into it.",
+		question: "Can I Use SchoolCare With My Existing School's Website?",
+	},
+	{
+		answer:
 			"SchoolCare is a school management system that allows you to register your school for free. After registration, your school will be verified and given an independent portal where you can seamlessly compute students' results and track their academic performance in real time.",
 		question: "How does SchoolCare work?",
 	},
