@@ -4,16 +4,18 @@ import {
 	cardOne,
 	cardThree,
 	cardTwo,
+	carouselOne,
+	carouselThree,
+	carouselTwo,
 	chart,
-	person,
 	schoolFour,
 	schoolOne,
 	schoolThree,
 	schoolTwo,
 } from "@/assets/images/home";
-import { ForWithWrapper, getElementList, Image } from "@/components/common";
+import { For, ForWithWrapper, Image } from "@/components/common";
 import { BrainIcon, LineGraphIcon, PageIcon, PieIcon, StudentIcon, UploadIcon } from "@/components/icons";
-import { Card } from "@/components/ui";
+import { Card, Carousel } from "@/components/ui";
 import { AccordionFaqs } from "./-components/AccordionFaqs";
 import { ResultCheckForm } from "./-components/ResultCheckForm";
 
@@ -96,7 +98,7 @@ const blogPosts = [
 	},
 ];
 
-const [List] = getElementList();
+const carouselItems = [{ imageURL: carouselOne }, { imageURL: carouselTwo }, { imageURL: carouselThree }];
 
 function HomePage() {
 	const { getItemProps, getRootProps } = useDragScroll<HTMLUListElement>();
@@ -205,7 +207,7 @@ function HomePage() {
 						className="h-[360px] max-w-[376px] lg:h-[528px] lg:max-w-[583px]"
 					/>
 
-					<List
+					<ForWithWrapper
 						className="flex flex-col gap-6"
 						each={features}
 						render={(feature) => (
@@ -234,15 +236,33 @@ function HomePage() {
 			<section className="flex flex-col items-center gap-6 px-6 lg:gap-[52px] lg:px-[80px]">
 				<h3 className="text-center font-bold lg:text-[32px]">Why SchoolCare is Your Ideal Platform</h3>
 
-				<div className="flex flex-col items-center gap-6 lg:flex-row-reverse lg:gap-10">
-					<Image
-						src={person}
-						width={379}
-						height={333}
-						className="h-[333px] max-w-[379px] lg:h-[497px] lg:max-w-[623px]"
-					/>
+				<div className="flex flex-col gap-[54px] max-lg:items-center lg:flex-row-reverse lg:gap-10">
+					<Carousel.Root className="flex w-full max-w-[379px] flex-col gap-5.5 lg:max-w-[623px]">
+						<Carousel.Content className="size-full">
+							<For
+								each={carouselItems}
+								render={(item) => (
+									<Carousel.Item key={item.imageURL} className="h-[333px] lg:h-full">
+										<Image
+											src={item.imageURL}
+											width={379}
+											height={333}
+											className="size-full rounded-[12px] object-cover lg:rounded-[24px]"
+										/>
+									</Carousel.Item>
+								)}
+							/>
+						</Carousel.Content>
 
-					<List
+						<Carousel.IndicatorGroup
+							classNames={{
+								indicator: "size-2 bg-[hsl(0,0%,85%)] data-[selected=true]:bg-210-79-44 lg:size-3",
+								indicatorGroup: "-bottom-5.5 lg:-bottom-[52px]",
+							}}
+						/>
+					</Carousel.Root>
+
+					<ForWithWrapper
 						className="flex flex-col gap-6 lg:gap-11.5"
 						each={reasons}
 						render={(reason) => (
@@ -271,7 +291,7 @@ function HomePage() {
 			<section className="flex flex-col items-center gap-6 px-6 lg:gap-[52px] lg:px-[80px]">
 				<h3 className="text-center font-bold lg:text-[32px]">Latest Blog Posts</h3>
 
-				<List
+				<ForWithWrapper
 					{...getRootProps({ className: "select-none gap-7.5 md:justify-between" })}
 					each={blogPosts}
 					render={(post) => (

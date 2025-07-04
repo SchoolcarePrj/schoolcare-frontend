@@ -1,8 +1,8 @@
 "use client";
 
-import { cnMerge } from "@/lib/utils/cn";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { Accordion as AccordionPrimitive } from "radix-ui";
+import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common/IconBox";
 
 function AccordionRoot(props: InferProps<typeof AccordionPrimitive.Root>) {
@@ -29,9 +29,9 @@ function AccordionTrigger(
 				data-slot="accordion-trigger"
 				className={cnMerge(
 					`flex flex-1 items-center justify-between gap-4 rounded-md text-left text-[14px] font-medium
-					transition-all outline-none hover:underline focus-visible:border-shadcn-ring
-					focus-visible:ring-[3px] focus-visible:ring-shadcn-ring/50 disabled:pointer-events-none
-					disabled:opacity-50 [&[data-state=open]>svg,_&[data-state=open]>[data-icon]>svg]:rotate-180`,
+					transition-all outline-none focus-visible:border-shadcn-ring focus-visible:ring-[3px]
+					focus-visible:ring-shadcn-ring/50 disabled:pointer-events-none disabled:opacity-50
+					[&[data-state=open]>svg,_&[data-state=open]>[data-icon]>svg]:rotate-180`,
 					className,
 					classNames?.base
 				)}

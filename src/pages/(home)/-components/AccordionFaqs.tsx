@@ -31,7 +31,7 @@ const FAQs = [
 	{
 		answer:
 			"Yes. Once you view your result, you can always print a hard copy by clicking the “Print” button.",
-		question: "Is there a fee for checking my result?",
+		question: "Can I get a printed copy of my results?",
 	},
 	{
 		answer:

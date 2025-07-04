@@ -1,8 +1,10 @@
 export { default as cardOne } from "./card-1.svg";
 export { default as cardTwo } from "./card-2.svg";
 export { default as cardThree } from "./card-3.svg";
+export { default as carouselOne } from "./carousel-1.svg";
+export { default as carouselTwo } from "./carousel-2.jpg";
+export { default as carouselThree } from "./carousel-3.jpg";
 export { default as chart } from "./chart.svg";
-export { default as person } from "./person.svg";
 export { default as schoolOne } from "./school-1.svg";
 export { default as schoolTwo } from "./school-2.svg";
 export { default as schoolThree } from "./school-3.svg";
