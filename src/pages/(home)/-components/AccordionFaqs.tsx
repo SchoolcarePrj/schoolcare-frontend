@@ -54,14 +54,16 @@ function AccordionFaqs() {
 						<Accordion.Trigger withIcon={false} className="p-4 lg:p-9 lg:text-base">
 							{faq.question}
 
-							<div>
+							<div data-icon="true" className="relative flex items-center pr-4">
 								<IconBox
 									icon="material-symbols:add-2"
-									className="size-3 lg:size-6 [[data-state=open]_&]:hidden"
+									className="absolute size-3 origin-center transition-all duration-200 lg:size-6
+										[[data-state=open]_&]:rotate-90 [[data-state=open]_&]:opacity-0"
 								/>
 								<IconBox
 									icon="material-symbols:remove"
-									className="size-3 lg:size-6 [[data-state=closed]_&]:hidden"
+									className="absolute size-3 origin-center transition-all duration-200 lg:size-6
+										[[data-state=close]_&]:opacity-100 [[data-state=open]_&]:rotate-90"
 								/>
 							</div>
 						</Accordion.Trigger>
