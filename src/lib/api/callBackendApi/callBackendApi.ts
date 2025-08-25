@@ -1,10 +1,10 @@
-import { type CallApiParameters, type ResultModeUnion, createFetchClient } from "@zayne-labs/callapi";
+import { type CallApiParameters, createFetchClient, type ResultModeUnion } from "@zayne-labs/callapi";
 import type { UnmaskType } from "@zayne-labs/toolkit-type-helpers";
 import {
 	type AuthHeaderInclusionPluginMeta,
-	type ToastPluginMeta,
 	authHeaderInclusionPlugin,
 	isAuthTokenRelatedError,
+	type ToastPluginMeta,
 	toastPlugin,
 } from "./plugins";
 

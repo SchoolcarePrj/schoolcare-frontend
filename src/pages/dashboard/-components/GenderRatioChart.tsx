@@ -36,11 +36,11 @@ function GenderRatioChart(props: {
 
 	return (
 		<Card.Root
-			className="flex size-full flex-col items-center rounded-[24px] border-2 border-school-gray
-				bg-white py-[36px_18px]"
+			className="flex size-full max-w-[334px] flex-col items-center rounded-[24px] border-2
+				border-school-gray-lighter bg-white py-[36px_18px]"
 		>
-			<Card.Header>
-				<Card.Title>Gender Composition</Card.Title>
+			<Card.Header className="shrink-0">
+				<Card.Title className="text-[22px] font-semibold">Gender Composition</Card.Title>
 			</Card.Header>
 
 			<Card.Content className="-mt-3 flex size-full justify-center">

@@ -1,9 +1,9 @@
-import { cnMerge } from "@/lib/utils/cn";
 import { css } from "@zayne-labs/toolkit-core";
 import type { CssWithCustomProperties, InferProps } from "@zayne-labs/toolkit-react/utils";
+import type { ExtractUnion } from "@zayne-labs/toolkit-type-helpers";
 import { createContext, use, useId, useMemo } from "react";
 import * as RechartsPrimitive from "recharts";
-import type { Payload } from "recharts/types/component/DefaultLegendContent";
+import { cnMerge } from "@/lib/utils/cn";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { dark: ".dark", light: "" } as const;
@@ -222,7 +222,7 @@ export function ChartTooltipContent(
 						<div
 							key={item.dataKey}
 							className={cnMerge(
-								`flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5
+								`flex w-full flex-wrap items-stretch gap-2 [&>svg]:size-2.5
 								[&>svg]:text-shadcn-muted-foreground`,
 								indicator === "dot" && "items-center"
 							)}
@@ -299,7 +299,7 @@ export function ChartLegendContent(
 			renderItem?: (context: {
 				index: number;
 				itemConfig: ReturnType<typeof getConfigItemFromPayload>;
-				payloadItem: Payload;
+				payloadItem: ExtractUnion<RechartsPrimitive.LegendProps["payload"]>;
 			}) => React.ReactNode;
 			withIcon?: boolean;
 		}

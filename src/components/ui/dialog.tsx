@@ -81,7 +81,7 @@ function DialogContent(props: InferProps<typeof DialogPrimitive.Content> & { wit
 
 			<DialogPrimitive.Content
 				className={cnMerge(
-					`fixed top-1/2 left-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4
+					`fixed top-1/2 left-1/2 z-50 grid w-full max-w-lg -translate-1/2 gap-4
 					border bg-shadcn-background p-6 shadow-lg duration-200 data-[state=closed]:animate-out
 					data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
 					data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]

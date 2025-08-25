@@ -1,8 +1,8 @@
 import {
 	type CallApiResultErrorVariant,
+	definePlugin,
 	type ErrorContext,
 	type SuccessContext,
-	definePlugin,
 } from "@zayne-labs/callapi";
 import { isHTTPError } from "@zayne-labs/callapi/utils";
 import { toast } from "sonner";

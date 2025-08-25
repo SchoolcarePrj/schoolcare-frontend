@@ -130,7 +130,7 @@ function RegisterClassPage() {
 							)}
 						/>
 
-						<Form.ErrorMessage className="text-red-600" />
+						<Form.ErrorMessage />
 					</Form.Field>
 
 					<Form.Field<typeof methods.control> name="grade" className="gap-3 md:gap-4">
@@ -154,10 +154,10 @@ function RegisterClassPage() {
 							/>
 						</Form.InputGroup>
 
-						<Form.ErrorMessage className="text-red-600" />
+						<Form.ErrorMessage />
 					</Form.Field>
 
-					<Form.ErrorMessage type="root" errorField="serverError" className="text-red-600" />
+					<Form.ErrorMessage type="root" errorField="serverError" />
 
 					<Form.Submit
 						disabled={methods.formState.isSubmitting || !methods.formState.isValid}

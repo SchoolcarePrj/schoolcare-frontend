@@ -1,7 +1,7 @@
+import type { AnyFunction } from "@zayne-labs/toolkit-type-helpers";
 import { callBackendApi } from "@/lib/api/callBackendApi";
 import { useQueryClientStore } from "@/store/react-query/queryClientStore";
 import { sessionQuery } from "@/store/react-query/queryFactory";
-import type { AnyFunction } from "@zayne-labs/toolkit-type-helpers";
 
 export const dashboardLinkItems = [
 	{
@@ -24,16 +24,14 @@ export const dashboardLinkItems = [
 		label: "Register Students",
 		link: "/dashboard/register/student",
 	},
-
 	{
 		icon: "streamline:interface-edit-view-eye-eyeball-open-view",
-		label: "View All Students",
-		link: "/dashboard/students/view-all",
-	},
-	{
-		icon: "streamline:interface-edit-view-eye-eyeball-open-view",
-		label: "View a Student",
-		link: "/dashboard/students/view-single",
+		items: [
+			{ label: "View all Students", link: "/dashboard/students/view-all" },
+			{ label: "View a Student", link: "/dashboard/students/view-single" },
+		],
+		label: "View Student",
+		link: null,
 	},
 	{
 		icon: "solar:upload-minimalistic-linear",
@@ -44,11 +42,10 @@ export const dashboardLinkItems = [
 		icon: "mage:logout",
 		label: "Log out",
 		link: (navigate: AnyFunction) => {
+			const refreshToken = localStorage.getItem("refreshToken");
 			return () => {
 				void callBackendApi("/logout", {
-					body: {
-						refresh: localStorage.getItem("refreshToken"),
-					},
+					body: { refresh: refreshToken },
 					meta: { toast: { success: true } },
 					method: "POST",
 

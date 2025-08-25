@@ -1,9 +1,9 @@
-import { IconBox, getElementList } from "@/components/common";
-import { Drawer } from "@/components/ui";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
+import { ForWithWrapper, getElementList, IconBox } from "@/components/common";
+import { CollapsibleAnimated, Drawer } from "@/components/ui";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
 
 const [SideBarLinkList] = getElementList();
@@ -21,7 +21,9 @@ function Sidebar(props: { className?: string }) {
 			<aside
 				className={cnMerge(
 					// NOTE - These classes allow the sidebar to scroll only within itself
-					"sticky inset-y-0 h-svh custom-scrollbar min-w-[300px] overflow-y-auto bg-white",
+					"sticky inset-y-0 flex h-svh overflow-y-auto",
+
+					"custom-scrollbar min-w-[300px] bg-white",
 					className
 				)}
 			>
@@ -35,9 +37,9 @@ function Sidebar(props: { className?: string }) {
 					withPortal={false}
 					className={cnJoin(
 						// NOTE - These classes allow the sidebar to scroll only within itself
-						"absolute size-full pt-[100px]",
+						"absolute flex size-full min-h-0 grow flex-col",
 
-						`bg-school-dark-blue text-white outline-hidden
+						`bg-school-dark-blue pt-[100px] text-white outline-hidden
 						data-vaul-drawer:[animation-duration:1300ms]`
 					)}
 				>
@@ -46,25 +48,60 @@ function Sidebar(props: { className?: string }) {
 						className="flex flex-col gap-6 bg-inherit pb-15 font-medium"
 						render={(item) => (
 							<Fragment key={item.label}>
+								{item.link === null && (
+									<CollapsibleAnimated.Root
+										className="group/collapsible"
+										defaultOpen={item.items.some((innerItem) => innerItem.link === pathname)}
+									>
+										<CollapsibleAnimated.Trigger
+											className="ml-6 flex h-[42px] items-center gap-3 rounded-r-[10px]"
+										>
+											<IconBox icon={item.icon} className="size-5" />
+											{item.label}
+											<IconBox
+												icon="lucide:chevron-right"
+												className="size-5 transition-transform duration-200
+													group-data-[state=open]/collapsible:rotate-90"
+											/>
+										</CollapsibleAnimated.Trigger>
+
+										<ForWithWrapper
+											className="flex flex-col gap-5 group-data-[state=open]/collapsible:mt-3"
+											each={item.items}
+											render={(innerItem) => (
+												<CollapsibleAnimated.Content key={innerItem.label} asChild={true}>
+													<NavLink
+														data-active={innerItem.link === pathname}
+														to={innerItem.link}
+														className="mx-7.5 flex h-[42px] items-center gap-3 rounded-[8px]
+															border border-white pl-6 data-[active=true]:bg-school-blue"
+													>
+														{innerItem.label}
+													</NavLink>
+												</CollapsibleAnimated.Content>
+											)}
+										/>
+									</CollapsibleAnimated.Root>
+								)}
+
 								{isString(item.link) && (
 									<NavLink
 										data-active={item.link === pathname}
-										className="flex h-[42px] items-center gap-3 rounded-r-[10px]
+										className="flex h-[42px] items-center gap-3 rounded-r-[10px] pl-6
 											data-[active=true]:bg-school-blue"
 										to={item.link}
 									>
-										<IconBox icon={item.icon} className="ml-6 size-5" />
+										<IconBox icon={item.icon} className="size-5" />
 										{item.label}
 									</NavLink>
 								)}
-
 								{isFunction(item.link) && (
 									<button
 										type="button"
-										className="flex h-[42px] items-center gap-3"
+										className="flex h-[42px] items-center gap-3 pl-6"
 										onClick={item.link(navigate)}
 									>
-										<IconBox icon={item.icon} className="ml-6 size-5" />
+										<IconBox icon={item.icon} className="size-5" />
 										{item.label}
 									</button>
 								)}

@@ -82,7 +82,7 @@ function RegisterStudentPage() {
 								md:px-8 md:text-base"
 						/>
 
-						<Form.ErrorMessage control={methods.control} className="text-red-600" />
+						<Form.ErrorMessage />
 					</Form.Field>
 
 					<Form.Field<typeof methods.control> name="other_names" className="gap-4">
@@ -95,7 +95,7 @@ function RegisterStudentPage() {
 								md:px-8 md:text-base"
 						/>
 
-						<Form.ErrorMessage control={methods.control} className="text-red-600" />
+						<Form.ErrorMessage />
 					</Form.Field>
 
 					<div className="flex gap-6 md:gap-[70px]">
@@ -145,7 +145,7 @@ function RegisterStudentPage() {
 								)}
 							/>
 
-							<Form.ErrorMessage control={methods.control} className="text-red-600" />
+							<Form.ErrorMessage />
 						</Form.Field>
 
 						<Form.Field<typeof methods.control> name="school_class" className="w-full min-w-0 gap-4">
@@ -194,9 +194,11 @@ function RegisterStudentPage() {
 								)}
 							/>
 
-							<Form.ErrorMessage control={methods.control} className="text-red-600" />
+							<Form.ErrorMessage />
 						</Form.Field>
 					</div>
+
+					<Form.ErrorMessage type="root" errorField="serverError" />
 
 					<Form.Submit
 						disabled={methods.formState.isSubmitting || !methods.formState.isValid}

@@ -126,10 +126,10 @@ function RegisterSubjectPage() {
 							)}
 						/>
 
-						<Form.ErrorMessage className="text-red-600" />
+						<Form.ErrorMessage />
 					</Form.Field>
 
-					<Form.ErrorMessage type="root" errorField="serverError" className="text-red-600" />
+					<Form.ErrorMessage type="root" errorField="serverError" />
 
 					<Form.Submit
 						disabled={methods.formState.isSubmitting}

@@ -42,7 +42,7 @@ function DashboardPage() {
 	];
 
 	return (
-		<Main className="flex w-full flex-col gap-9 py-4 md:gap-5.5">
+		<Main className="flex w-full flex-col gap-10 py-4 md:gap-6">
 			<InfoCardList
 				as="section"
 				className="flex gap-5 md:gap-10"
@@ -50,7 +50,7 @@ function DashboardPage() {
 				render={(item) => (
 					<Card.Root
 						key={item.title}
-						className="w-[calc(100%/3)] rounded-[8px] border-2 border-school-gray bg-white
+						className="w-[calc(100%/3)] rounded-[8px] border-2 border-school-gray-lighter bg-white
 							py-[20px_9px] md:rounded-[30px] md:py-[30px_32px]"
 					>
 						<Card.Header className="flex flex-col items-center">
@@ -63,11 +63,11 @@ function DashboardPage() {
 
 							<hr className="mt-2 h-2 w-full bg-school-blue md:hidden" />
 
-							<Card.Title className="mt-1.5 text-[9px] font-medium md:mt-3.5 md:text-[12px]">
+							<Card.Title className="mt-1.5 text-[10px] font-medium md:mt-3.5 md:text-[12px]">
 								{item.title}
 							</Card.Title>
 
-							<Card.Description className="text-[12px] font-bold text-black md:mt-1 md:text-[24px]">
+							<Card.Description className="text-[13px] font-bold text-black md:mt-1 md:text-[24px]">
 								<NumberFlow value={item.description} />
 							</Card.Description>
 						</Card.Header>
@@ -77,13 +77,9 @@ function DashboardPage() {
 				)}
 			/>
 
-			<div className="flex flex-col md:flex-row">
-				<section />
-
-				<section className="md:ml-auto md:w-[calc(100%/3.3)]">
-					<GenderRatioChart genderResponse={studentsGenderQueryResult.data?.data} />
-				</section>
-			</div>
+			<section className="flex flex-col items-center md:ml-auto md:w-[calc(100%/3.3)]">
+				<GenderRatioChart genderResponse={studentsGenderQueryResult.data?.data} />
+			</section>
 		</Main>
 	);
 }

@@ -56,10 +56,10 @@ function ViewSingleStudent() {
 								md:px-8 md:text-base"
 						/>
 
-						<Form.ErrorMessage className="text-red-600" />
+						<Form.ErrorMessage />
 					</Form.Field>
 
-					<Form.ErrorMessage type="root" errorField="serverError" className="text-red-600" />
+					<Form.ErrorMessage type="root" errorField="serverError" />
 
 					<div className="flex gap-6 self-end">
 						<button

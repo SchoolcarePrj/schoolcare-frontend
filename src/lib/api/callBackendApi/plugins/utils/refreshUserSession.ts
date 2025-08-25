@@ -18,6 +18,7 @@ const refreshUserSession = async () => {
 
 	const result = await callBackendApi<{ access: string }>("/token/refresh", {
 		body: { refresh: refreshToken },
+		dedupeStrategy: "defer",
 		meta: {
 			skipAuthHeaderAddition: true,
 			toast: {
@@ -32,7 +33,7 @@ const refreshUserSession = async () => {
 
 		toast.error(message);
 
-		setTimeout(() => hardNavigate("/login"), 1500);
+		// setTimeout(() => hardNavigate("/login"), 1500);
 
 		throw new Error(message);
 	}

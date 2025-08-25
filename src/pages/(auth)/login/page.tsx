@@ -31,11 +31,7 @@ function LoginPage() {
 	const onSubmit = methods.handleSubmit(async (data) => {
 		await callBackendApi<LoginData>("/login", {
 			body: data,
-
-			meta: {
-				toast: { success: true },
-			},
-
+			meta: { toast: { success: true } },
 			method: "POST",
 
 			onSuccess: (ctx) => {

@@ -1,16 +1,16 @@
+import { queryOptions } from "@tanstack/react-query";
+import type { CallApiExtraOptions } from "@zayne-labs/callapi";
 import {
 	type AllClasses,
 	type AllStudentsInSchool,
 	type AllSubjects,
 	type AllSubjectsInSchool,
 	type ClassesData,
+	callBackendApiForQuery,
 	type StudentsByClassOrID,
 	type StudentsGenderResponse,
-	callBackendApiForQuery,
 } from "@/lib/api/callBackendApi";
 import { checkUserSession } from "@/lib/api/callBackendApi/plugins/utils";
-import { queryOptions } from "@tanstack/react-query";
-import type { CallApiExtraOptions } from "@zayne-labs/callapi";
 
 export const sessionQuery = () => {
 	return queryOptions({
