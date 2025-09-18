@@ -8,7 +8,7 @@ import {
 	allStudentsInSchoolQuery,
 	allSubjectsInSchoolQuery,
 	studentsGenderQuery,
-} from "@/store/react-query/queryFactory";
+} from "@/lib/react-query/queryOptions";
 import GenderRatioChart from "./-components/GenderRatioChart";
 import { Main } from "./-components/Main";
 
@@ -25,17 +25,17 @@ function DashboardPage() {
 
 	const infoCardArray = [
 		{
-			description: allStudentsInSchoolQueryResult.data?.data?.length ?? 0,
+			description: allStudentsInSchoolQueryResult.data?.data.length ?? 0,
 			icon: <StudentIcon className="max-md:size-3" />,
 			title: "Registered Students",
 		},
 		{
-			description: allSubjectsInSchoolQueryResult.data?.data?.length ?? 0,
+			description: allSubjectsInSchoolQueryResult.data?.data.length ?? 0,
 			icon: <BookIcon className="max-md:size-3" />,
 			title: "Number of Subjects",
 		},
 		{
-			description: allClassesInSchoolQueryResult.data?.data?.length ?? 0,
+			description: allClassesInSchoolQueryResult.data?.data.length ?? 0,
 			icon: <SchoolIcon className="max-md:size-3" />,
 			title: "Numbers of Classes",
 		},
@@ -47,7 +47,7 @@ function DashboardPage() {
 				as="section"
 				className="flex gap-5 md:gap-10"
 				each={infoCardArray}
-				render={(item) => (
+				renderItem={(item) => (
 					<Card.Root
 						key={item.title}
 						className="w-[calc(100%/3)] rounded-[8px] border-2 border-school-gray-lighter bg-white
@@ -78,7 +78,7 @@ function DashboardPage() {
 			/>
 
 			<section className="flex flex-col items-center md:ml-auto md:w-[calc(100%/3.3)]">
-				<GenderRatioChart genderResponse={studentsGenderQueryResult.data?.data} />
+				<GenderRatioChart genderResponseData={studentsGenderQueryResult.data?.data} />
 			</section>
 		</Main>
 	);

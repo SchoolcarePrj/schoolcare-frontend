@@ -2,17 +2,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { z } from "zod";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
-import { callBackendApi, type InputScoresResponse } from "@/lib/api/callBackendApi";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
+import { callBackendApi } from "@/lib/api/callBackendApi";
 import {
 	allClassesInSchoolQuery,
 	schoolSessionQuery,
 	schoolTermQuery,
-} from "@/store/react-query/queryFactory";
-import { useInputScoreFormStore } from "@/store/zustand/inputScoresFormStore";
+} from "@/lib/react-query/queryOptions";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
+import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
 import { Main } from "../../-components/Main";
 
 const AddScoresSchema = z.object({
@@ -40,13 +40,10 @@ function AddScoresPage() {
 	const [List] = getElementList("base");
 
 	const onSubmit = methods.handleSubmit(async (data) => {
-		await callBackendApi<InputScoresResponse>("/school/results/get-class-session-term", {
+		await callBackendApi("@post/school/results/get-class-session-term", {
 			body: data,
-			method: "POST",
 
 			onSuccess: (ctx) => {
-				if (!ctx.data.data) return;
-
 				useInputScoreFormStore.setState({ responseData: ctx.data.data });
 				void navigate("/dashboard/students/input-scores/table");
 			},
@@ -95,7 +92,7 @@ function AddScoresPage() {
 										>
 											<List
 												each={schoolSessionQueryResult.data?.data ?? []}
-												render={(item) => (
+												renderItem={(item) => (
 													<Select.Item
 														key={item}
 														value={item}
@@ -142,7 +139,7 @@ function AddScoresPage() {
 										>
 											<List
 												each={schoolTermQueryResult.data?.data ?? []}
-												render={(item) => (
+												renderItem={(item) => (
 													<Select.Item
 														key={item}
 														value={item}
@@ -186,7 +183,7 @@ function AddScoresPage() {
 									>
 										<List
 											each={classesQueryResult.data?.data ?? []}
-											render={(item) => (
+											renderItem={(item) => (
 												<Select.Item
 													key={`${item.school_class} ${item.grade}`}
 													value={`${item.school_class} ${item.grade}`}

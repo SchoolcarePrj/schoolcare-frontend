@@ -1,19 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
-import { callBackendApi } from "@/lib/api/callBackendApi";
+import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
+import { allClassesInSchoolQuery, allStudentsInSchoolQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { useQueryClientStore } from "@/store/react-query/queryClientStore";
-import { allClassesInSchoolQuery, allStudentsInSchoolQuery } from "@/store/react-query/queryFactory";
 import { Main } from "../-components/Main";
 
 const RegisterStudentSchema = z.object({
-	gender: z.string().min(1, "Gender is required"),
+	...apiSchema.routes["@post/school/students"].body.omit({ name: true }).shape,
 	other_names: z.string().min(1, "Please enter other names"),
-	school_class: z.string().min(1, "Please choose the student's class"),
 	surname: z.string().min(1, "Surname is required"),
 });
 
@@ -33,16 +31,17 @@ function RegisterStudentPage() {
 
 	const classesQueryResult = useQuery(allClassesInSchoolQuery());
 
+	const queryClient = useQueryClient();
+
 	const onSubmit = methods.handleSubmit(async (data) => {
 		const { other_names, surname, ...restOfData } = data;
 
-		await callBackendApi("/school/students", {
+		await callBackendApi("@post/school/students", {
 			body: {
 				...restOfData,
 				name: `${surname} ${other_names}`,
 			},
 			meta: { toast: { success: true } },
-			method: "POST",
 
 			onResponseError: (ctx) => {
 				methods.setError("root.serverError", {
@@ -53,9 +52,7 @@ function RegisterStudentPage() {
 			onSuccess: () => {
 				methods.reset();
 
-				void useQueryClientStore
-					.getState()
-					.queryClient.invalidateQueries({ queryKey: allStudentsInSchoolQuery().queryKey });
+				void queryClient.invalidateQueries(allStudentsInSchoolQuery());
 			},
 		});
 	});
@@ -177,7 +174,7 @@ function RegisterStudentPage() {
 										>
 											<ClassesList
 												each={classesQueryResult.data?.data ?? []}
-												render={(item) => (
+												renderItem={(item) => (
 													<Select.Item
 														key={`${item.school_class} ${item.grade}`}
 														value={`${item.school_class} ${item.grade}`}

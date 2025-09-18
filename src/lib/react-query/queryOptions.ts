@@ -1,23 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { CallApiExtraOptions } from "@zayne-labs/callapi";
-import {
-	type AllClasses,
-	type AllStudentsInSchool,
-	type AllSubjects,
-	type AllSubjectsInSchool,
-	type ClassesData,
-	callBackendApiForQuery,
-	type StudentsByClassOrID,
-	type StudentsGenderResponse,
-} from "@/lib/api/callBackendApi";
-import { checkUserSession } from "@/lib/api/callBackendApi/plugins/utils";
+import { callBackendApiForQuery } from "../api/callBackendApi";
+import { checkUserSessionForQuery } from "../api/callBackendApi/plugins/utils/session";
 
 export const sessionQuery = () => {
 	return queryOptions({
-		queryFn: () => checkUserSession(),
+		queryFn: () => checkUserSessionForQuery(),
 		queryKey: ["session"],
-		refetchInterval: 9 * 60 * 1000, // 9 minutes
-		refetchOnWindowFocus: false,
 		retry: false,
 		staleTime: Infinity,
 	});
@@ -25,7 +14,8 @@ export const sessionQuery = () => {
 
 export const allClassesQuery = () => {
 	return queryOptions({
-		queryFn: () => callBackendApiForQuery<AllClasses>("/main-class"),
+		meta: { toast: { success: false } },
+		queryFn: () => callBackendApiForQuery("@get/main-class"),
 		queryKey: ["classes-all"],
 		staleTime: Infinity,
 	});
@@ -33,7 +23,7 @@ export const allClassesQuery = () => {
 
 export const allSubjectsQuery = () => {
 	return queryOptions({
-		queryFn: () => callBackendApiForQuery<AllSubjects>("/main-subject"),
+		queryFn: () => callBackendApiForQuery("@get/main-subject"),
 		queryKey: ["subjects-all"],
 		staleTime: Infinity,
 	});
@@ -41,7 +31,7 @@ export const allSubjectsQuery = () => {
 
 export const allClassesInSchoolQuery = () => {
 	return queryOptions({
-		queryFn: () => callBackendApiForQuery<ClassesData[]>("/school/classes"),
+		queryFn: () => callBackendApiForQuery("@get/school/classes"),
 		queryKey: ["classes", "school"],
 		staleTime: Infinity,
 	});
@@ -49,7 +39,7 @@ export const allClassesInSchoolQuery = () => {
 
 export const allSubjectsInSchoolQuery = () => {
 	return queryOptions({
-		queryFn: () => callBackendApiForQuery<AllSubjectsInSchool>("/school/subjects"),
+		queryFn: () => callBackendApiForQuery("@get/school/subjects"),
 		queryKey: ["subjects", "school"],
 		staleTime: Infinity,
 	});
@@ -57,7 +47,7 @@ export const allSubjectsInSchoolQuery = () => {
 
 export const allStudentsInSchoolQuery = () => {
 	return queryOptions({
-		queryFn: () => callBackendApiForQuery<AllStudentsInSchool>("/school/students"),
+		queryFn: () => callBackendApiForQuery("@get/school/students"),
 		queryKey: ["students", "school"],
 		staleTime: Infinity,
 	});
@@ -66,12 +56,9 @@ export const allStudentsInSchoolQuery = () => {
 export const studentsByClassQuery = (studentClass: string) => {
 	return queryOptions({
 		queryFn: () => {
-			return callBackendApiForQuery<{ students: StudentsByClassOrID[] }>(
-				"/school/students/class-students",
-				{
-					query: { class: studentClass },
-				}
-			);
+			return callBackendApiForQuery("@get/school/students/class-students", {
+				query: { class: studentClass },
+			});
 		},
 		queryKey: ["students", "school", { class: studentClass }],
 		staleTime: Infinity,
@@ -83,8 +70,8 @@ export const studentsByIDQuery = (options: { studentId: string }) => {
 
 	return queryOptions({
 		queryFn: () => {
-			return callBackendApiForQuery<StudentsByClassOrID>("/school/students/students-by-reg-number", {
-				meta: { toast: { errorMessageField: "reg", success: true } },
+			return callBackendApiForQuery("@get/school/students/students-by-reg-number", {
+				meta: { toast: { success: true } },
 				query: { reg: studentId },
 			});
 		},
@@ -95,18 +82,24 @@ export const studentsByIDQuery = (options: { studentId: string }) => {
 
 export const studentsGenderQuery = () => {
 	return queryOptions({
-		queryFn: () => callBackendApiForQuery<StudentsGenderResponse>("/school/students/students-by-gender"),
+		queryFn: () => callBackendApiForQuery("@get/school/students/students-by-gender"),
 		queryKey: ["students", "school", "gender-ratio"],
 		staleTime: Infinity,
 	});
 };
+
+export type StudentGenderRatioData = Awaited<
+	ReturnType<NonNullable<ReturnType<typeof studentsGenderQuery>["select"]>>
+>["data"];
 
 export const schoolSessionQuery = (options?: { meta?: CallApiExtraOptions["meta"] }) => {
 	const { meta } = options ?? {};
 
 	return queryOptions({
 		queryFn: () =>
-			callBackendApiForQuery<string[]>("/session", { meta: { skipAuthHeaderAddition: true, ...meta } }),
+			callBackendApiForQuery("@get/session", {
+				meta: { auth: { skipHeaderAddition: true }, ...meta },
+			}),
 		// eslint-disable-next-line tanstack-query/exhaustive-deps
 		queryKey: ["school-session"],
 		staleTime: Infinity,
@@ -118,7 +111,9 @@ export const schoolTermQuery = (options?: { meta?: CallApiExtraOptions["meta"] }
 
 	return queryOptions({
 		queryFn: () =>
-			callBackendApiForQuery<string[]>("/term", { meta: { skipAuthHeaderAddition: true, ...meta } }),
+			callBackendApiForQuery("@get/term", {
+				meta: { auth: { skipHeaderAddition: true }, ...meta },
+			}),
 		// eslint-disable-next-line tanstack-query/exhaustive-deps
 		queryKey: ["school-term"],
 		staleTime: Infinity,

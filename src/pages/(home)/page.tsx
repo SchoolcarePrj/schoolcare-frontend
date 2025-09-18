@@ -168,7 +168,7 @@ function HomePage() {
 				<ForWithWrapper
 					className="flex flex-col gap-6 lg:flex-row lg:gap-8"
 					each={experiences}
-					render={(experience) => (
+					renderItem={(experience) => (
 						<li
 							key={experience.title}
 							className="flex h-[218px] w-full flex-col items-center justify-center gap-3
@@ -210,7 +210,7 @@ function HomePage() {
 					<ForWithWrapper
 						className="flex flex-col gap-6"
 						each={features}
-						render={(feature) => (
+						renderItem={(feature) => (
 							<li
 								key={feature.title}
 								className="flex items-start gap-3.5 rounded-[12px] bg-210-79-44 px-9 py-7.5
@@ -241,7 +241,7 @@ function HomePage() {
 						<Carousel.Content className="size-full">
 							<For
 								each={carouselItems}
-								render={(item) => (
+								renderItem={(item) => (
 									<Carousel.Item key={item.imageURL} className="h-[333px] lg:h-full">
 										<Image
 											src={item.imageURL}
@@ -265,7 +265,7 @@ function HomePage() {
 					<ForWithWrapper
 						className="flex flex-col gap-6 lg:gap-11.5"
 						each={reasons}
-						render={(reason) => (
+						renderItem={(reason) => (
 							<li
 								key={reason.title}
 								className="flex flex-col gap-1 rounded-[12px] border-[3px] border-210-78-82 px-6
@@ -294,7 +294,7 @@ function HomePage() {
 				<ForWithWrapper
 					{...getRootProps({ className: "select-none gap-7.5 md:justify-between" })}
 					each={blogPosts}
-					render={(post) => (
+					renderItem={(post) => (
 						<Card.Root
 							key={post.imageURL}
 							as="li"

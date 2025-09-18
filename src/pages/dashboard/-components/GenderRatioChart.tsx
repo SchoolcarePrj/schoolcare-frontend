@@ -1,6 +1,6 @@
 import { Pie, PieChart } from "recharts";
 import { Card, Chart } from "@/components/ui";
-import type { ApiSuccessResponse, StudentsGenderResponse } from "@/lib/api/callBackendApi";
+import type { StudentGenderRatioData } from "@/lib/react-query/queryOptions";
 
 const chartConfig = {
 	female: {
@@ -16,21 +16,19 @@ const chartConfig = {
 	},
 } satisfies Chart.ChartConfig;
 
-function GenderRatioChart(props: {
-	genderResponse: ApiSuccessResponse<StudentsGenderResponse>["data"] | undefined;
-}) {
-	const { genderResponse } = props;
+function GenderRatioChart(props: { genderResponseData: StudentGenderRatioData | undefined }) {
+	const { genderResponseData } = props;
 
 	const chartData = [
 		{
 			fill: "var(--color-male)",
 			gender: "male",
-			ratio: genderResponse?.male ?? 0,
+			ratio: genderResponseData?.male ?? 0,
 		},
 		{
 			fill: "var(--color-female)",
 			gender: "female",
-			ratio: genderResponse?.female ?? 0,
+			ratio: genderResponseData?.female ?? 0,
 		},
 	];
 
@@ -48,7 +46,7 @@ function GenderRatioChart(props: {
 					<PieChart className="flex gap-59">
 						<Chart.Tooltip cursor={false} content={<Chart.TooltipContent hideLabel={true} />} />
 
-						{Boolean(genderResponse) && (
+						{Boolean(genderResponseData) && (
 							<Pie
 								data={chartData}
 								dataKey="ratio"

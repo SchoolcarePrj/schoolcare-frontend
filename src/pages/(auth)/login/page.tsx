@@ -5,15 +5,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
-import { callBackendApi, type LoginData } from "@/lib/api/callBackendApi";
+import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
+import { authTokenObject } from "@/lib/api/callBackendApi/plugins/utils";
+import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { sessionQuery } from "@/store/react-query/queryFactory";
 
-const SignInSchema = z.object({
-	email: z.email({ error: "Please enter a valid email!" }),
-	password: z.string().min(1, { error: "Password is required" }),
-});
+const SignInSchema = apiSchema.routes["@post/login"].body;
 
 function LoginPage() {
 	const methods = useForm({
@@ -29,16 +26,15 @@ function LoginPage() {
 	const queryClient = useQueryClient();
 
 	const onSubmit = methods.handleSubmit(async (data) => {
-		await callBackendApi<LoginData>("/login", {
+		await callBackendApi("@post/login", {
 			body: data,
 			meta: { toast: { success: true } },
-			method: "POST",
 
 			onSuccess: (ctx) => {
-				if (!ctx.data.data) return;
-
-				localStorage.setItem("accessToken", ctx.data.data.access);
-				localStorage.setItem("refreshToken", ctx.data.data.refresh);
+				authTokenObject.setTokens({
+					access: ctx.data.data.access,
+					refresh: ctx.data.data.refresh,
+				});
 
 				queryClient.setQueryData(sessionQuery().queryKey, {
 					...ctx.data,

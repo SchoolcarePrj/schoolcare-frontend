@@ -1,7 +1,7 @@
-import { Table } from "@/components/ui";
-import type { CheckResultResponse } from "@/lib/api/callBackendApi";
 import { useStorageState } from "@zayne-labs/toolkit-react";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
+import { Table } from "@/components/ui";
+import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
 import { Main } from "../dashboard/-components/Main";
 
 const columns = defineEnum(["Subject", "First CA", "Second CA", "Exam", "Total", "Grade", "Remark"]);
@@ -26,7 +26,7 @@ const toOrdinal = (number: number) => {
 };
 
 function ResultSheetPage() {
-	const [data] = useStorageState<CheckResultResponse | null>("scratch-card-result", null);
+	const [data] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
 
 	const tableData =
 		data?.results.map((result) => ({

@@ -1,18 +1,14 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { getElementList, IconBox, Show } from "@/components/common";
+import { For, IconBox, Show } from "@/components/common";
 import { Command, Form, Popover } from "@/components/ui";
-import { callBackendApi } from "@/lib/api/callBackendApi";
+import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
+import { allSubjectsInSchoolQuery, allSubjectsQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { useQueryClientStore } from "@/store/react-query/queryClientStore";
-import { allSubjectsInSchoolQuery, allSubjectsQuery } from "@/store/react-query/queryFactory";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import { Main } from "../-components/Main";
 
-const RegisterSubjectSchema = z.object({
-	subject: z.string().min(1, "Subject is required"),
-});
+const RegisterSubjectSchema = apiSchema.routes["@post/school/subjects"].body;
 
 function RegisterSubjectPage() {
 	const methods = useForm({
@@ -23,15 +19,14 @@ function RegisterSubjectPage() {
 		resolver: zodResolver(RegisterSubjectSchema),
 	});
 
-	const [SubjectList] = getElementList("base");
-
 	const subjectQueryResult = useQuery(allSubjectsQuery());
 
+	const queryClient = useQueryClient();
+
 	const onSubmit = methods.handleSubmit(async (data) => {
-		await callBackendApi("/school/subjects", {
+		await callBackendApi("@post/school/subjects", {
 			body: data,
 			meta: { toast: { success: true } },
-			method: "POST",
 
 			onResponseError: (ctx) => {
 				methods.setError("root.serverError", {
@@ -42,9 +37,7 @@ function RegisterSubjectPage() {
 			onSuccess: () => {
 				methods.reset();
 
-				void useQueryClientStore.getState().queryClient.invalidateQueries({
-					queryKey: allSubjectsInSchoolQuery().queryKey,
-				});
+				void queryClient.invalidateQueries(allSubjectsInSchoolQuery());
 			},
 		});
 	});
@@ -77,9 +70,7 @@ function RegisterSubjectPage() {
 										)}
 									>
 										<Show.Root when={field.value} fallback="Select subject">
-											{subjectQueryResult.data?.data?.find(
-												(subject) => subject === field.value
-											)}
+											{subjectQueryResult.data?.data.find((subject) => subject === field.value)}
 										</Show.Root>
 
 										<IconBox
@@ -96,9 +87,9 @@ function RegisterSubjectPage() {
 												<Command.Empty>No subject found.</Command.Empty>
 
 												<Command.Group>
-													<SubjectList
+													<For
 														each={subjectQueryResult.data?.data ?? []}
-														render={(item) => (
+														renderItem={(item) => (
 															<Command.Item
 																key={item}
 																value={item}

@@ -1,19 +1,13 @@
+import { DropZoneInput, IconBox } from "@/components/common";
+import { EditIcon } from "@/components/icons";
+import { DropZone, Form } from "@/components/ui";
+import { PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
+import { cnMerge } from "@/lib/utils/cn";
+import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
+import { Main } from "@/pages/dashboard/-components/Main";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { DropZoneInput, IconBox } from "@/components/common";
-import { EditIcon } from "@/components/icons";
-import { Form } from "@/components/ui";
-import { cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { Main } from "@/pages/dashboard/-components/Main";
-import { useRegisterFormStore } from "@/store/zustand/registerFormStore";
-
-export const PersonalInfoSchema = z.object({
-	email: z.email({ error: "Please enter a valid email!" }),
-	logo: z.file({ error: "Please upload a logo!" }),
-	name: z.string().min(1, { error: "Name is required" }).max(50, { error: "Name is too long" }),
-});
 
 function PersonalInfoPage() {
 	const {
@@ -25,7 +19,7 @@ function PersonalInfoPage() {
 	const methods = useForm({
 		defaultValues: formStepData,
 		mode: "onChange",
-		resolver: zodResolver(PersonalInfoSchema),
+		resolver: zodResolver(PersonalInfoBodySchema),
 	});
 
 	const navigate = useNavigate();
@@ -55,30 +49,30 @@ function PersonalInfoPage() {
 								<DropZoneInput
 									onChange={field.onChange}
 									allowedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
-									withDefaultFilePicker={false}
 									onFilesChange={(ctx) => {
-										const preview = ctx.filesWithPreview[0]?.preview;
+										const preview = ctx.fileStateArray[0]?.preview;
 
 										preview && useRegisterFormStore.setState({ logoPreview: preview });
 									}}
-									classNames={{ base: "w-fit" }}
+									disableFilePickerOpenOnAreaClick={true}
+									classNames={{
+										container: `size-[110px] rounded-full border-none bg-[hsl(0,0%,85%)] bg-cover
+										p-0 md:mt-8 md:size-[200px]`,
+									}}
+									extraProps={{
+										container: {
+											style: { backgroundImage: logoPreview ? `url(${logoPreview})` : "" },
+										},
+									}}
 								>
-									{({ dropZoneActions }) => (
-										<span
-											className="relative mt-4 block size-[110px] rounded-full
-												bg-[hsl(0,0%,85%)] bg-cover md:mt-8 md:size-[200px]"
-											style={{ backgroundImage: logoPreview ? `url(${logoPreview})` : "" }}
-										>
-											<button type="button" onClick={dropZoneActions.openFilePicker}>
-												<EditIcon
-													className={cnMerge(
-														"absolute right-3 bottom-2 size-[18px] md:size-[40px]",
-														logoPreview && "[&_path]:stroke-school-blue"
-													)}
-												/>
-											</button>
-										</span>
-									)}
+									<DropZone.Trigger>
+										<EditIcon
+											className={cnMerge(
+												"absolute right-3 bottom-2 size-[18px] md:size-[40px]",
+												logoPreview && "[&_path]:stroke-school-blue"
+											)}
+										/>
+									</DropZone.Trigger>
 								</DropZoneInput>
 							)}
 						/>

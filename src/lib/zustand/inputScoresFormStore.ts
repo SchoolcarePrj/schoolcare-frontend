@@ -1,10 +1,11 @@
 /* eslint-disable perfectionist/sort-object-types */
-import type { InputScoresResponse } from "@/lib/api/callBackendApi";
-import { type StateCreator, create } from "zustand";
+
+import { create, type StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
+import type { InputScoresResponseData } from "@/lib/api/callBackendApi";
 
 type InputScoresFormStore = {
-	responseData: InputScoresResponse;
+	responseData: InputScoresResponseData;
 	actions: {
 		resetFormStore: () => void;
 	};

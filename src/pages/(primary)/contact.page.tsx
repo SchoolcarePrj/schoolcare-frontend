@@ -3,7 +3,7 @@ import AiImage from "../../assets/images/AiImage.png";
 
 function ContactUs() {
 	return (
-		<div className="flex flex-col md:flex-row md:gap-7 lg:gap-36">
+		<div className="flex flex-col gap-7 md:flex-row lg:gap-36">
 			<div className="md:w-[45%]">
 				<img src={AiImage} alt="" />
 
@@ -32,9 +32,9 @@ function ContactUs() {
 					</div>
 
 					<p className="sm:hidden md:block">Follow Us on Social Media</p>
-					<div className="mt-2 flex sm:hidden md:block">
+					<div className="mt-2 flex text-[24px] sm:hidden md:block">
 						<IconBox icon="ri-facebook-circle-fill" />
-						<IconBox icon="ri-twitter-x-fill" className="mx-4 text-[24px]" />
+						<IconBox icon="ri-twitter-x-fill" />
 						<IconBox icon="ri-linkedin-box-fill" />
 						<IconBox icon="ri-instagram-fill" />
 					</div>
