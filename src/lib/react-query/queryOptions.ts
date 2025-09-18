@@ -60,7 +60,8 @@ export const studentsByClassQuery = (studentClass: string) => {
 				query: { class: studentClass },
 			});
 		},
-		queryKey: ["students", "school", { class: studentClass }],
+		// eslint-disable-next-line tanstack-query/exhaustive-deps
+		queryKey: ["students", "school", { class: studentClass.split(" ").join("") }],
 		staleTime: Infinity,
 	});
 };

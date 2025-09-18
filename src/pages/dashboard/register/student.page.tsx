@@ -5,7 +5,11 @@ import { z } from "zod";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
-import { allClassesInSchoolQuery, allStudentsInSchoolQuery } from "@/lib/react-query/queryOptions";
+import {
+	allClassesInSchoolQuery,
+	allStudentsInSchoolQuery,
+	studentsByClassQuery,
+} from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { Main } from "../-components/Main";
 
@@ -43,16 +47,17 @@ function RegisterStudentPage() {
 			},
 			meta: { toast: { success: true } },
 
-			onResponseError: (ctx) => {
-				methods.setError("root.serverError", {
-					message: ctx.error.errorData.errors?.message,
-				});
-			},
+			// onResponseError: (ctx) => {
+			// 	methods.setError("root.serverError", {
+			// 		message: ctx.error.errorData.errors?.message,
+			// 	});
+			// },
 
 			onSuccess: () => {
 				methods.reset();
 
 				void queryClient.invalidateQueries(allStudentsInSchoolQuery());
+				queryClient.removeQueries(studentsByClassQuery(data.school_class));
 			},
 		});
 	});

@@ -44,7 +44,6 @@ const StudentDataSchema = z.object({
 
 const SchoolClassDataSchema = z.object({
 	grade: z.string(),
-	id: z.number(),
 	school_class: z.string(),
 });
 
@@ -146,10 +145,6 @@ export const apiSchema = defineSchema(
 			data: withBaseSuccessResponse(SchoolClassDataSchema),
 		},
 
-		"@get/school/get": {
-			data: withBaseSuccessResponse(SchoolDetailsDataSchema),
-		},
-
 		"@get/school/results": {
 			data: withBaseSuccessResponse(z.array(ResultDataSchema)),
 		},
@@ -165,7 +160,9 @@ export const apiSchema = defineSchema(
 		},
 
 		"@get/school/students": {
-			data: withBaseSuccessResponse(z.array(StudentDataSchema)),
+			data: withBaseSuccessResponse(
+				z.array(StudentDataSchema.pick({ gender: true, name: true, school_class: true }))
+			),
 		},
 
 		"@get/school/students/:id": {
@@ -173,7 +170,13 @@ export const apiSchema = defineSchema(
 		},
 
 		"@get/school/students/class-students": {
-			data: withBaseSuccessResponse(z.object({ students: z.array(StudentDataSchema) })),
+			data: withBaseSuccessResponse(
+				z.object({
+					students: z.array(
+						StudentDataSchema.pick({ gender: true, name: true, registration_number: true })
+					),
+				})
+			),
 			query: z.object({ class: z.string() }),
 		},
 
@@ -182,7 +185,9 @@ export const apiSchema = defineSchema(
 		},
 
 		"@get/school/students/students-by-reg-number": {
-			data: withBaseSuccessResponse(StudentDataSchema),
+			data: withBaseSuccessResponse(
+				StudentDataSchema.pick({ gender: true, name: true, registration_number: true })
+			),
 			query: z.object({ reg: z.string() }),
 		},
 
@@ -262,7 +267,11 @@ export const apiSchema = defineSchema(
 
 		"@post/school/classes": {
 			body: z.object({
-				grade: z.string().min(1, "Grade is required").max(1, "Grade must be a single character"),
+				grade: z
+					.string()
+					.min(1, "Grade is required")
+					.max(1, "Grade must be a single character")
+					.regex(/^[A-Za-z]$/, "Grade must be an alphabet"),
 				school_class: z.string().min(1, "School class is required"),
 			}),
 			data: withBaseSuccessResponse(SchoolClassDataSchema),
@@ -306,12 +315,14 @@ export const apiSchema = defineSchema(
 				name: z.string().min(1, "Name is required"),
 				school_class: z.string().min(1, "Please choose the student's class"),
 			}),
-			data: withBaseSuccessResponse(StudentDataSchema),
+			data: withBaseSuccessResponse(
+				StudentDataSchema.pick({ gender: true, name: true, school_class: true })
+			),
 		},
 
 		"@post/school/subjects": {
 			body: z.object({ subject: z.string().min(1, "Subject is required") }),
-			data: withBaseSuccessResponse(z.array(z.object({ subject: z.string() }))),
+			data: withBaseSuccessResponse(z.object({ subject: z.string() })),
 		},
 
 		"@post/token/refresh": {

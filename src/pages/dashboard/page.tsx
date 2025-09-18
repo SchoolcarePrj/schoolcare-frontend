@@ -1,6 +1,6 @@
 import NumberFlow from "@number-flow/react";
 import { useQuery } from "@tanstack/react-query";
-import { getElementList } from "@/components/common";
+import { ForWithWrapper } from "@/components/common";
 import { BookIcon, SchoolIcon, StudentIcon } from "@/components/icons";
 import { Card } from "@/components/ui";
 import {
@@ -9,7 +9,7 @@ import {
 	allSubjectsInSchoolQuery,
 	studentsGenderQuery,
 } from "@/lib/react-query/queryOptions";
-import GenderRatioChart from "./-components/GenderRatioChart";
+import { GenderRatioChart } from "./-components/GenderRatioChart";
 import { Main } from "./-components/Main";
 
 function DashboardPage() {
@@ -20,8 +20,6 @@ function DashboardPage() {
 	const allClassesInSchoolQueryResult = useQuery(allClassesInSchoolQuery());
 
 	const studentsGenderQueryResult = useQuery(studentsGenderQuery());
-
-	const [InfoCardList] = getElementList();
 
 	const infoCardArray = [
 		{
@@ -43,7 +41,7 @@ function DashboardPage() {
 
 	return (
 		<Main className="flex w-full flex-col gap-10 py-4 md:gap-6">
-			<InfoCardList
+			<ForWithWrapper
 				as="section"
 				className="flex gap-5 md:gap-10"
 				each={infoCardArray}
@@ -53,7 +51,7 @@ function DashboardPage() {
 						className="w-[calc(100%/3)] rounded-[8px] border-2 border-school-gray-lighter bg-white
 							py-[20px_9px] md:rounded-[30px] md:py-[30px_32px]"
 					>
-						<Card.Header className="flex flex-col items-center">
+						<Card.Content className="flex flex-col items-center px-0">
 							<span
 								className="flex size-6 items-center justify-center rounded-full border-[3px]
 									border-school-blue md:size-[70px]"
@@ -61,16 +59,20 @@ function DashboardPage() {
 								{item.icon}
 							</span>
 
-							<hr className="mt-2 h-2 w-full bg-school-blue md:hidden" />
+							<hr className="my-2 h-2 w-full bg-school-blue md:hidden" />
 
-							<Card.Title className="mt-1.5 text-[10px] font-medium md:mt-3.5 md:text-[12px]">
+							<Card.Title
+								className="px-3 text-center text-[10px] font-medium md:mt-3.5 md:text-[12px]"
+							>
 								{item.title}
 							</Card.Title>
 
-							<Card.Description className="text-[13px] font-bold text-black md:mt-1 md:text-[24px]">
+							<Card.Description
+								className="px-3 text-[13px] font-bold text-black md:mt-1 md:text-[24px]"
+							>
 								<NumberFlow value={item.description} />
 							</Card.Description>
-						</Card.Header>
+						</Card.Content>
 
 						<hr className="mt-3 h-4 w-full bg-school-blue max-md:hidden" />
 					</Card.Root>

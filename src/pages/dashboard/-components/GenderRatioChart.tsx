@@ -91,4 +91,4 @@ function GenderRatioChart(props: { genderResponseData: StudentGenderRatioData | 
 		</Card.Root>
 	);
 }
-export default GenderRatioChart;
+export { GenderRatioChart };

@@ -1,4 +1,5 @@
 import { createFetchClient, defineBaseConfig } from "@zayne-labs/callapi";
+import { loggerPlugin } from "@zayne-labs/callapi-plugins";
 import { apiSchema } from "./apiSchema";
 import { type AuthPluginMeta, authPlugin, type ToastPluginMeta, toastPlugin } from "./plugins";
 import { isAuthTokenRelatedError } from "./plugins/utils";
@@ -27,7 +28,12 @@ const sharedBaseCallApiConfig = defineBaseConfig((instanceConfig) => ({
 	dedupeCacheScope: "global",
 	dedupeCacheScopeKey: instanceConfig.options.baseURL,
 
-	plugins: [authPlugin(), toastPlugin()],
+	plugins: [
+		authPlugin(),
+		toastPlugin(),
+		loggerPlugin({ enabled: { onValidationError: true }, verbose: true }),
+	],
+
 	schema: apiSchema,
 
 	skipAutoMergeFor: "options",

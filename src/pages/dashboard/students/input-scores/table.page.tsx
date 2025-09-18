@@ -8,17 +8,17 @@ import { Main } from "../../-components/Main";
 
 const columns = defineEnum(["Name", "Reg. No", "First CA", "Second CA", "Exam", "Total", "Grade"]);
 
-const csvConfig = mkConfig({
-	columnHeaders: columns,
-	filename: "students-results",
-	quoteStrings: false,
-	title: "Students Result Sheet",
-	useBom: false,
-});
-
 function TablePage() {
 	const navigate = useNavigate();
-	const { students } = useInputScoreFormStore((state) => state.responseData);
+	const { class_session_term, students } = useInputScoreFormStore((state) => state.responseData);
+
+	const csvConfig = mkConfig({
+		columnHeaders: columns,
+		filename: `students-results-${class_session_term.session}-${class_session_term.term}-${class_session_term.school_class}`,
+		quoteStrings: false,
+		title: "Students Result Sheet",
+		useBom: false,
+	});
 
 	if (students.length === 0) {
 		toast.error("No students found");

@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { getElementList, IconBox, Show } from "@/components/common";
 import { Command, Form, Popover } from "@/components/ui";
-import { callBackendApi, apiSchema } from "@/lib/api/callBackendApi";
+import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { allClassesInSchoolQuery, allClassesQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { Main } from "../-components/Main";
@@ -31,11 +31,11 @@ function RegisterClassPage() {
 			body: data,
 			meta: { toast: { success: true } },
 
-			onResponseError: (ctx) => {
-				methods.setError("root.serverError", {
-					message: ctx.error.errorData.errors?.message,
-				});
-			},
+			// onResponseError: (ctx) => {
+			// 	methods.setError("root.serverError", {
+			// 		message: ctx.error.errorData.errors?.message,
+			// 	});
+			// },
 
 			onSuccess: () => {
 				methods.resetField("grade");

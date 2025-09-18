@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { DropZoneInput, IconBox } from "@/components/common";
 import { EditIcon } from "@/components/icons";
 import { DropZone, Form } from "@/components/ui";
@@ -5,9 +8,6 @@ import { PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
 import { cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
 import { Main } from "@/pages/dashboard/-components/Main";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 
 function PersonalInfoPage() {
 	const {
@@ -55,24 +55,27 @@ function PersonalInfoPage() {
 										preview && useRegisterFormStore.setState({ logoPreview: preview });
 									}}
 									disableFilePickerOpenOnAreaClick={true}
-									classNames={{
-										container: `size-[110px] rounded-full border-none bg-[hsl(0,0%,85%)] bg-cover
-										p-0 md:mt-8 md:size-[200px]`,
-									}}
-									extraProps={{
-										container: {
-											style: { backgroundImage: logoPreview ? `url(${logoPreview})` : "" },
-										},
-									}}
 								>
-									<DropZone.Trigger>
-										<EditIcon
-											className={cnMerge(
-												"absolute right-3 bottom-2 size-[18px] md:size-[40px]",
-												logoPreview && "[&_path]:stroke-school-blue"
-											)}
-										/>
-									</DropZone.Trigger>
+									<DropZone.Area
+										classNames={{
+											container: `size-[110px] rounded-full border-none bg-[hsl(0,0%,85%)]
+											bg-cover p-0 md:mt-8 md:size-[200px]`,
+										}}
+										extraProps={{
+											container: {
+												style: { backgroundImage: logoPreview ? `url(${logoPreview})` : "" },
+											},
+										}}
+									>
+										<DropZone.Trigger>
+											<EditIcon
+												className={cnMerge(
+													"absolute right-3 bottom-2 size-[18px] md:size-[40px]",
+													logoPreview && "[&_path]:stroke-school-blue"
+												)}
+											/>
+										</DropZone.Trigger>
+									</DropZone.Area>
 								</DropZoneInput>
 							)}
 						/>

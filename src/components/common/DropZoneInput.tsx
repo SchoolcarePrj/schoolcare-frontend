@@ -5,14 +5,12 @@ import { cnMerge } from "@/lib/utils/cn";
 import { DropZone } from "../ui/drop-zone";
 import { IconBox } from "./IconBox";
 
-type DropZoneInputProps = InferProps<typeof DropZone.Area>
-	& InferProps<typeof DropZone.Root> & {
-		onChange: (file: File) => void;
-	};
+type DropZoneInputProps = InferProps<typeof DropZone.Root> & {
+	onChange: (file: File) => void;
+};
 
 export function DropZoneInput(props: DropZoneInputProps) {
-	const { children, onChange, onFilesChange, onValidationError, onValidationSuccess, ...restOfProps } =
-		props;
+	const { onChange, onFilesChange, onValidationError, onValidationSuccess, ...restOfProps } = props;
 
 	const handleFileUpload: DropZoneInputProps["onFilesChange"] = (ctx) => {
 		onFilesChange?.(ctx);
@@ -34,9 +32,7 @@ export function DropZoneInput(props: DropZoneInputProps) {
 				void onValidationError?.(ctx);
 			}}
 			{...restOfProps}
-		>
-			<DropZone.Area {...restOfProps}>{children}</DropZone.Area>
-		</DropZone.Root>
+		/>
 	);
 }
 

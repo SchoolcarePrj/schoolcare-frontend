@@ -1,11 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import { For, IconBox, Show } from "@/components/common";
 import { Command, Form, Popover } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { allSubjectsInSchoolQuery, allSubjectsQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
 import { Main } from "../-components/Main";
 
 const RegisterSubjectSchema = apiSchema.routes["@post/school/subjects"].body;
@@ -28,11 +28,11 @@ function RegisterSubjectPage() {
 			body: data,
 			meta: { toast: { success: true } },
 
-			onResponseError: (ctx) => {
-				methods.setError("root.serverError", {
-					message: ctx.error.errorData.errors?.message,
-				});
-			},
+			// onResponseError: (ctx) => {
+			// 	methods.setError("root.serverError", {
+			// 		message: ctx.error.errorData.errors?.message,
+			// 	});
+			// },
 
 			onSuccess: () => {
 				methods.reset();
