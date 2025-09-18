@@ -26,7 +26,7 @@
 		"@zayne-labs/toolkit-core": "^0.11.7",
 		"@zayne-labs/toolkit-react": "^0.11.7",
 		"@zayne-labs/toolkit-type-helpers": "^0.11.7",
-		"@zayne-labs/ui-react": "^0.10.16",
+		"@zayne-labs/ui-react": "^0.10.17",
 		"aos": "3.0.0-beta.6",
 		"clsx": "^2.1.1",
 		"cmdk": "^1.1.1",
