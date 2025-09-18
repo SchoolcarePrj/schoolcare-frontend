@@ -28,7 +28,10 @@ function LoginPage() {
 	const onSubmit = methods.handleSubmit(async (data) => {
 		await callBackendApi("@post/login", {
 			body: data,
-			meta: { toast: { success: true } },
+			meta: {
+				auth: { skipHeaderAddition: true },
+				toast: { success: true },
+			},
 
 			onSuccess: (ctx) => {
 				authTokenObject.setTokens({

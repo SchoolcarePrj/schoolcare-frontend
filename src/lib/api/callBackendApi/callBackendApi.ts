@@ -44,7 +44,6 @@ const sharedBaseCallApiConfig = defineBaseConfig((instanceConfig) => ({
 		...instanceConfig.options.meta,
 
 		auth: {
-			routesToExemptFromHeaderAddition: ["/auth/**"],
 			routesToIncludeForRedirectionOnAuthError: ["/dashboard/**"],
 			...instanceConfig.options.meta?.auth,
 		},

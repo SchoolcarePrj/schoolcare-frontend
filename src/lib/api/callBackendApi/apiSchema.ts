@@ -237,7 +237,10 @@ export const apiSchema = defineSchema(
 		},
 
 		"@post/login": {
-			body: z.object({ email: z.email(), password: z.string() }),
+			body: z.object({
+				email: z.email("Please enter a valid email!"),
+				password: z.string().min(1, "Password is required"),
+			}),
 			data: withBaseSuccessResponse(
 				z.object({
 					access: z.string(),

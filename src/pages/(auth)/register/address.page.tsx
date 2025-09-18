@@ -1,3 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import { z } from "zod";
 import { For, IconBox, Show } from "@/components/common";
 import { Command, Form, Popover, Select } from "@/components/ui";
 import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
@@ -5,11 +10,6 @@ import { nigeriaStatesAndLGA } from "@/lib/api/nigeria";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
 import { Main } from "@/pages/dashboard/-components/Main";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import { z } from "zod";
 
 function AddressPage() {
 	const {
@@ -50,7 +50,10 @@ function AddressPage() {
 				...formStepData,
 				...stepTwoData,
 			},
-			meta: { toast: { success: true } },
+			meta: {
+				auth: { skipHeaderAddition: true },
+				toast: { success: true },
+			},
 
 			onSuccess: () => {
 				resetFormStore();
