@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Outlet } from "react-router";
 import { AuthLoadingSpinner } from "@/components/common";
-import { sessionQuery } from "@/store/react-query/queryFactory";
+import { sessionQuery } from "@/lib/react-query/queryOptions";
 
 function ProtectionLayout() {
 	const { data } = useQuery(sessionQuery());

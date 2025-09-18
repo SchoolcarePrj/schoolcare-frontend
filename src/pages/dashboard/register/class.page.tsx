@@ -1,19 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { getElementList, IconBox, Show } from "@/components/common";
 import { Command, Form, Popover } from "@/components/ui";
-import { callBackendApi } from "@/lib/api/callBackendApi";
+import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
+import { allClassesInSchoolQuery, allClassesQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { useQueryClientStore } from "@/store/react-query/queryClientStore";
-import { allClassesInSchoolQuery, allClassesQuery } from "@/store/react-query/queryFactory";
 import { Main } from "../-components/Main";
 
-const RegisterClassSchema = z.object({
-	grade: z.string().min(1, "Grade is required").max(1, "Grade must be a single character"),
-	school_class: z.string().min(1, "School class is required"),
-});
+const RegisterClassSchema = apiSchema.routes["@post/school/classes"].body;
 
 function RegisterClassPage() {
 	const methods = useForm({
@@ -27,26 +22,25 @@ function RegisterClassPage() {
 
 	const allClassesQueryResult = useQuery(allClassesQuery());
 
+	const queryClient = useQueryClient();
+
 	const [ClassList] = getElementList("base");
 
 	const onSubmit = methods.handleSubmit(async (data) => {
-		await callBackendApi("/school/classes", {
+		await callBackendApi("@post/school/classes", {
 			body: data,
 			meta: { toast: { success: true } },
-			method: "POST",
 
-			onResponseError: (ctx) => {
-				methods.setError("root.serverError", {
-					message: ctx.error.errorData.errors?.message,
-				});
-			},
+			// onResponseError: (ctx) => {
+			// 	methods.setError("root.serverError", {
+			// 		message: ctx.error.errorData.errors?.message,
+			// 	});
+			// },
 
 			onSuccess: () => {
 				methods.resetField("grade");
 
-				void useQueryClientStore
-					.getState()
-					.queryClient.invalidateQueries({ queryKey: allClassesInSchoolQuery().queryKey });
+				void queryClient.invalidateQueries(allClassesInSchoolQuery());
 			},
 		});
 	});
@@ -81,7 +75,7 @@ function RegisterClassPage() {
 										)}
 									>
 										<Show.Root when={field.value} fallback="Select class">
-											{allClassesQueryResult.data?.data?.find(
+											{allClassesQueryResult.data?.data.find(
 												(school_class) => school_class === field.value
 											)}
 										</Show.Root>
@@ -102,7 +96,7 @@ function RegisterClassPage() {
 												<Command.Group>
 													<ClassList
 														each={allClassesQueryResult.data?.data ?? []}
-														render={(item) => (
+														renderItem={(item) => (
 															<Command.Item
 																key={item}
 																value={item}

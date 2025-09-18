@@ -1,14 +1,10 @@
-import { type CallApiParameters, createFetchClient, type ResultModeUnion } from "@zayne-labs/callapi";
-import type { UnmaskType } from "@zayne-labs/toolkit-type-helpers";
-import {
-	type AuthHeaderInclusionPluginMeta,
-	authHeaderInclusionPlugin,
-	isAuthTokenRelatedError,
-	type ToastPluginMeta,
-	toastPlugin,
-} from "./plugins";
+import { createFetchClient, defineBaseConfig } from "@zayne-labs/callapi";
+import { loggerPlugin } from "@zayne-labs/callapi-plugins";
+import { apiSchema } from "./apiSchema";
+import { type AuthPluginMeta, authPlugin, type ToastPluginMeta, toastPlugin } from "./plugins";
+import { isAuthTokenRelatedError } from "./plugins/utils";
 
-type GlobalMeta = AuthHeaderInclusionPluginMeta & ToastPluginMeta;
+type GlobalMeta = AuthPluginMeta & ToastPluginMeta;
 
 declare module "@zayne-labs/callapi" {
 	// eslint-disable-next-line ts-eslint/consistent-type-definitions
@@ -17,63 +13,62 @@ declare module "@zayne-labs/callapi" {
 	}
 }
 
-const BACKEND_HOST = "https://api.schoolcare.com.ng";
-// const BACKEND_HOST = import.meta.env.MODE === "development" ? "" : "https://api.schoolcare.com.ng";
+const REMOTE_BACKEND_HOST = "https://api.schoolcare.com.ng";
 
-const BASE_API_URL = "api";
+// const BACKEND_HOST =
+// 	process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : REMOTE_BACKEND_HOST;
 
-export const sharedFetchClient = createFetchClient((ctx) => ({
-	baseURL: `${BACKEND_HOST}/${BASE_API_URL}`,
+const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
-	plugins: [authHeaderInclusionPlugin(), toastPlugin()],
+const BASE_API_URL = `${BACKEND_HOST}/api`;
+
+const sharedBaseCallApiConfig = defineBaseConfig((instanceConfig) => ({
+	baseURL: BASE_API_URL,
+
+	dedupeCacheScope: "global",
+	dedupeCacheScopeKey: instanceConfig.options.baseURL,
+
+	plugins: [
+		authPlugin(),
+		toastPlugin(),
+		loggerPlugin({ enabled: { onValidationError: true }, verbose: true }),
+	],
+
+	schema: apiSchema,
 
 	skipAutoMergeFor: "options",
 
-	...(ctx.options as object),
+	...(instanceConfig.options as object),
 
 	meta: {
-		...ctx.options.meta,
+		...instanceConfig.options.meta,
+
+		auth: {
+			routesToIncludeForRedirectionOnAuthError: ["/dashboard/**"],
+			...instanceConfig.options.meta?.auth,
+		},
+
 		toast: {
+			endpointsToSkip: {
+				errorAndSuccess: ["/token/refresh"],
+				success: ["/check-user-session"],
+			},
 			error: true,
 			errorsToSkip: ["AbortError"],
 			errorsToSkipCondition: (error) => isAuthTokenRelatedError(error),
-			...ctx.options.meta?.toast,
+			success: false,
+			...instanceConfig.options.meta?.toast,
 		},
-	},
+	} satisfies GlobalMeta,
 }));
 
-export type ApiSuccessResponse<TData = unknown> = UnmaskType<{
-	data: TData | null;
-	message: string;
-	status: "success";
-}>;
+export const callBackendApi = createFetchClient(sharedBaseCallApiConfig);
 
-export type ApiErrorResponse<TErrorData = unknown> = UnmaskType<{
-	errors?: Record<string, string> & TErrorData & { message?: string };
-	message: string;
-	status: "error";
-}>;
-
-export const callBackendApi = <
-	TData = unknown,
-	TError = unknown,
-	TResultMode extends ResultModeUnion = ResultModeUnion,
->(
-	...args: CallApiParameters<ApiSuccessResponse<TData>, ApiErrorResponse<TError>, TResultMode>
-) => {
-	const [initUrl, config] = args;
-
-	return sharedFetchClient(initUrl, config);
-};
-
-export const callBackendApiForQuery = <TData = unknown>(
-	...args: CallApiParameters<ApiSuccessResponse<TData>, false | undefined>
-) => {
-	const [initUrl, config] = args;
-
-	return sharedFetchClient(initUrl, {
-		resultMode: "onlySuccessWithException",
-		throwOnError: true,
-		...config,
-	});
-};
+export const callBackendApiForQuery = createFetchClient(
+	(instanceConfig) =>
+		({
+			...sharedBaseCallApiConfig(instanceConfig),
+			resultMode: "onlyData",
+			throwOnError: true,
+		}) satisfies ReturnType<typeof defineBaseConfig>
+);

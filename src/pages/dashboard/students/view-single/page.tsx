@@ -1,13 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { z } from "zod";
 import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
+import { studentsByIDQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { useQueryClientStore } from "@/store/react-query/queryClientStore";
-import { studentsByIDQuery } from "@/store/react-query/queryFactory";
-import { useViewStudentFormStore } from "@/store/zustand/viewStudentFormStore";
+import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
 import { Main } from "../../-components/Main";
 
 const ViewSingleStudentsSchema = z.object({
@@ -24,12 +24,12 @@ function ViewSingleStudent() {
 		resolver: zodResolver(ViewSingleStudentsSchema),
 	});
 
+	const queryClient = useQueryClient();
+
 	const onSubmit = methods.handleSubmit(async (data) => {
 		useViewStudentFormStore.setState({ studentId: data.reg_number });
 
-		await useQueryClientStore
-			.getState()
-			.queryClient.prefetchQuery(studentsByIDQuery({ studentId: data.reg_number }));
+		await queryClient.prefetchQuery(studentsByIDQuery({ studentId: data.reg_number }));
 
 		void navigate("./table");
 	});

@@ -3,16 +3,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
-import { callBackendApi } from "@/lib/api/callBackendApi";
+import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
 import { Main } from "@/pages/dashboard/-components/Main";
 
-const AdminRegisterSchema = z.object({
-	email: z.email("Please enter a valid email!"),
-	password: z.string().min(1, "Password is required").min(8, "Password must be at least 8 characters"),
-	school: z.string().min(1, "School name is required"),
-});
+const AdminRegisterSchema = apiSchema.routes["@post/school/admin/register"].body;
 
 function AdminRegisterPage() {
 	const navigate = useNavigate();
@@ -27,9 +22,8 @@ function AdminRegisterPage() {
 	});
 
 	const onSubmit = methods.handleSubmit(async (data) => {
-		await callBackendApi("/school/admin/register", {
+		await callBackendApi("@post/school/admin/register", {
 			body: data,
-			method: "POST",
 
 			onSuccess: () => {
 				void navigate("/login");

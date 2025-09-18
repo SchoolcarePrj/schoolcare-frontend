@@ -2,45 +2,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import { getElementList, IconBox, Show } from "@/components/common";
+import { z } from "zod";
+import { For, IconBox, Show } from "@/components/common";
 import { Command, Form, Popover, Select } from "@/components/ui";
-import { callBackendApi } from "@/lib/api/callBackendApi";
+import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
 import { nigeriaStatesAndLGA } from "@/lib/api/nigeria";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
+import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
 import { Main } from "@/pages/dashboard/-components/Main";
-import { useRegisterFormStore } from "@/store/zustand/registerFormStore";
-import { PersonalInfoSchema } from "./personal-info.page";
-
-const AddressSchema = z.object({
-	address: z.string().min(1, "Address is required"),
-	local_govt: z.string().min(1, "LGA is required"),
-	nationality: z.string().min(1, "Nationality is required"),
-	postal_code: z
-		.string()
-		.min(1, "Postal code is required")
-		.min(6, "Postal code must be at least 6 digits"),
-	state: z.string().min(1, "State is required"),
-});
-
-const handlePreviousPageErrors = (requestBody: Record<string, unknown>) => {
-	const personalInfoResult = PersonalInfoSchema.safeParse(requestBody);
-
-	if (personalInfoResult.success) {
-		return true;
-	}
-
-	const fieldErrors = z.flattenError(personalInfoResult.error).fieldErrors;
-
-	for (const path of Object.keys(fieldErrors) as Array<keyof typeof fieldErrors>) {
-		toast.error(
-			`Your school ${path} is missing. Please return to the previous step and ${path === "logo" ? "upload" : "fill"} it`,
-			{ duration: 4000 }
-		);
-	}
-
-	return false;
-};
 
 function AddressPage() {
 	const {
@@ -51,7 +20,7 @@ function AddressPage() {
 	const methods = useForm({
 		defaultValues: formStepData,
 		mode: "onChange",
-		resolver: zodResolver(AddressSchema),
+		resolver: zodResolver(AddressBodySchema),
 	});
 
 	const navigate = useNavigate();
@@ -59,24 +28,32 @@ function AddressPage() {
 	const onSubmit = methods.handleSubmit(async (stepTwoData) => {
 		updateFormData(stepTwoData);
 
-		const requestBody = { ...formStepData, ...stepTwoData };
+		const result = PersonalInfoBodySchema.safeParse(formStepData);
 
-		const isSuccess = handlePreviousPageErrors(requestBody);
+		if (!result.success) {
+			const fieldErrors = z.flattenError(result.error).fieldErrors;
 
-		if (!isSuccess) return;
+			for (const path of Object.keys(fieldErrors)) {
+				toast.error(
+					`Your school ${path} is missing. Please return to the previous step and ${path === "logo" ? "upload" : "fill"} it`,
+					{ duration: 3000 }
+				);
+			}
 
-		const formData = new FormData();
+			void navigate("/register/personal-info");
 
-		for (const [key, value] of Object.entries(requestBody)) {
-			formData.set(key, value);
+			return;
 		}
 
-		await callBackendApi("/school/register", {
-			body: formData,
+		await callBackendApi("@post/school/register", {
+			body: {
+				...formStepData,
+				...stepTwoData,
+			},
 			meta: {
+				auth: { skipHeaderAddition: true },
 				toast: { success: true },
 			},
-			method: "POST",
 
 			onSuccess: () => {
 				resetFormStore();
@@ -88,8 +65,6 @@ function AddressPage() {
 	const state = methods.watch("state");
 
 	const LGAResult = nigeriaStatesAndLGA.find((item) => item.state === state)?.lgas ?? [];
-
-	const [StateList] = getElementList("base");
 
 	return (
 		<Main className="flex flex-col gap-8">
@@ -192,9 +167,9 @@ function AddressPage() {
 												<Command.Empty>No State found.</Command.Empty>
 
 												<Command.Group>
-													<StateList
+													<For
 														each={nigeriaStatesAndLGA}
-														render={(item) => (
+														renderItem={(item) => (
 															<Command.Item
 																key={item.state}
 																value={item.state}
@@ -261,9 +236,9 @@ function AddressPage() {
 													<Command.Empty>No LGA found.</Command.Empty>
 
 													<Command.Group>
-														<StateList
+														<For
 															each={LGAResult}
-															render={(item) => (
+															renderItem={(item) => (
 																<Command.Item
 																	key={item}
 																	value={item}

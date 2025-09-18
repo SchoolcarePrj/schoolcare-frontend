@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { lockScroll } from "@zayne-labs/toolkit-core";
 import { useToggle } from "@zayne-labs/toolkit-react";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { ForWithWrapper, getElementList, IconBox, Image, Show } from "@/components/common";
 import { CollapsibleAnimated } from "@/components/ui";
+import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { sessionQuery } from "@/store/react-query/queryFactory";
 import { dashboardLinkItems } from "./constants";
 
 export function NavBar() {
@@ -62,6 +62,7 @@ type MobileNavProps = {
 
 function DesktopNavContent(props: { className?: string }) {
 	const { className } = props;
+
 	const sessionQueryResult = useQuery(sessionQuery());
 
 	return (
@@ -69,15 +70,13 @@ function DesktopNavContent(props: { className?: string }) {
 			<header>
 				<h1 className="text-[32px] font-semibold">Hi, Admin!</h1>
 
-				<p className="text-[20px] font-medium">
-					Welcome back, {sessionQueryResult.data?.data?.school}
-				</p>
+				<p className="text-[20px] font-medium">Welcome back, {sessionQueryResult.data?.data.school}</p>
 			</header>
 
 			<div className="flex items-center gap-6">
 				<IconBox icon="material-symbols:notifications-outline-rounded" className="size-8" />
 
-				<Show.Root when={sessionQueryResult.data?.data?.logo}>
+				<Show.Root when={sessionQueryResult.data?.data.logo}>
 					{(logo) => (
 						<>
 							<Image src={logo} width={70} height={70} className="rounded-full" />
@@ -98,14 +97,14 @@ function MobileNavigation(props: MobileNavProps) {
 
 	const pathname = useLocation().pathname;
 
-	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	return (
 		<section
 			className={cnMerge(
 				`fixed inset-[0_auto_0_0] mt-[70px] scrollbar-hidden overflow-x-hidden bg-school-dark-blue pt-1
 				text-white`,
-				isNavShow ? "w-svw [transition:width_400ms_ease]" : "w-0 [transition:width_200ms_ease]",
+				isNavShow ? "w-svw [transition:width_450ms_ease]" : "w-0 [transition:width_250ms_ease]",
 				className
 			)}
 			onClick={(event) => {
@@ -118,7 +117,7 @@ function MobileNavigation(props: MobileNavProps) {
 				as="nav"
 				className="flex flex-col gap-5 px-5 pb-6 text-nowrap"
 				each={dashboardLinkItems}
-				render={(item) => (
+				renderItem={(item) => (
 					<Fragment key={item.label}>
 						{item.link === null && (
 							<CollapsibleAnimated.Root
@@ -140,7 +139,7 @@ function MobileNavigation(props: MobileNavProps) {
 								<ForWithWrapper
 									className="flex flex-col gap-5 group-data-[state=open]/collapsible:mt-3"
 									each={item.items}
-									render={(innerItem) => (
+									renderItem={(innerItem) => (
 										<CollapsibleAnimated.Content key={innerItem.label} asChild={true}>
 											<NavLink
 												data-active={innerItem.link === pathname}
@@ -167,11 +166,12 @@ function MobileNavigation(props: MobileNavProps) {
 								{item.label}
 							</NavLink>
 						)}
+
 						{isFunction(item.link) && (
 							<button
 								type="button"
 								className="flex h-[42px] items-center gap-3 pl-6"
-								onClick={item.link(navigate)}
+								onClick={item.link(queryClient)}
 							>
 								<IconBox icon={item.icon} className="size-5" />
 								{item.label}

@@ -1,9 +1,9 @@
-import { Table } from "@/components/ui";
-import { cnMerge } from "@/lib/utils/cn";
-import { studentsByClassQuery } from "@/store/react-query/queryFactory";
-import { useViewStudentFormStore } from "@/store/zustand/viewStudentFormStore";
 import { useQuery } from "@tanstack/react-query";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
+import { Table } from "@/components/ui";
+import { studentsByClassQuery } from "@/lib/react-query/queryOptions";
+import { cnMerge } from "@/lib/utils/cn";
+import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
 import { Main } from "../../-components/Main";
 
 const columns = defineEnum(["Name", "Gender", "Reg. No"]);
@@ -14,7 +14,7 @@ function TablePage() {
 	const studentsQueryResult = useQuery(studentsByClassQuery(studentClass));
 
 	const tableData =
-		studentsQueryResult.data?.data?.students.map((student) => ({
+		studentsQueryResult.data?.data.students.map((student) => ({
 			[columns[0]]: student.name,
 			[columns[1]]: student.gender,
 			[columns[2]]: student.registration_number,

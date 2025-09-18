@@ -45,7 +45,7 @@ function AccordionFaqs() {
 		<Accordion.Root type="single" collapsible={true} className="flex w-full flex-col gap-3">
 			<For
 				each={FAQs}
-				render={(faq) => (
+				renderItem={(faq) => (
 					<Accordion.Item
 						key={faq.question}
 						value={faq.question}

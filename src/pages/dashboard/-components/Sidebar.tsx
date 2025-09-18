@@ -1,6 +1,7 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { ForWithWrapper, getElementList, IconBox } from "@/components/common";
 import { CollapsibleAnimated, Drawer } from "@/components/ui";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
@@ -13,7 +14,7 @@ function Sidebar(props: { className?: string }) {
 
 	const pathname = useLocation().pathname;
 
-	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
 	return (
 		// NOTE - Using the trapFocus prop as a hack to prevent radix within vaul from trapping focus like a massive idiot🙂
@@ -46,7 +47,7 @@ function Sidebar(props: { className?: string }) {
 					<SideBarLinkList
 						each={dashboardLinkItems}
 						className="flex flex-col gap-6 bg-inherit pb-15 font-medium"
-						render={(item) => (
+						renderItem={(item) => (
 							<Fragment key={item.label}>
 								{item.link === null && (
 									<CollapsibleAnimated.Root
@@ -68,7 +69,7 @@ function Sidebar(props: { className?: string }) {
 										<ForWithWrapper
 											className="flex flex-col gap-5 group-data-[state=open]/collapsible:mt-3"
 											each={item.items}
-											render={(innerItem) => (
+											renderItem={(innerItem) => (
 												<CollapsibleAnimated.Content key={innerItem.label} asChild={true}>
 													<NavLink
 														data-active={innerItem.link === pathname}
@@ -99,7 +100,7 @@ function Sidebar(props: { className?: string }) {
 									<button
 										type="button"
 										className="flex h-[42px] items-center gap-3 pl-6"
-										onClick={item.link(navigate)}
+										onClick={item.link(queryClient)}
 									>
 										<IconBox icon={item.icon} className="size-5" />
 										{item.label}

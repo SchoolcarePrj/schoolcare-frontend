@@ -82,7 +82,7 @@ function DesktopNavigation(props: DesktopNavigationProps) {
 				as="nav"
 				className="flex w-fit gap-14 font-medium"
 				each={linkItems}
-				render={(linkItem) => (
+				renderItem={(linkItem) => (
 					<NavLink key={linkItem.title} to={linkItem.href}>
 						{linkItem.title}
 					</NavLink>
@@ -137,7 +137,7 @@ function MobileNavigation(props: MobileNavigationProps) {
 						as="nav"
 						className="flex flex-col gap-6 text-[14px] text-nowrap"
 						each={linkItems}
-						render={(linkItem) => (
+						renderItem={(linkItem) => (
 							<NavLink
 								key={linkItem.title}
 								to={linkItem.href}

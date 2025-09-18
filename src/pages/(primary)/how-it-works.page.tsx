@@ -59,7 +59,7 @@ function HowItWorks() {
 			<section className="grid gap-4 lg:grid-cols-3 lg:gap-8">
 				<For
 					each={steps}
-					render={(step) => (
+					renderItem={(step) => (
 						<article
 							key={step.title}
 							className="flex flex-col justify-center gap-1 rounded-[16px] border border-210-78-82

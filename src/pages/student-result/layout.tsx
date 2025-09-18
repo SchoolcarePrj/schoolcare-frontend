@@ -1,10 +1,10 @@
-import { Image, Show } from "@/components/common";
-import type { CheckResultResponse } from "@/lib/api/callBackendApi";
 import { useStorageState } from "@zayne-labs/toolkit-react";
 import { Outlet } from "react-router";
+import { Image, Show } from "@/components/common";
+import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
 
 function StudentResultLayout() {
-	const [data] = useStorageState<CheckResultResponse | null>("scratch-card-result", null);
+	const [data] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
 
 	const classSessionTerm = data?.class_session_term.split(" - ");
 

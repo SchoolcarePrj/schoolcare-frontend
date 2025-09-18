@@ -1,30 +1,21 @@
-import { IconBox, getElementList } from "@/components/common";
-import { Form, Select } from "@/components/ui";
-import { type CheckResultResponse, callBackendApi } from "@/lib/api/callBackendApi";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { schoolSessionQuery, schoolTermQuery } from "@/store/react-query/queryFactory";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useStorageState } from "@zayne-labs/toolkit-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { For, IconBox } from "@/components/common";
+import { Form, Select } from "@/components/ui";
+import { apiSchema, type CheckResultResponseData, callBackendApi } from "@/lib/api/callBackendApi";
+import { schoolSessionQuery, schoolTermQuery } from "@/lib/react-query/queryOptions";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
 
-const ResultCheckFormSchema = z.object({
-	class_grade: z.string().min(1, "Grade level is required"),
-	school_class: z.string().min(1, "Class is required"),
-	school_ID: z.string().min(1, "School ID is required"),
-	scratch_card_code: z.string().min(1, "Scratch card code is required"),
-	serial_number: z.string().min(1, "Serial number is required"),
-	session: z.string("Session is required"),
-	student_reg_number: z.string().min(1, "Reg number is required"),
-	term: z.string("Term is required"),
-});
-
-const [For] = getElementList("base");
+const ResultCheckFormSchema = apiSchema.routes["@post/check-result"].body;
 
 function ResultCheckForm() {
-	const { 1: storageActions } = useStorageState<CheckResultResponse | null>("scratch-card-result", null);
+	const { 1: storageActions } = useStorageState<CheckResultResponseData | null>(
+		"scratch-card-result",
+		null
+	);
 
 	const schoolSessionQueryResult = useQuery(schoolSessionQuery({ meta: { toast: { error: false } } }));
 	const schoolTermQueryResult = useQuery(schoolTermQuery({ meta: { toast: { error: false } } }));
@@ -46,15 +37,12 @@ function ResultCheckForm() {
 	const navigate = useNavigate();
 
 	const onSubmit = methods.handleSubmit(async (data) => {
-		await callBackendApi<CheckResultResponse>("/check-result", {
+		await callBackendApi("@post/check-result", {
 			body: data,
 			meta: {
-				skipAuthHeaderAddition: true,
-				toast: {
-					success: true,
-				},
+				auth: { skipHeaderAddition: true },
+				toast: { success: true },
 			},
-			method: "POST",
 
 			onSuccess: (ctx) => {
 				storageActions.setState(ctx.data.data);
@@ -140,7 +128,7 @@ function ResultCheckForm() {
 								>
 									<For
 										each={schoolSessionQueryResult.data?.data ?? []}
-										render={(item) => (
+										renderItem={(item) => (
 											<Select.Item
 												key={item}
 												value={item}
@@ -183,7 +171,7 @@ function ResultCheckForm() {
 								>
 									<For
 										each={schoolTermQueryResult.data?.data ?? []}
-										render={(item) => (
+										renderItem={(item) => (
 											<Select.Item
 												key={item}
 												value={item}

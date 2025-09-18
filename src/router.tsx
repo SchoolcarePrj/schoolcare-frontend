@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { lazy } from "react";
 import {
@@ -9,19 +9,10 @@ import {
 	RouterProvider,
 } from "react-router";
 import RootLayout from "./pages/layout";
-import { dashboardLoader, protectionLoader } from "./store/react-query/loaders";
-import { useQueryClientStore } from "./store/react-query/queryClientStore";
+import { dashboardLoader, protectionLoader } from "./lib/react-query/loaders";
+import { getQueryClient } from "./lib/react-query/queryClient";
 
-const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			gcTime: 10 * (60 * 1000),
-			retry: 1,
-		},
-	},
-});
-
-useQueryClientStore.setState({ queryClient });
+const queryClient = getQueryClient();
 
 /* Layouts */
 const PrimaryLayout = lazy(() => import("./pages/(primary)/layout"));

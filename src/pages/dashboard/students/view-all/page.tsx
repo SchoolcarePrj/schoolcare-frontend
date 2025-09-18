@@ -1,15 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { z } from "zod";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
+import { allClassesInSchoolQuery, studentsByClassQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { useQueryClientStore } from "@/store/react-query/queryClientStore";
-import { allClassesInSchoolQuery, studentsByClassQuery } from "@/store/react-query/queryFactory";
-import { useViewStudentFormStore } from "@/store/zustand/viewStudentFormStore";
+import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
 import { Main } from "../../-components/Main";
 
 const ViewAllStudentsSchema = z.object({
@@ -30,14 +29,14 @@ export function ViewAllStudentsPage() {
 
 	const [ClassesList] = getElementList("base");
 
+	const queryClient = useQueryClient();
+
 	const onSubmit = methods.handleSubmit(async (data) => {
 		useViewStudentFormStore.setState({ studentClass: data.class });
 
-		const queryData = await useQueryClientStore
-			.getState()
-			.queryClient.fetchQuery(studentsByClassQuery(data.class));
+		const queryData = await queryClient.ensureQueryData(studentsByClassQuery(data.class));
 
-		if (queryData.data?.students.length === 0) {
+		if (queryData.data.students.length === 0) {
 			toast.error(`No students found in ${data.class}. Please register students first.`, {
 				duration: 5000,
 			});
@@ -86,7 +85,7 @@ export function ViewAllStudentsPage() {
 									>
 										<ClassesList
 											each={classesQueryResult.data?.data ?? []}
-											render={(item) => (
+											renderItem={(item) => (
 												<Select.Item
 													key={`${item.school_class} ${item.grade}`}
 													value={`${item.school_class} ${item.grade}`}

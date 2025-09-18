@@ -2,52 +2,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { DropZoneInput, DropZoneInputImagePreview, getElementList, IconBox } from "@/components/common";
-import { Form, Select } from "@/components/ui";
-import { callBackendApi } from "@/lib/api/callBackendApi";
+import { DropZoneInput, DropZoneInputImagePreview, For, IconBox } from "@/components/common";
+import { DropZone, Form, Select } from "@/components/ui";
+import { callBackendApi, UploadResultBodySchema } from "@/lib/api/callBackendApi";
+import { allSubjectsInSchoolQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { z } from "@/lib/zod";
-import { allSubjectsInSchoolQuery } from "@/store/react-query/queryFactory";
-import { useInputScoreFormStore } from "@/store/zustand/inputScoresFormStore";
+import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
 import { Main } from "../../-components/Main";
-
-const UploadSchema = z.object({
-	file: z.file({ error: "File is required" }),
-	subject: z.string().min(1, "Subject is required"),
-});
 
 function UploadPage() {
 	const navigate = useNavigate();
-
-	const methods = useForm({
-		defaultValues: {
-			subject: "",
-		},
-		resolver: zodResolver(UploadSchema),
-	});
-
-	const schoolSubjectsQueryResult = useQuery(allSubjectsInSchoolQuery());
-
-	const [SubjectList] = getElementList("base");
 
 	const {
 		actions: { resetFormStore },
 		responseData: { class_session_term },
 	} = useInputScoreFormStore((state) => state);
 
+	const methods = useForm({
+		defaultValues: {
+			class_session_term: JSON.stringify(class_session_term),
+			subject: "",
+		},
+		resolver: zodResolver(UploadResultBodySchema),
+	});
+
+	const schoolSubjectsQueryResult = useQuery(allSubjectsInSchoolQuery());
+
 	const onSubmit = methods.handleSubmit(async (data) => {
-		const formData = new FormData();
-
-		for (const [key, value] of Object.entries(data)) {
-			formData.set(key, value as never);
-		}
-
-		formData.set("class_session_term", JSON.stringify(class_session_term));
-
-		await callBackendApi("/school/results", {
-			body: formData,
+		await callBackendApi("@post/school/results", {
+			body: data,
 			meta: { toast: { success: true } },
-			method: "POST",
 
 			onSuccess: () => {
 				resetFormStore();
@@ -91,9 +75,9 @@ function UploadPage() {
 											viewport: "gap-1",
 										}}
 									>
-										<SubjectList
+										<For
 											each={schoolSubjectsQueryResult.data?.data ?? []}
-											render={(item) => (
+											renderItem={(item) => (
 												<Select.Item
 													key={item.subject}
 													value={item.subject}
@@ -118,21 +102,25 @@ function UploadPage() {
 						<Form.FieldController
 							render={({ field }) => (
 								<DropZoneInput
-									classNames={{
-										base: `w-full items-center gap-2 rounded-[8px] border-[3px] border-dashed
-										border-gray-600 px-4 py-[60px]`,
-									}}
 									allowedFileTypes={["text/csv"]}
-									maxFileSize={6}
+									maxFileSize={{ mb: 6 }}
 									onChange={field.onChange}
 								>
-									<span className="block size-8 shrink-0 md:size-10">
-										<IconBox icon="solar:file-send-outline" className="size-full" />
-									</span>
+									<DropZone.Area
+										classNames={{
+											container: `w-full cursor-pointer items-center gap-2 rounded-[8px]
+											border-[3px] border-dashed border-gray-600 px-4 py-[60px]`,
+										}}
+									>
+										<span className="block size-8 shrink-0 md:size-10">
+											<IconBox icon="solar:file-send-outline" className="size-full" />
+										</span>
 
-									<p className="text-[14px] md:text-base">
-										Drag and drop or <span className="text-school-blue">Browse</span> your file
-									</p>
+										<p className="text-[14px] md:text-base">
+											Drag and drop or <span className="text-school-blue">Browse</span> your
+											file
+										</p>
+									</DropZone.Area>
 
 									<DropZoneInputImagePreview classNames={{ listItem: "px-3 md:px-6" }} />
 								</DropZoneInput>

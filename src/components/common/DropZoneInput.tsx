@@ -1,36 +1,35 @@
-import { cnMerge } from "@/lib/utils/cn";
+import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { isFile } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
-import { DropZone, type DropZoneRootProps, useDropZoneContext } from "../ui/drop-zone";
-import { getElementList } from "./For";
+import { cnMerge } from "@/lib/utils/cn";
+import { DropZone } from "../ui/drop-zone";
 import { IconBox } from "./IconBox";
-import { Switch } from "./Switch";
 
-type DropZoneInputProps = DropZoneRootProps & {
-	onChange: (file: File | null) => void;
+type DropZoneInputProps = InferProps<typeof DropZone.Root> & {
+	onChange: (file: File) => void;
 };
 
 export function DropZoneInput(props: DropZoneInputProps) {
-	const { onChange, onFilesChange, onUploadError, onUploadSuccess, ...restOfProps } = props;
+	const { onChange, onFilesChange, onValidationError, onValidationSuccess, ...restOfProps } = props;
 
-	const handleFileUpload: DropZoneRootProps["onFilesChange"] = (ctx) => {
+	const handleFileUpload: DropZoneInputProps["onFilesChange"] = (ctx) => {
 		onFilesChange?.(ctx);
 
-		if (!isFile(ctx.filesWithPreview[0]?.file)) return;
+		if (!isFile(ctx.fileStateArray[0]?.file)) return;
 
-		onChange(ctx.filesWithPreview[0].file);
+		onChange(ctx.fileStateArray[0].file);
 	};
 
 	return (
 		<DropZone.Root
 			onFilesChange={handleFileUpload}
-			onUploadError={(ctx) => {
-				toast.error("Error", { description: ctx.message });
-				onUploadError?.(ctx);
-			}}
-			onUploadSuccess={(ctx) => {
+			onValidationSuccess={(ctx) => {
 				toast.success("Success", { description: ctx.message });
-				onUploadSuccess?.(ctx);
+				void onValidationSuccess?.(ctx);
+			}}
+			onValidationError={(ctx) => {
+				toast.error("Error", { description: ctx.message });
+				void onValidationError?.(ctx);
 			}}
 			{...restOfProps}
 		/>
@@ -48,71 +47,89 @@ type ImagePreviewProps = {
 export function DropZoneInputImagePreview(props: ImagePreviewProps) {
 	const { classNames } = props;
 
-	const [ImagePreviewList] = getElementList();
-
-	const { dropZoneActions, dropZoneState } = useDropZoneContext();
-
-	if (dropZoneState.filesWithPreview.length === 0) return;
-
 	return (
-		<ImagePreviewList
+		<DropZone.FileList
 			className={cnMerge(
 				`relative mt-[13px] max-h-[140px] divide-y divide-gray-600 overflow-y-auto overscroll-y-contain
 				rounded-md border border-gray-600`,
 				classNames?.listContainer
 			)}
-			each={dropZoneState.filesWithPreview}
-			render={(fileWithPreview) => {
-				return (
-					<li
-						key={fileWithPreview.id}
-						className={cnMerge(
-							"flex items-center justify-between p-2 text-xs",
-							classNames?.listItem
-						)}
-					>
-						<div className="flex h-[48px] min-w-0 items-center gap-4 md:h-[66px]">
-							<Switch.Root>
-								<Switch.Match when={fileWithPreview.file.type.startsWith("image")}>
-									<img
-										src={fileWithPreview.preview}
-										className={cnMerge(
-											"size-[50px] shrink-0 rounded-md object-cover",
-											classNames?.image
-										)}
-										fetchPriority="high"
-										alt="image-preview-thumbnail"
-									/>
-								</Switch.Match>
-
-								<Switch.Match when={fileWithPreview.file.type.includes("pdf")}>
-									<span className="block size-[40px] shrink-0">
+		>
+			{(ctx) => (
+				<DropZone.FileItem
+					key={ctx.fileState.id}
+					fileState={ctx.fileState}
+					className={cnMerge("justify-between text-xs", classNames?.listItem)}
+				>
+					<DropZone.FileItemPreview
+						className="h-[48px] gap-4 md:h-[66px]"
+						renderPreview={{
+							default: (
+								<span className="block size-[40px]">
+									<IconBox icon="solar:file-outline" className="size-full" />
+								</span>
+							),
+							image: {
+								props: {
+									className: cnMerge("size-[50px] rounded-md", classNames?.image),
+									fetchPriority: "high",
+								},
+							},
+							text: {
+								node: (
+									<span className="block size-[40px]">
 										<IconBox icon="solar:document-medicine-linear" className="size-full" />
 									</span>
-								</Switch.Match>
+								),
+							},
+						}}
+					/>
 
-								<Switch.Default>
-									<span className="block size-[40px] shrink-0">
-										<IconBox icon="solar:file-outline" className="size-full" />
-									</span>
-								</Switch.Default>
-							</Switch.Root>
+					<DropZone.FileItemMetadata />
 
-							<p className="truncate">{fileWithPreview.file.name}</p>
-						</div>
+					<DropZone.FileItemDelete>
+						<IconBox icon="lucide:trash-2" className="size-[20px] text-red-600 active:scale-[1.1]" />
+					</DropZone.FileItemDelete>
+				</DropZone.FileItem>
+				// <li
+				// 	key={fileWithPreview.id}
+				// 	className={cnMerge("justify-between text-xs", classNames?.listItem)}
+				// >
+				// 	<div className="flex h-[48px] min-w-0 items-center gap-4 md:h-[66px]">
+				// 		<Switch.Root>
+				// 			<Switch.Match when={fileWithPreview.file.type.startsWith("image")}>
+				// 				<img
+				// 					src={fileWithPreview.preview}
+				// 					className={cnMerge(
+				// 						"size-[50px] shrink-0 rounded-md object-cover",
+				// 						classNames?.image
+				// 					)}
+				// 					fetchPriority="high"
+				// 					alt="image-preview-thumbnail"
+				// 				/>
+				// 			</Switch.Match>
 
-						<button type="button" onClick={() => dropZoneActions.removeFile(fileWithPreview)}>
-							<IconBox
-								icon="lucide:trash-2"
-								className="size-[20px] text-red-600 active:scale-[1.1]"
-							/>
-						</button>
-					</li>
-				);
-			}}
-		/>
+				// 			<Switch.Match when={fileWithPreview.file.type.includes("pdf")}>
+				// 				<span className="block size-[40px] shrink-0">
+				// 					<IconBox icon="solar:document-medicine-linear" className="size-full" />
+				// 				</span>
+				// 			</Switch.Match>
+
+				// 			<Switch.Default>
+				// 				<span className="block size-[40px] shrink-0">
+				// 					<IconBox icon="solar:file-outline" className="size-full" />
+				// 				</span>
+				// 			</Switch.Default>
+				// 		</Switch.Root>
+
+				// 		<p className="truncate">{fileWithPreview.file.name}</p>
+				// 	</div>
+
+				// 	<button type="button" onClick={() => dropZoneActions.removeFile(fileWithPreview)}>
+				// 		<IconBox icon="lucide:trash-2" className="size-[20px] text-red-600 active:scale-[1.1]" />
+				// 	</button>
+				// </li>
+			)}
+		</DropZone.FileList>
 	);
 }
-
-DropZoneInputImagePreview.slotName = DropZone.ImagePreview.slotName;
-DropZoneInputImagePreview.slotSymbol = DropZone.ImagePreview.slotSymbol;
