@@ -31,7 +31,7 @@ const sharedBaseCallApiConfig = defineBaseConfig((instanceConfig) => ({
 	plugins: [
 		authPlugin(),
 		toastPlugin(),
-		loggerPlugin({ enabled: { onValidationError: true }, verbose: true }),
+		loggerPlugin({ enabled: { onRequestError: true, onResponseError: true, onValidationError: true } }),
 	],
 
 	schema: apiSchema,

@@ -1,45 +1,46 @@
-import { cnMerge } from "@/lib/utils/cn";
-import { createCustomContext, useCallbackRef, useToggle } from "@zayne-labs/toolkit-react";
+import { createCustomContext, useCallbackRef, useControllableState } from "@zayne-labs/toolkit-react";
 import type { DiscriminatedRenderProps, InferProps } from "@zayne-labs/toolkit-react/utils";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { useMemo } from "react";
+import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common";
 
 type ContextValue = {
-	onClose: () => void;
-	onOpen: () => void;
 	open: boolean;
 	setOpen: (open: boolean) => void;
+	toggleClose: () => void;
+	toggleOpen: () => void;
 };
 
 const [DialogStateContextProvider, useDialogStateContext] = createCustomContext<ContextValue>();
 
 function DialogRoot(props: InferProps<typeof DialogPrimitive.Root>) {
-	const [openState, toggleOpen] = useToggle(false);
 	// eslint-disable-next-line ts-eslint/unbound-method
-	const { onOpenChange, open, ...restOfProps } = props;
+	const { defaultOpen, onOpenChange: onOpenChangeProp, open: openProp, ...restOfProps } = props;
 
-	const selectedOpen = open ?? openState;
-	const selectedOnOpenChange = open ? onOpenChange : toggleOpen;
+	const [open, setOpen] = useControllableState({
+		defaultValue: defaultOpen,
+		onChange: onOpenChangeProp,
+		value: openProp,
+	});
 
-	const setOpen = useCallbackRef((value: boolean) => selectedOnOpenChange?.(value));
-	const onClose = useCallbackRef(() => setOpen(false));
-	const onOpen = useCallbackRef(() => setOpen(true));
+	const toggleClose = useCallbackRef(() => setOpen(false));
+	const toggleOpen = useCallbackRef(() => setOpen(true));
 
 	const contextValue = useMemo(
 		() =>
 			({
-				onClose,
-				onOpen,
-				open: selectedOpen,
+				open,
 				setOpen,
+				toggleClose,
+				toggleOpen,
 			}) satisfies ContextValue,
-		[onClose, onOpen, selectedOpen, setOpen]
+		[toggleClose, toggleOpen, setOpen, open]
 	);
 
 	return (
 		<DialogStateContextProvider value={contextValue}>
-			<DialogPrimitive.Root {...restOfProps} open={selectedOpen} onOpenChange={selectedOnOpenChange} />
+			<DialogPrimitive.Root {...restOfProps} open={open} onOpenChange={setOpen} />
 		</DialogStateContextProvider>
 	);
 }
@@ -48,13 +49,12 @@ type RenderFn = (props: ContextValue) => React.ReactNode;
 
 function DialogContext(props: DiscriminatedRenderProps<RenderFn>) {
 	const { children, render } = props;
+
 	const dialogCtx = useDialogStateContext();
 
-	if (typeof children === "function") {
-		return children(dialogCtx);
-	}
+	const selectedRenderFn = typeof children === "function" ? children : render;
 
-	return render(dialogCtx);
+	return selectedRenderFn(dialogCtx);
 }
 
 function DialogOverlay(props: InferProps<typeof DialogPrimitive.Overlay>) {

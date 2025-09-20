@@ -57,15 +57,9 @@ function PersonalInfoPage() {
 									disableFilePickerOpenOnAreaClick={true}
 								>
 									<DropZone.Area
-										classNames={{
-											container: `size-[110px] rounded-full border-none bg-[hsl(0,0%,85%)]
-											bg-cover p-0 md:mt-8 md:size-[200px]`,
-										}}
-										extraProps={{
-											container: {
-												style: { backgroundImage: logoPreview ? `url(${logoPreview})` : "" },
-											},
-										}}
+										className="size-[110px] rounded-full border-none bg-[hsl(0,0%,85%)] bg-cover
+											p-0 md:mt-8 md:size-[200px]"
+										style={{ backgroundImage: logoPreview ? `url(${logoPreview})` : "" }}
 									>
 										<DropZone.Trigger>
 											<EditIcon

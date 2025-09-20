@@ -107,10 +107,8 @@ function UploadPage() {
 									onChange={field.onChange}
 								>
 									<DropZone.Area
-										classNames={{
-											container: `w-full cursor-pointer items-center gap-2 rounded-[8px]
-											border-[3px] border-dashed border-gray-600 px-4 py-[60px]`,
-										}}
+										className="w-full cursor-pointer items-center gap-2 rounded-[8px]
+											border-[3px] border-dashed border-gray-600 px-4 py-[60px]"
 									>
 										<span className="block size-8 shrink-0 md:size-10">
 											<IconBox icon="solar:file-send-outline" className="size-full" />

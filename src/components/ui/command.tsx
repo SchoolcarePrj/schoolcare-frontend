@@ -1,6 +1,6 @@
-import { cnMerge } from "@/lib/utils/cn";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { Command as CommandPrimitive } from "cmdk";
+import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common";
 import * as DialogPrimitive from "./dialog";
 

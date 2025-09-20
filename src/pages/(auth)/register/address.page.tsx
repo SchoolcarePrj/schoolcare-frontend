@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-import { For, IconBox, Show } from "@/components/common";
-import { Command, Form, Popover, Select } from "@/components/ui";
+import { For, IconBox } from "@/components/common";
+import { Combobox, Form, Select } from "@/components/ui";
 import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
 import { nigeriaStatesAndLGA } from "@/lib/api/nigeria";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
@@ -64,7 +64,17 @@ function AddressPage() {
 
 	const state = methods.watch("state");
 
+	const formattedNigeriaStatesAndLGA = nigeriaStatesAndLGA.map((item) => ({
+		label: item.state,
+		value: item.state,
+	}));
+
 	const LGAResult = nigeriaStatesAndLGA.find((item) => item.state === state)?.lgas ?? [];
+
+	const formattedLGAResult = LGAResult.map((item) => ({
+		label: item,
+		value: item,
+	}));
 
 	return (
 		<Main className="flex flex-col gap-8">
@@ -139,63 +149,56 @@ function AddressPage() {
 
 						<Form.FieldController
 							render={({ field }) => (
-								<Popover.Root>
-									<Popover.Trigger
-										className={cnJoin(
-											`flex h-[48px] items-center justify-between rounded-[8px] border
-											border-school-gray-lighter bg-white px-4 text-[12px]
-											data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
-											md:text-base md:text-[14px]`,
-											!(field.value as boolean) && "text-shadcn-muted-foreground"
-										)}
-									>
-										<Show.Root when={field.value} fallback="Select State">
-											{nigeriaStatesAndLGA.find((item) => item.state === field.value)?.state}
-										</Show.Root>
+								<Combobox.Root
+									data={formattedNigeriaStatesAndLGA}
+									type="state"
+									value={field.value}
+									onValueChange={field.onChange}
+								>
+									<Combobox.Trigger
+										classNames={{
+											base: cnJoin(
+												`flex h-[48px] items-center justify-between rounded-[8px] border
+												border-school-gray-lighter bg-white px-4 text-[12px]
+												data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+												md:text-base md:text-[14px]`,
+												!(field.value as boolean) && "text-shadcn-muted-foreground"
+											),
+											icon: "size-5 text-school-gray md:size-6",
+										}}
+									/>
 
-										<IconBox
-											icon="lucide:chevrons-up-down"
-											className="size-5 text-school-gray md:size-6"
-										/>
-									</Popover.Trigger>
+									<Combobox.Content className="bg-white/90 backdrop-blur-lg max-md:w-60">
+										<Combobox.Input placeholder="Choose State" className="h-9" />
+										<Combobox.Empty>No State found.</Combobox.Empty>
 
-									<Popover.Content className="bg-white/90 p-0 backdrop-blur-lg max-md:w-60">
-										<Command.Root>
-											<Command.Input placeholder="Choose State" className="h-9" />
-
-											<Command.List>
-												<Command.Empty>No State found.</Command.Empty>
-
-												<Command.Group>
-													<For
-														each={nigeriaStatesAndLGA}
-														renderItem={(item) => (
-															<Command.Item
-																key={item.state}
-																value={item.state}
-																onSelect={() => field.onChange(item.state)}
-																className="h-12 text-[12px] font-medium text-black
-																	focus:bg-gray-300 focus:text-black
-																	data-[selected=true]:bg-gray-300 md:text-base"
-															>
-																<p>{item.state}</p>
-																<IconBox
-																	icon="lucide:check"
-																	className={cnJoin(
-																		"ml-auto size-[14px]",
-																		item.state === field.value ?
-																			"opacity-100"
-																		:	"opacity-0"
-																	)}
-																/>
-															</Command.Item>
-														)}
-													/>
-												</Command.Group>
-											</Command.List>
-										</Command.Root>
-									</Popover.Content>
-								</Popover.Root>
+										<Combobox.List>
+											<Combobox.Group>
+												<For
+													each={formattedNigeriaStatesAndLGA}
+													renderItem={(item) => (
+														<Combobox.Item
+															key={item.value}
+															value={item.value}
+															className="h-12 text-[12px] font-medium text-black
+																focus:bg-gray-300 focus:text-black
+																data-[selected=true]:bg-gray-300 md:text-base"
+														>
+															<p>{item.label}</p>
+															<IconBox
+																icon="lucide:check"
+																className={cnJoin(
+																	"ml-auto size-[14px]",
+																	item.value === field.value ? "opacity-100" : "opacity-0"
+																)}
+															/>
+														</Combobox.Item>
+													)}
+												/>
+											</Combobox.Group>
+										</Combobox.List>
+									</Combobox.Content>
+								</Combobox.Root>
 							)}
 						/>
 
@@ -208,61 +211,58 @@ function AddressPage() {
 
 							<Form.FieldController
 								render={({ field }) => (
-									<Popover.Root>
-										<Popover.Trigger
-											className={cnJoin(
-												`flex h-[48px] items-center justify-between rounded-[8px] border
-												border-school-gray-lighter bg-white px-4 text-[12px]
-												data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
-												md:text-base md:text-[14px]`,
-												!(field.value as boolean) && "text-shadcn-muted-foreground"
-											)}
-										>
-											<Show.Root when={field.value} fallback="Select LGA">
-												{LGAResult.find((LGA) => LGA === field.value)}
-											</Show.Root>
+									<Combobox.Root
+										data={formattedLGAResult}
+										type="lga"
+										value={field.value}
+										onValueChange={field.onChange}
+									>
+										<Combobox.Trigger
+											classNames={{
+												base: cnJoin(
+													`flex h-[48px] items-center justify-between rounded-[8px] border
+													border-school-gray-lighter bg-white px-4 text-[12px]
+													data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
+													md:px-8 md:text-base md:text-[14px]`,
+													!(field.value as boolean) && "text-shadcn-muted-foreground"
+												),
+												icon: "size-5 text-school-gray md:size-6",
+											}}
+										/>
 
-											<IconBox
-												icon="lucide:chevrons-up-down"
-												className="size-5 text-school-gray md:size-6"
-											/>
-										</Popover.Trigger>
+										<Combobox.Content className="bg-white/90 backdrop-blur-lg max-md:w-60">
+											<Combobox.Input placeholder="Choose LGA" className="h-9" />
+											<Combobox.Empty>No LGA found.</Combobox.Empty>
 
-										<Popover.Content className="bg-white/90 p-0 backdrop-blur-lg max-md:w-60">
-											<Command.Root>
-												<Command.Input placeholder="Choose LGA" className="h-9" />
-
-												<Command.List>
-													<Command.Empty>No LGA found.</Command.Empty>
-
-													<Command.Group>
-														<For
-															each={LGAResult}
-															renderItem={(item) => (
-																<Command.Item
-																	key={item}
-																	value={item}
-																	onSelect={() => field.onChange(item)}
-																	className="h-12 text-[12px] font-medium text-black
-																		focus:bg-gray-300 focus:text-black
-																		data-[selected=true]:bg-gray-300 md:text-base"
-																>
-																	<p>{item}</p>
-																	<IconBox
-																		icon="lucide:check"
-																		className={cnJoin(
-																			"ml-auto size-[14px]",
-																			item === field.value ? "opacity-100" : "opacity-0"
-																		)}
-																	/>
-																</Command.Item>
-															)}
-														/>
-													</Command.Group>
-												</Command.List>
-											</Command.Root>
-										</Popover.Content>
-									</Popover.Root>
+											<Combobox.List>
+												<Combobox.Group>
+													<For
+														each={formattedLGAResult}
+														renderItem={(item) => (
+															<Combobox.Item
+																key={item.value}
+																value={item.value}
+																className="h-12 text-[12px] font-medium text-black
+																	focus:bg-gray-300 focus:text-black
+																	data-[selected=true]:bg-gray-300 md:text-base"
+															>
+																<p>{item.label}</p>
+																<IconBox
+																	icon="lucide:check"
+																	className={cnJoin(
+																		"ml-auto size-[14px]",
+																		item.value === field.value ?
+																			"opacity-100"
+																		:	"opacity-0"
+																	)}
+																/>
+															</Combobox.Item>
+														)}
+													/>
+												</Combobox.Group>
+											</Combobox.List>
+										</Combobox.Content>
+									</Combobox.Root>
 								)}
 							/>
 

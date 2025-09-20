@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { getElementList, IconBox, Show } from "@/components/common";
-import { Command, Form, Popover } from "@/components/ui";
+import { For, IconBox } from "@/components/common";
+import { Combobox, Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { allClassesInSchoolQuery, allClassesQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
@@ -23,8 +23,6 @@ function RegisterClassPage() {
 	const allClassesQueryResult = useQuery(allClassesQuery());
 
 	const queryClient = useQueryClient();
-
-	const [ClassList] = getElementList("base");
 
 	const onSubmit = methods.handleSubmit(async (data) => {
 		await callBackendApi("@post/school/classes", {
@@ -47,6 +45,12 @@ function RegisterClassPage() {
 
 	const watchedSchoolClass = methods.watch("school_class");
 
+	const formattedClasses =
+		allClassesQueryResult.data?.data.map((school_class) => ({
+			label: school_class,
+			value: school_class,
+		})) ?? [];
+
 	return (
 		<Main className="flex flex-col gap-6 md:gap-8">
 			<header>
@@ -64,63 +68,56 @@ function RegisterClassPage() {
 
 						<Form.FieldController
 							render={({ field }) => (
-								<Popover.Root>
-									<Popover.Trigger
-										className={cnJoin(
-											`flex h-[48px] items-center justify-between rounded-[8px] border
-											border-school-gray-lighter bg-white px-4 text-[12px]
-											data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
-											md:text-base md:text-[14px]`,
-											!(field.value as boolean) && "text-shadcn-muted-foreground"
-										)}
-									>
-										<Show.Root when={field.value} fallback="Select class">
-											{allClassesQueryResult.data?.data.find(
-												(school_class) => school_class === field.value
-											)}
-										</Show.Root>
+								<Combobox.Root
+									data={formattedClasses}
+									type="class"
+									value={field.value}
+									onValueChange={field.onChange}
+								>
+									<Combobox.Trigger
+										classNames={{
+											base: cnJoin(
+												`flex h-[48px] items-center justify-between rounded-[8px] border
+												border-school-gray-lighter bg-white px-4 text-[12px]
+												data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+												md:text-base md:text-[14px]`,
+												!(field.value as boolean) && "text-shadcn-muted-foreground"
+											),
+											icon: "size-5 text-school-gray md:size-6",
+										}}
+									/>
 
-										<IconBox
-											icon="lucide:chevrons-up-down"
-											className="size-5 text-school-gray md:size-6"
-										/>
-									</Popover.Trigger>
+									<Combobox.Content className="bg-white/90 backdrop-blur-lg">
+										<Combobox.Input placeholder="Choose class" className="h-9" />
+										<Combobox.Empty>No class found.</Combobox.Empty>
 
-									<Popover.Content className="bg-white/90 p-0 backdrop-blur-lg">
-										<Command.Root>
-											<Command.Input placeholder="Choose class" className="h-9" />
-
-											<Command.List>
-												<Command.Empty>No class found.</Command.Empty>
-
-												<Command.Group>
-													<ClassList
-														each={allClassesQueryResult.data?.data ?? []}
-														renderItem={(item) => (
-															<Command.Item
-																key={item}
-																value={item}
-																onSelect={() => field.onChange(item)}
-																className="h-12 text-[12px] font-medium text-black
-																	focus:bg-gray-300 focus:text-black
-																	data-[selected=true]:bg-gray-300 md:text-base"
-															>
-																<p>{item}</p>
-																<IconBox
-																	icon="lucide:check"
-																	className={cnJoin(
-																		"ml-auto size-[14px]",
-																		item === field.value ? "opacity-100" : "opacity-0"
-																	)}
-																/>
-															</Command.Item>
-														)}
-													/>
-												</Command.Group>
-											</Command.List>
-										</Command.Root>
-									</Popover.Content>
-								</Popover.Root>
+										<Combobox.List>
+											<Combobox.Group>
+												<For
+													each={formattedClasses}
+													renderItem={(item) => (
+														<Combobox.Item
+															key={item.value}
+															value={item.value}
+															className="h-12 text-[12px] font-medium text-black
+																focus:bg-gray-300 focus:text-black
+																data-[selected=true]:bg-gray-300 md:text-base"
+														>
+															<p>{item.label}</p>
+															<IconBox
+																icon="lucide:check"
+																className={cnJoin(
+																	"ml-auto size-[14px]",
+																	item.value === field.value ? "visible" : "invisible"
+																)}
+															/>
+														</Combobox.Item>
+													)}
+												/>
+											</Combobox.Group>
+										</Combobox.List>
+									</Combobox.Content>
+								</Combobox.Root>
 							)}
 						/>
 
