@@ -5,7 +5,7 @@ const makeQueryClient = () => {
 	return new QueryClient({
 		defaultOptions: {
 			queries: {
-				retry: 1,
+				retry: 0,
 			},
 		},
 	});

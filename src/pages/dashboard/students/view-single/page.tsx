@@ -29,9 +29,14 @@ function ViewSingleStudent() {
 	const onSubmit = methods.handleSubmit(async (data) => {
 		useViewStudentFormStore.setState({ studentId: data.reg_number });
 
-		await queryClient.prefetchQuery(studentsByIDQuery({ studentId: data.reg_number }));
-
-		void navigate("./table");
+		await queryClient.prefetchQuery(
+			studentsByIDQuery({
+				onSuccess: () => {
+					void navigate("./table");
+				},
+				studentId: data.reg_number,
+			})
+		);
 	});
 
 	return (

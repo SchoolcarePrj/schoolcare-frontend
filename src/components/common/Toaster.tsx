@@ -13,7 +13,7 @@ function SonnerToaster(props: ToasterProps) {
 			className="toaster group"
 			richColors={true}
 			position="bottom-right"
-			duration={3000}
+			duration={2500}
 			closeButton={true}
 			toastOptions={{
 				classNames: {
