@@ -91,44 +91,6 @@ export function DropZoneInputImagePreview(props: ImagePreviewProps) {
 						<IconBox icon="lucide:trash-2" className="size-[20px] text-red-600 active:scale-[1.1]" />
 					</DropZone.FileItemDelete>
 				</DropZone.FileItem>
-				// <li
-				// 	key={fileWithPreview.id}
-				// 	className={cnMerge("justify-between text-xs", classNames?.listItem)}
-				// >
-				// 	<div className="flex h-[48px] min-w-0 items-center gap-4 md:h-[66px]">
-				// 		<Switch.Root>
-				// 			<Switch.Match when={fileWithPreview.file.type.startsWith("image")}>
-				// 				<img
-				// 					src={fileWithPreview.preview}
-				// 					className={cnMerge(
-				// 						"size-[50px] shrink-0 rounded-md object-cover",
-				// 						classNames?.image
-				// 					)}
-				// 					fetchPriority="high"
-				// 					alt="image-preview-thumbnail"
-				// 				/>
-				// 			</Switch.Match>
-
-				// 			<Switch.Match when={fileWithPreview.file.type.includes("pdf")}>
-				// 				<span className="block size-[40px] shrink-0">
-				// 					<IconBox icon="solar:document-medicine-linear" className="size-full" />
-				// 				</span>
-				// 			</Switch.Match>
-
-				// 			<Switch.Default>
-				// 				<span className="block size-[40px] shrink-0">
-				// 					<IconBox icon="solar:file-outline" className="size-full" />
-				// 				</span>
-				// 			</Switch.Default>
-				// 		</Switch.Root>
-
-				// 		<p className="truncate">{fileWithPreview.file.name}</p>
-				// 	</div>
-
-				// 	<button type="button" onClick={() => dropZoneActions.removeFile(fileWithPreview)}>
-				// 		<IconBox icon="lucide:trash-2" className="size-[20px] text-red-600 active:scale-[1.1]" />
-				// 	</button>
-				// </li>
 			)}
 		</DropZone.FileList>
 	);

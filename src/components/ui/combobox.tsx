@@ -2,9 +2,9 @@
 
 import { useControllableState } from "@zayne-labs/toolkit-react";
 import { createContext, use, useEffect, useMemo, useRef, useState } from "react";
-import { Command } from "@/components/ui/command-parts";
+import * as Command from "@/components/ui/command";
 import { type ShadcnButtonProps, shadcnButtonVariants } from "@/components/ui/constants";
-import { Popover } from "@/components/ui/popover-parts";
+import * as Popover from "@/components/ui/popover";
 import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common";
 
