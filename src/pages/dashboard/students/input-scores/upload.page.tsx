@@ -18,7 +18,7 @@ function UploadPage() {
 		responseData: { class_session_term },
 	} = useInputScoreFormStore((state) => state);
 
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: {
 			class_session_term: JSON.stringify(class_session_term),
 			subject: "",
@@ -28,7 +28,7 @@ function UploadPage() {
 
 	const schoolSubjectsQueryResult = useQuery(allSubjectsInSchoolQuery());
 
-	const onSubmit = methods.handleSubmit(async (data) => {
+	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/school/results", {
 			body: data,
 			meta: { toast: { success: true } },
@@ -48,11 +48,11 @@ function UploadPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
-					<Form.Field<typeof methods.control> name="subject" className="w-full gap-3 md:gap-4">
+					<Form.Field<typeof form.control> name="subject" className="w-full gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Subject</Form.Label>
 
 						<Form.FieldController
@@ -94,7 +94,7 @@ function UploadPage() {
 						/>
 					</Form.Field>
 
-					<Form.Field<typeof methods.control> name="file" className="w-full gap-3 md:gap-4">
+					<Form.Field<typeof form.control> name="file" className="w-full gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">
 							Upload CSV Result file
 						</Form.Label>
@@ -127,20 +127,20 @@ function UploadPage() {
 					</Form.Field>
 
 					<Form.Submit
-						disabled={methods.formState.isSubmitting || !methods.formState.isValid}
+						disabled={form.formState.isSubmitting || !form.formState.isValid}
 						className={cnMerge(
 							`flex w-[120.5px] items-center justify-center self-end rounded-[10px] bg-school-blue
 							px-8 py-4 text-[18px] font-bold text-white`,
-							methods.formState.isSubmitting && "grid",
-							!methods.formState.isValid && "cursor-not-allowed bg-gray-400"
+							form.formState.isSubmitting && "grid",
+							!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 						)}
 					>
-						{methods.formState.isSubmitting && (
+						{form.formState.isSubmitting && (
 							<span className="flex justify-center [grid-area:1/1]">
 								<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 							</span>
 						)}
-						<p className={cnJoin(methods.formState.isSubmitting && "invisible [grid-area:1/1]")}>
+						<p className={cnJoin(form.formState.isSubmitting && "invisible [grid-area:1/1]")}>
 							Submit
 						</p>
 					</Form.Submit>

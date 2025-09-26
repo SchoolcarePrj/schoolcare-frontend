@@ -18,7 +18,7 @@ const ViewAllStudentsSchema = z.object({
 export function ViewAllStudentsPage() {
 	const navigate = useNavigate();
 
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: {
 			class: "",
 		},
@@ -31,7 +31,7 @@ export function ViewAllStudentsPage() {
 
 	const queryClient = useQueryClient();
 
-	const onSubmit = methods.handleSubmit(async (data) => {
+	const onSubmit = form.handleSubmit(async (data) => {
 		useViewStudentFormStore.setState({ studentClass: data.class });
 
 		const queryData = await queryClient.ensureQueryData(studentsByClassQuery(data.class));
@@ -56,11 +56,11 @@ export function ViewAllStudentsPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
-					<Form.Field<typeof methods.control> name="class" className="w-full gap-4">
+					<Form.Field<typeof form.control> name="class" className="w-full gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Choose class</Form.Label>
 
 						<Form.FieldController
@@ -113,20 +113,20 @@ export function ViewAllStudentsPage() {
 						</button>
 
 						<Form.Submit
-							disabled={methods.formState.isSubmitting}
+							disabled={form.formState.isSubmitting}
 							className={cnMerge(
 								`flex h-9 w-fit items-center justify-center self-end rounded-[10px] bg-school-blue
 								px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8 md:text-[18px]`,
-								methods.formState.isSubmitting && "grid",
-								!methods.formState.isValid && "cursor-not-allowed bg-gray-400"
+								form.formState.isSubmitting && "grid",
+								!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 							)}
 						>
-							{methods.formState.isSubmitting && (
+							{form.formState.isSubmitting && (
 								<span className="flex justify-center [grid-area:1/1]">
 									<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 								</span>
 							)}
-							<p className={cnJoin(methods.formState.isSubmitting && "invisible [grid-area:1/1]")}>
+							<p className={cnJoin(form.formState.isSubmitting && "invisible [grid-area:1/1]")}>
 								Continue
 							</p>
 						</Form.Submit>

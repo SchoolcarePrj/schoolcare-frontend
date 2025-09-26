@@ -20,7 +20,7 @@ function ResultCheckForm() {
 	const schoolSessionQueryResult = useQuery(schoolSessionQuery({ meta: { toast: { error: false } } }));
 	const schoolTermQueryResult = useQuery(schoolTermQuery({ meta: { toast: { error: false } } }));
 
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: {
 			class_grade: "",
 			school_class: "",
@@ -36,7 +36,7 @@ function ResultCheckForm() {
 
 	const navigate = useNavigate();
 
-	const onSubmit = methods.handleSubmit(async (data) => {
+	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/check-result", {
 			body: data,
 			meta: {
@@ -54,7 +54,7 @@ function ResultCheckForm() {
 
 	return (
 		<Form.Root
-			methods={methods}
+			methods={form}
 			onSubmit={(event) => void onSubmit(event)}
 			className="w-full max-w-[600px] rounded-[24px] border-[2px] border-white px-9 py-11
 				lg:border-[3px] lg:px-10 lg:py-14"
@@ -62,7 +62,7 @@ function ResultCheckForm() {
 			<h3 className="text-center text-[14px] font-semibold lg:text-[24px]">Check Result</h3>
 
 			<div className="mt-5.5 grid grid-cols-2 gap-x-7 gap-y-4 lg:mt-7 lg:gap-x-11.5 lg:gap-y-6.5">
-				<Form.Field<typeof methods.control> name="school_ID" className="flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="school_ID" className="flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">School ID</Form.Label>
 					<Form.Input
 						placeholder="Enter school ID"
@@ -72,7 +72,7 @@ function ResultCheckForm() {
 					/>
 				</Form.Field>
 
-				<Form.Field<typeof methods.control> name="student_reg_number" className="flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="student_reg_number" className="flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Reg. Number</Form.Label>
 					<Form.Input
 						placeholder="e.g: 20246..."
@@ -82,7 +82,7 @@ function ResultCheckForm() {
 					/>
 				</Form.Field>
 
-				<Form.Field<typeof methods.control> name="school_class" className="flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="school_class" className="flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Class</Form.Label>
 					<Form.Input
 						placeholder="e.g: JSS1"
@@ -92,7 +92,7 @@ function ResultCheckForm() {
 					/>
 				</Form.Field>
 
-				<Form.Field<typeof methods.control> name="class_grade" className="flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="class_grade" className="flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Class Grade</Form.Label>
 					<Form.Input
 						placeholder="e.g: A"
@@ -102,7 +102,7 @@ function ResultCheckForm() {
 					/>
 				</Form.Field>
 
-				<Form.Field<typeof methods.control> name="session" className="group flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="session" className="group flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Result Session</Form.Label>
 
 					<Form.FieldController
@@ -145,7 +145,7 @@ function ResultCheckForm() {
 					/>
 				</Form.Field>
 
-				<Form.Field<typeof methods.control> name="term" className="group flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="term" className="group flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Term</Form.Label>
 
 					<Form.FieldController
@@ -188,7 +188,7 @@ function ResultCheckForm() {
 					/>
 				</Form.Field>
 
-				<Form.Field<typeof methods.control> name="scratch_card_code" className="flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="scratch_card_code" className="flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Card Pin</Form.Label>
 					<Form.Input
 						placeholder="Enter card pin"
@@ -198,7 +198,7 @@ function ResultCheckForm() {
 					/>
 				</Form.Field>
 
-				<Form.Field<typeof methods.control> name="serial_number" className="flex flex-col gap-3">
+				<Form.Field<typeof form.control> name="serial_number" className="flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Card Serial No.</Form.Label>
 					<Form.Input
 						placeholder="e.g: 12348..."

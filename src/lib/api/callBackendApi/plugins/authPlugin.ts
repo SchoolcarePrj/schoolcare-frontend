@@ -9,17 +9,19 @@ import {
 	redirectTo,
 } from "./utils";
 import { getNewUserSession } from "./utils/session";
+import type { Awaitable, CallbackFn } from "@zayne-labs/toolkit-type-helpers";
 
 export type AuthPluginMeta = {
 	auth?: {
-		routesToExemptFromHeaderAddition?: Array<`/${string}/**` | `/${string}`>;
-		routesToIncludeForRedirectionOnAuthError?: Array<`/${string}/**` | `/${string}`>;
+		redirectFn?: CallbackFn<`/${string}`, Awaitable<void>>;
+		routesToExemptFromHeaderAddition?: Array<`/${string}` | `${string}/**`>;
+		routesToExemptFromRedirectOnAuthError?: Array<`/${string}` | `${string}/**`>;
 		skipHeaderAddition?: boolean;
 		tokenToAdd?: PossibleAuthToken;
 	};
 };
 
-const signInRoute = "/login";
+const signInRoute = "/auth/login";
 
 const defaultRedirectionMessage = "Session is missing! Redirecting to login...";
 
@@ -40,15 +42,19 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 
 			if (shouldSkipAuthHeaderAddition) return;
 
-			const isProtectedRoute = authMeta?.routesToIncludeForRedirectionOnAuthError?.some((route) =>
-				isPathnameMatchingRoute(route)
+			const shouldSkipRouteFromRedirect = authMeta?.routesToExemptFromRedirectOnAuthError?.some(
+				(route) => isPathnameMatchingRoute(route)
 			);
 
 			if (authTokenObject.getRefreshToken() === null) {
-				isProtectedRoute && redirectTo(signInRoute);
+				const redirectFn = authMeta?.redirectFn ?? redirectTo;
 
-				// == Turn off error toast if route is not protected
-				!isProtectedRoute && ctx.options.meta?.toast && (ctx.options.meta.toast.error = false);
+				!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
+
+				// == Turn off error toast if redirect is skipped
+				shouldSkipRouteFromRedirect
+					&& ctx.options.meta?.toast
+					&& (ctx.options.meta.toast.error = false);
 
 				throw new Error(defaultRedirectionMessage);
 			}
@@ -66,14 +72,16 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 
 			if (!shouldRefreshToken) return;
 
-			const isProtectedRoute = authMeta?.routesToIncludeForRedirectionOnAuthError?.some((route) =>
-				isPathnameMatchingRoute(route)
+			const shouldSkipRouteFromRedirect = authMeta?.routesToExemptFromRedirectOnAuthError?.some(
+				(route) => isPathnameMatchingRoute(route)
 			);
 
 			const refreshToken = authTokenObject.getRefreshToken();
 
+			const redirectFn = authMeta?.redirectFn ?? redirectTo;
+
 			if (refreshToken === null) {
-				isProtectedRoute && redirectTo(signInRoute);
+				!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
 
 				throw new Error(defaultRedirectionMessage);
 			}
@@ -81,7 +89,7 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 			const result = await getNewUserSession(refreshToken);
 
 			if (isHTTPError(result.error)) {
-				isProtectedRoute && redirectTo(signInRoute);
+				!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
 
 				throw new Error("Session invalid or expired! Redirecting to login...");
 			}

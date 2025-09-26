@@ -24,7 +24,7 @@ const AddScoresSchema = z.object({
 function AddScoresPage() {
 	const navigate = useNavigate();
 
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: {
 			school_class: "",
 			session: "",
@@ -39,7 +39,7 @@ function AddScoresPage() {
 
 	const [List] = getElementList("base");
 
-	const onSubmit = methods.handleSubmit(async (data) => {
+	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/school/results/get-class-session-term", {
 			body: data,
 
@@ -58,12 +58,12 @@ function AddScoresPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
 					<div className="flex gap-6 md:gap-[70px]">
-						<Form.Field<typeof methods.control> name="session" className="w-full min-w-0 gap-4">
+						<Form.Field<typeof form.control> name="session" className="w-full min-w-0 gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">Session</Form.Label>
 
 							<Form.FieldController
@@ -110,7 +110,7 @@ function AddScoresPage() {
 							/>
 						</Form.Field>
 
-						<Form.Field<typeof methods.control> name="term" className="w-full min-w-0 gap-4">
+						<Form.Field<typeof form.control> name="term" className="w-full min-w-0 gap-4">
 							<Form.Label className="font-medium">Term</Form.Label>
 
 							<Form.FieldController
@@ -158,7 +158,7 @@ function AddScoresPage() {
 						</Form.Field>
 					</div>
 
-					<Form.Field<typeof methods.control> name="school_class" className="w-full gap-4">
+					<Form.Field<typeof form.control> name="school_class" className="w-full gap-4">
 						<Form.Label className="font-medium">Choose class</Form.Label>
 
 						<Form.FieldController
@@ -211,20 +211,20 @@ function AddScoresPage() {
 						</button>
 
 						<Form.Submit
-							disabled={methods.formState.isSubmitting}
+							disabled={form.formState.isSubmitting}
 							className={cnMerge(
 								`flex h-9 w-fit items-center justify-center self-end rounded-[10px] bg-school-blue
 								px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8 md:text-[18px]`,
-								methods.formState.isSubmitting && "grid",
-								!methods.formState.isValid && "cursor-not-allowed bg-gray-400"
+								form.formState.isSubmitting && "grid",
+								!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 							)}
 						>
-							{methods.formState.isSubmitting && (
+							{form.formState.isSubmitting && (
 								<span className="flex justify-center [grid-area:1/1]">
 									<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 								</span>
 							)}
-							<p className={cnJoin(methods.formState.isSubmitting && "invisible [grid-area:1/1]")}>
+							<p className={cnJoin(form.formState.isSubmitting && "invisible [grid-area:1/1]")}>
 								Continue
 							</p>
 						</Form.Submit>

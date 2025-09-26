@@ -12,7 +12,7 @@ const AdminRegisterSchema = apiSchema.routes["@post/school/admin/register"].body
 function AdminRegisterPage() {
 	const navigate = useNavigate();
 
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: {
 			email: "",
 			password: "",
@@ -21,12 +21,12 @@ function AdminRegisterPage() {
 		resolver: zodResolver(AdminRegisterSchema),
 	});
 
-	const onSubmit = methods.handleSubmit(async (data) => {
+	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/school/admin/register", {
 			body: data,
 
 			onSuccess: () => {
-				void navigate("/login");
+				void navigate("/auth/login");
 			},
 		});
 	});
@@ -39,11 +39,11 @@ function AdminRegisterPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
-					<Form.Field<typeof methods.control> name="school" className="w-full gap-4">
+					<Form.Field control={form.control} name="school" className="w-full gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">School Name</Form.Label>
 
 						<Form.Input
@@ -55,7 +55,8 @@ function AdminRegisterPage() {
 
 						<Form.ErrorMessage className="text-red-600" />
 					</Form.Field>
-					<Form.Field<typeof methods.control> name="email" className="w-full gap-4">
+
+					<Form.Field control={form.control} name="email" className="w-full gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Email</Form.Label>
 
 						<Form.Input
@@ -67,7 +68,8 @@ function AdminRegisterPage() {
 
 						<Form.ErrorMessage className="text-red-600" />
 					</Form.Field>
-					<Form.Field<typeof methods.control> name="password" className="w-full gap-4">
+
+					<Form.Field control={form.control} name="password" className="w-full gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Password</Form.Label>
 
 						<Form.Input
@@ -84,20 +86,20 @@ function AdminRegisterPage() {
 					</Form.Field>
 
 					<Form.Submit
-						disabled={methods.formState.isSubmitting}
+						disabled={form.formState.isSubmitting}
 						className={cnMerge(
 							`mt-12 flex h-9 w-fit items-center justify-center self-end rounded-[10px]
 							bg-school-blue px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8
 							md:text-[18px]`,
-							methods.formState.isSubmitting && "grid"
+							form.formState.isSubmitting && "grid"
 						)}
 					>
-						{methods.formState.isSubmitting && (
+						{form.formState.isSubmitting && (
 							<span className="flex justify-center [grid-area:1/1]">
 								<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 							</span>
 						)}
-						<p className={cnJoin(methods.formState.isSubmitting && "invisible [grid-area:1/1]")}>
+						<p className={cnJoin(form.formState.isSubmitting && "invisible [grid-area:1/1]")}>
 							Register
 						</p>
 					</Form.Submit>

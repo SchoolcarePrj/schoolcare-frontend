@@ -17,7 +17,7 @@ function AddressPage() {
 		formStepData,
 	} = useRegisterFormStore((state) => state);
 
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: formStepData,
 		mode: "onChange",
 		resolver: zodResolver(AddressBodySchema),
@@ -25,7 +25,7 @@ function AddressPage() {
 
 	const navigate = useNavigate();
 
-	const onSubmit = methods.handleSubmit(async (stepTwoData) => {
+	const onSubmit = form.handleSubmit(async (stepTwoData) => {
 		updateFormData(stepTwoData);
 
 		const result = PersonalInfoBodySchema.safeParse(formStepData);
@@ -40,7 +40,7 @@ function AddressPage() {
 				);
 			}
 
-			void navigate("/register/personal-info");
+			void navigate("/auth/register/personal-info");
 
 			return;
 		}
@@ -62,7 +62,7 @@ function AddressPage() {
 		});
 	});
 
-	const state = methods.watch("state");
+	const state = form.watch("state");
 
 	const formattedNigeriaStatesAndLGA = nigeriaStatesAndLGA.map((item) => ({
 		label: item.state,
@@ -85,11 +85,11 @@ function AddressPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="mt-3 gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
-					<Form.Field<typeof methods.control> name="nationality" className="gap-3 md:gap-4">
+					<Form.Field<typeof form.control> name="nationality" className="gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-semibold md:text-base">
 							School nationality
 						</Form.Label>
@@ -126,10 +126,10 @@ function AddressPage() {
 							)}
 						/>
 
-						<Form.ErrorMessage control={methods.control} className="text-red-600" />
+						<Form.ErrorMessage control={form.control} className="text-red-600" />
 					</Form.Field>
 
-					<Form.Field<typeof methods.control> name="address" className="gap-4">
+					<Form.Field<typeof form.control> name="address" className="gap-4">
 						<Form.Label className="text-[14px] font-semibold md:text-base">
 							School Address
 						</Form.Label>
@@ -141,10 +141,10 @@ function AddressPage() {
 								md:px-8 md:text-base"
 						/>
 
-						<Form.ErrorMessage control={methods.control} className="text-red-600" />
+						<Form.ErrorMessage control={form.control} className="text-red-600" />
 					</Form.Field>
 
-					<Form.Field<typeof methods.control> name="state" className="w-full gap-4">
+					<Form.Field<typeof form.control> name="state" className="w-full gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">State</Form.Label>
 
 						<Form.FieldController
@@ -202,11 +202,11 @@ function AddressPage() {
 							)}
 						/>
 
-						<Form.ErrorMessage control={methods.control} className="text-red-600" />
+						<Form.ErrorMessage control={form.control} className="text-red-600" />
 					</Form.Field>
 
 					<div className="flex justify-between gap-1 md:gap-4">
-						<Form.Field<typeof methods.control> name="local_govt" className="w-full gap-3 md:gap-4">
+						<Form.Field<typeof form.control> name="local_govt" className="w-full gap-3 md:gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">LGA</Form.Label>
 
 							<Form.FieldController
@@ -266,10 +266,10 @@ function AddressPage() {
 								)}
 							/>
 
-							<Form.ErrorMessage control={methods.control} className="text-red-600" />
+							<Form.ErrorMessage control={form.control} className="text-red-600" />
 						</Form.Field>
 
-						<Form.Field<typeof methods.control> name="postal_code" className="w-full gap-3 md:gap-4">
+						<Form.Field<typeof form.control> name="postal_code" className="w-full gap-3 md:gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">
 								School postal code
 							</Form.Label>
@@ -282,7 +282,7 @@ function AddressPage() {
 									md:rounded-[20px] md:px-8 md:text-base"
 							/>
 
-							<Form.ErrorMessage control={methods.control} className="text-red-600" />
+							<Form.ErrorMessage control={form.control} className="text-red-600" />
 						</Form.Field>
 					</div>
 
@@ -292,28 +292,28 @@ function AddressPage() {
 							className="flex max-w-fit items-center gap-3 rounded-[4px] border-2
 								border-[hsl(0,0%,26%)] px-3 py-[6px] text-[14px] font-semibold text-[hsl(0,0%,13%)]
 								md:rounded-[8px] md:px-5 md:py-2 md:text-[18px]"
-							onClick={() => void navigate("/register/personal-info")}
+							onClick={() => void navigate("/auth/register/personal-info")}
 						>
 							<IconBox icon="material-symbols:arrow-forward-ios-rounded" className="rotate-180" />
 							Back
 						</button>
 
 						<Form.Submit
-							disabled={methods.formState.isSubmitting || !methods.formState.isValid}
+							disabled={form.formState.isSubmitting || !form.formState.isValid}
 							className={cnMerge(
 								`flex max-w-fit min-w-[77px] items-center justify-center gap-3 rounded-[4px]
 								bg-school-blue px-3 py-[6px] text-[14px] font-semibold text-white md:rounded-[8px]
 								md:px-5 md:py-2 md:text-[18px]`,
-								methods.formState.isSubmitting && "grid",
-								!methods.formState.isValid && "cursor-not-allowed bg-gray-400"
+								form.formState.isSubmitting && "grid",
+								!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 							)}
 						>
-							{methods.formState.isSubmitting && (
+							{form.formState.isSubmitting && (
 								<span className="flex justify-center [grid-area:1/1]">
 									<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 								</span>
 							)}
-							<p className={cnJoin(methods.formState.isSubmitting && "invisible [grid-area:1/1]")}>
+							<p className={cnJoin(form.formState.isSubmitting && "invisible [grid-area:1/1]")}>
 								Submit
 							</p>
 						</Form.Submit>

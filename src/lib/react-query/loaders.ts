@@ -9,6 +9,10 @@ import {
 
 const queryClient = getQueryClient();
 
+export const rootLoader = () => {
+	void queryClient.prefetchQuery(sessionQuery());
+};
+
 export const protectionLoader = () => {
 	void queryClient.prefetchQuery(sessionQuery());
 };

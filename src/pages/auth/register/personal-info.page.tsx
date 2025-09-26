@@ -16,7 +16,7 @@ function PersonalInfoPage() {
 		logoPreview,
 	} = useRegisterFormStore((state) => state);
 
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: formStepData,
 		mode: "onChange",
 		resolver: zodResolver(PersonalInfoBodySchema),
@@ -24,10 +24,10 @@ function PersonalInfoPage() {
 
 	const navigate = useNavigate();
 
-	const onSubmit = methods.handleSubmit((data) => {
+	const onSubmit = form.handleSubmit((data) => {
 		updateFormData(data);
 
-		void navigate("/register/address");
+		void navigate("/auth/register/address");
 	});
 
 	return (
@@ -39,11 +39,11 @@ function PersonalInfoPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="mt-3 gap-8 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
-					<Form.Field<typeof methods.control> name="logo">
+					<Form.Field<typeof form.control> name="logo">
 						<Form.FieldController
 							render={({ field }) => (
 								<DropZoneInput
@@ -77,7 +77,7 @@ function PersonalInfoPage() {
 						<Form.ErrorMessage className="text-red-600" />
 					</Form.Field>
 
-					<Form.Field<typeof methods.control> name="name" className="gap-3 md:gap-4">
+					<Form.Field<typeof form.control> name="name" className="gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Name of School</Form.Label>
 
 						<Form.Input
@@ -90,7 +90,7 @@ function PersonalInfoPage() {
 						<Form.ErrorMessage className="text-red-600" />
 					</Form.Field>
 
-					<Form.Field<typeof methods.control> name="email" className="gap-3 md:gap-4">
+					<Form.Field<typeof form.control> name="email" className="gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">School Email</Form.Label>
 
 						<Form.Input
@@ -105,7 +105,7 @@ function PersonalInfoPage() {
 					</Form.Field>
 
 					<Form.Submit
-						disabled={methods.formState.isSubmitting}
+						disabled={form.formState.isSubmitting}
 						className={cnMerge(
 							`flex max-w-fit min-w-[77px] items-center justify-center gap-3 self-end rounded-[4px]
 							bg-school-blue px-3 py-[6px] text-[14px] font-semibold text-white md:rounded-[8px]

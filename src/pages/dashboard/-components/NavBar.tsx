@@ -3,7 +3,7 @@ import { lockScroll } from "@zayne-labs/toolkit-core";
 import { useToggle } from "@zayne-labs/toolkit-react";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
-import { NavLink, useLocation } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { ForWithWrapper, getElementList, IconBox, Image, Show } from "@/components/common";
 import { CollapsibleAnimated } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
@@ -99,6 +99,8 @@ function MobileNavigation(props: MobileNavProps) {
 
 	const queryClient = useQueryClient();
 
+	const navigate = useNavigate();
+
 	return (
 		<section
 			className={cnMerge(
@@ -171,7 +173,7 @@ function MobileNavigation(props: MobileNavProps) {
 							<button
 								type="button"
 								className="flex h-[42px] items-center gap-3 pl-6"
-								onClick={item.link(queryClient)}
+								onClick={item.link(queryClient, navigate)}
 							>
 								<IconBox icon={item.icon} className="size-5" />
 								{item.label}

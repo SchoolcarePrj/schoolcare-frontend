@@ -22,30 +22,26 @@ const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
 const BASE_API_URL = `${BACKEND_HOST}/api`;
 
-const sharedBaseCallApiConfig = defineBaseConfig((instanceConfig) => ({
+const sharedBaseCallApiConfig = defineBaseConfig((instanceCtx) => ({
 	baseURL: BASE_API_URL,
 
 	dedupeCacheScope: "global",
-	dedupeCacheScopeKey: instanceConfig.options.baseURL,
+	dedupeCacheScopeKey: instanceCtx.options.baseURL,
 
-	plugins: [
-		authPlugin(),
-		toastPlugin(),
-		loggerPlugin({ enabled: { onRequestError: true, onResponseError: true, onValidationError: true } }),
-	],
+	plugins: [authPlugin(), toastPlugin(), loggerPlugin({ enabled: { onError: true } })],
 
 	schema: apiSchema,
 
 	skipAutoMergeFor: "options",
 
-	...(instanceConfig.options as object),
+	...(instanceCtx.options as object),
 
 	meta: {
-		...instanceConfig.options.meta,
+		...instanceCtx.options.meta,
 
 		auth: {
-			routesToIncludeForRedirectionOnAuthError: ["/dashboard/**"],
-			...instanceConfig.options.meta?.auth,
+			routesToExemptFromRedirectOnAuthError: ["/", "/auth/**"],
+			...instanceCtx.options.meta?.auth,
 		},
 
 		toast: {
@@ -57,7 +53,7 @@ const sharedBaseCallApiConfig = defineBaseConfig((instanceConfig) => ({
 			errorsToSkip: ["AbortError"],
 			errorsToSkipCondition: (error) => isAuthTokenRelatedError(error),
 			success: false,
-			...instanceConfig.options.meta?.toast,
+			...instanceCtx.options.meta?.toast,
 		},
 	} satisfies GlobalMeta,
 }));

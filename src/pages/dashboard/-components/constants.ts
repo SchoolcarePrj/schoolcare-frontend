@@ -1,5 +1,6 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { logout } from "../utils";
+import type { NavigateFunction } from "react-router";
 
 export const dashboardLinkItems = [
 	{
@@ -39,6 +40,6 @@ export const dashboardLinkItems = [
 	{
 		icon: "mage:logout",
 		label: "Log out",
-		link: (queryClient: QueryClient) => () => logout(queryClient),
+		link: (queryClient: QueryClient, navigate: NavigateFunction) => () => logout(queryClient, navigate),
 	},
 ];

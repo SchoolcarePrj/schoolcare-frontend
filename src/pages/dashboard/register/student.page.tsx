@@ -20,7 +20,7 @@ const RegisterStudentSchema = z.object({
 });
 
 function RegisterStudentPage() {
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: {
 			gender: "",
 			other_names: "",
@@ -37,7 +37,7 @@ function RegisterStudentPage() {
 
 	const queryClient = useQueryClient();
 
-	const onSubmit = methods.handleSubmit(async (data) => {
+	const onSubmit = form.handleSubmit(async (data) => {
 		const { other_names, surname, ...restOfData } = data;
 
 		await callBackendApi("@post/school/students", {
@@ -48,13 +48,13 @@ function RegisterStudentPage() {
 			meta: { toast: { success: true } },
 
 			// onResponseError: (ctx) => {
-			// 	methods.setError("root.serverError", {
+			// 	form.setError("root.serverError", {
 			// 		message: ctx.error.errorData.errors?.message,
 			// 	});
 			// },
 
 			onSuccess: () => {
-				methods.reset();
+				form.reset();
 
 				void queryClient.invalidateQueries(allStudentsInSchoolQuery());
 				queryClient.removeQueries(studentsByClassQuery(data.school_class));
@@ -70,11 +70,11 @@ function RegisterStudentPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="gap-6 md:gap-8"
 					onSubmit={(event) => void onSubmit(event)}
 				>
-					<Form.Field<typeof methods.control> name="surname" className="gap-4">
+					<Form.Field<typeof form.control> name="surname" className="gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Surname*</Form.Label>
 
 						<Form.Input
@@ -87,7 +87,7 @@ function RegisterStudentPage() {
 						<Form.ErrorMessage />
 					</Form.Field>
 
-					<Form.Field<typeof methods.control> name="other_names" className="gap-4">
+					<Form.Field<typeof form.control> name="other_names" className="gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Other Names*</Form.Label>
 
 						<Form.Input
@@ -101,7 +101,7 @@ function RegisterStudentPage() {
 					</Form.Field>
 
 					<div className="flex gap-6 md:gap-[70px]">
-						<Form.Field<typeof methods.control> name="gender" className="w-full min-w-0 gap-4">
+						<Form.Field<typeof form.control> name="gender" className="w-full min-w-0 gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">Gender</Form.Label>
 
 							<Form.FieldController
@@ -150,7 +150,7 @@ function RegisterStudentPage() {
 							<Form.ErrorMessage />
 						</Form.Field>
 
-						<Form.Field<typeof methods.control> name="school_class" className="w-full min-w-0 gap-4">
+						<Form.Field<typeof form.control> name="school_class" className="w-full min-w-0 gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">Class</Form.Label>
 
 							<Form.FieldController
@@ -203,19 +203,19 @@ function RegisterStudentPage() {
 					<Form.ErrorMessage type="root" errorField="serverError" />
 
 					<Form.Submit
-						disabled={methods.formState.isSubmitting || !methods.formState.isValid}
+						disabled={form.formState.isSubmitting || !form.formState.isValid}
 						className={cnMerge(
 							`mt-12 flex h-9 w-fit items-center justify-center self-end rounded-[10px]
 							bg-school-blue px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8
 							md:text-[18px]`,
-							!methods.formState.isValid && "cursor-not-allowed bg-gray-400",
-							methods.formState.isSubmitting && "grid"
+							!form.formState.isValid && "cursor-not-allowed bg-gray-400",
+							form.formState.isSubmitting && "grid"
 						)}
 					>
-						<p className={cnJoin(methods.formState.isSubmitting && "invisible [grid-area:1/1]")}>
+						<p className={cnJoin(form.formState.isSubmitting && "invisible [grid-area:1/1]")}>
 							Register
 						</p>
-						{methods.formState.isSubmitting && (
+						{form.formState.isSubmitting && (
 							<span className="flex justify-center [grid-area:1/1]">
 								<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 							</span>

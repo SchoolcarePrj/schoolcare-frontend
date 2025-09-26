@@ -18,6 +18,8 @@ import { BrainIcon, LineGraphIcon, PageIcon, PieIcon, StudentIcon, UploadIcon } 
 import { Card, Carousel } from "@/components/ui";
 import { AccordionFaqs } from "./-components/AccordionFaqs";
 import { ResultCheckForm } from "./-components/ResultCheckForm";
+import { sessionQuery } from "@/lib/react-query/queryOptions";
+import { useQuery } from "@tanstack/react-query";
 
 const experiences = [
 	{
@@ -103,6 +105,8 @@ const carouselItems = [{ imageURL: carouselOne }, { imageURL: carouselTwo }, { i
 function HomePage() {
 	const { getItemProps, getRootProps } = useDragScroll<HTMLUListElement>();
 
+	const sessionQueryResult = useQuery(sessionQuery());
+
 	return (
 		<main className="flex grow flex-col gap-9 pb-[120px] lg:gap-[100px]">
 			<section
@@ -125,11 +129,11 @@ function HomePage() {
 					<div className="mt-9 flex flex-col items-center gap-5.5 lg:mt-[64px] lg:flex-row lg:gap-7">
 						<button type="button" className="shrink-0">
 							<NavLink
-								to="/login"
+								to={sessionQueryResult.data ? "/dashboard" : "/auth/login"}
 								className="block rounded-[8px] border border-[hsla(0,0%,98%,1)] px-6 py-2
 									font-semibold lg:rounded-[12px] lg:py-4 lg:text-[24px]"
 							>
-								Login
+								{sessionQueryResult.data ? "Dashboard" : "Login"}
 							</NavLink>
 						</button>
 

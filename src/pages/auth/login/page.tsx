@@ -13,7 +13,7 @@ import { cnJoin, cnMerge } from "@/lib/utils/cn";
 const SignInSchema = apiSchema.routes["@post/login"].body;
 
 function LoginPage() {
-	const methods = useForm({
+	const form = useForm({
 		defaultValues: {
 			email: "",
 			password: "",
@@ -25,7 +25,7 @@ function LoginPage() {
 
 	const queryClient = useQueryClient();
 
-	const onSubmit = methods.handleSubmit(async (data) => {
+	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/login", {
 			body: data,
 			meta: {
@@ -58,11 +58,11 @@ function LoginPage() {
 
 			<section>
 				<Form.Root
-					methods={methods}
+					methods={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
-					<Form.Field<typeof methods.control> name="email" className="gap-3 md:gap-4">
+					<Form.Field<typeof form.control> name="email" className="gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">
 							School email address*
 						</Form.Label>
@@ -78,7 +78,7 @@ function LoginPage() {
 						<Form.ErrorMessage className="text-red-600" />
 					</Form.Field>
 
-					<Form.Field<typeof methods.control> name="password" className="gap-4">
+					<Form.Field<typeof form.control> name="password" className="gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">
 							School Password*
 						</Form.Label>
@@ -110,19 +110,19 @@ function LoginPage() {
 					</div>
 
 					<Form.Submit
-						disabled={methods.formState.isSubmitting || !methods.formState.isValid}
+						disabled={form.formState.isSubmitting || !form.formState.isValid}
 						className={cnMerge(
 							`mt-3 flex h-12 w-full max-w-[200px] items-center justify-center gap-4 self-center
 							rounded-[60px] bg-school-blue text-[18px] font-bold text-white md:h-[65px]
 							md:max-w-[300px] md:text-[22px]`,
-							methods.formState.isSubmitting && "grid",
-							!methods.formState.isValid && "cursor-not-allowed bg-gray-400"
+							form.formState.isSubmitting && "grid",
+							!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 						)}
 					>
 						<p
 							className={cnJoin(
 								"flex items-center gap-1",
-								methods.formState.isSubmitting && "invisible [grid-area:1/1]"
+								form.formState.isSubmitting && "invisible [grid-area:1/1]"
 							)}
 						>
 							Login
@@ -131,7 +131,7 @@ function LoginPage() {
 							</span>
 						</p>
 
-						{methods.formState.isSubmitting && (
+						{form.formState.isSubmitting && (
 							<span className="flex justify-center [grid-area:1/1]">
 								<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 							</span>
