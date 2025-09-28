@@ -5,7 +5,7 @@ import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { Main } from "@/pages/dashboard/-components/Main";
+import { Main } from "@/pages/admin/school/dashboard/-components/Main";
 
 const AdminRegisterSchema = apiSchema.routes["@post/school/admin/register"].body;
 

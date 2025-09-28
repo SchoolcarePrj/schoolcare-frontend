@@ -2,7 +2,7 @@ import { useStorageState } from "@zayne-labs/toolkit-react";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Table } from "@/components/ui";
 import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
-import { Main } from "../dashboard/-components/Main";
+import { Main } from "../admin/school/dashboard/-components/Main";
 
 const columns = defineEnum(["Subject", "First CA", "Second CA", "Exam", "Total", "Grade", "Remark"]);
 

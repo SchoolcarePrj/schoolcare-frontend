@@ -1,5 +1,4 @@
-import { NavLink } from "react-router";
-import { IconBox } from "@/components/common";
+import { IconBox, NavLink } from "@/components/common";
 
 function Footer() {
 	return (

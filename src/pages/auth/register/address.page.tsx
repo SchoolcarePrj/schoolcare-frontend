@@ -9,7 +9,7 @@ import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib
 import { nigeriaStatesAndLGA } from "@/lib/api/nigeria";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
-import { Main } from "@/pages/dashboard/-components/Main";
+import { Main } from "@/pages/admin/school/dashboard/-components/Main";
 
 function AddressPage() {
 	const {

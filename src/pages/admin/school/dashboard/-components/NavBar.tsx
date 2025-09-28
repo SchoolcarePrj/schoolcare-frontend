@@ -105,8 +105,8 @@ function MobileNavigation(props: MobileNavProps) {
 		<section
 			className={cnMerge(
 				`fixed inset-[0_auto_0_0] mt-[70px] scrollbar-hidden overflow-x-hidden bg-school-dark-blue pt-1
-				text-white`,
-				isNavShow ? "w-svw [transition:width_450ms_ease]" : "w-0 [transition:width_250ms_ease]",
+				text-white transition-[width] ease-initial`,
+				isNavShow ? "w-svw duration-500" : "w-0 duration-250",
 				className
 			)}
 			onClick={(event) => {

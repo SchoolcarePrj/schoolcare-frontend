@@ -7,7 +7,7 @@ import { DropZone, Form } from "@/components/ui";
 import { PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
 import { cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
-import { Main } from "@/pages/dashboard/-components/Main";
+import { Main } from "@/pages/admin/school/dashboard/-components/Main";
 
 function PersonalInfoPage() {
 	const {

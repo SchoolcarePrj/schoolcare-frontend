@@ -20,14 +20,14 @@ const HomeLayout = lazy(() => import("./pages/(home)/layout"));
 const ProtectionLayout = lazy(() => import("./pages/layout.protect"));
 const AuthLayout = lazy(() => import("./pages/auth/layout"));
 const RegisterLayout = lazy(() => import("./pages/auth/register/layout"));
-const DashboardLayout = lazy(() => import("./pages/dashboard/layout"));
+const AdminSchoolDashboardLayout = lazy(() => import("./pages/admin/school/dashboard/layout"));
 const StudentResultLayout = lazy(() => import("./pages/student-result/layout"));
-const AdminLayout = lazy(() => import("./pages/admin/layout"));
-const SuperAdminDashboardLayout = lazy(() => import("./pages/super-admin/dashboard/layout"));
+const AdminSchoolRegisterLayout = lazy(() => import("./pages/admin/school/register/layout"));
+const AdminSuperDashboardLayout = lazy(() => import("./pages/admin/super/dashboard/layout"));
 
 const routes = createRoutesFromElements(
 	<Route Component={RootLayout} loader={rootLoader}>
-		{/* eslint-disable react/no-nested-lazy-component-declarations */}
+		{/* eslint-disable react-x/no-nested-lazy-component-declarations */}
 
 		<Route path="/test" Component={lazy(() => import("./pages/page.test"))} />
 
@@ -68,69 +68,87 @@ const routes = createRoutesFromElements(
 		</Route>
 
 		<Route Component={ProtectionLayout} loader={protectionLoader}>
-			<Route path="/dashboard" Component={DashboardLayout}>
+			<Route path="/admin/school/dashboard" Component={AdminSchoolDashboardLayout}>
 				<Route
 					index={true}
 					loader={dashboardLoader}
-					Component={lazy(() => import("./pages/dashboard/page"))}
+					Component={lazy(() => import("./pages/admin/school/dashboard/page"))}
 				/>
 
 				<Route
 					path="register/student"
-					Component={lazy(() => import("./pages/dashboard/register/student.page"))}
+					Component={lazy(() => import("./pages/admin/school/dashboard/register/student.page"))}
 				/>
 				<Route
 					path="register/subject"
-					Component={lazy(() => import("./pages/dashboard/register/subject.page"))}
+					Component={lazy(() => import("./pages/admin/school/dashboard/register/subject.page"))}
 				/>
 				<Route
 					path="register/class"
-					Component={lazy(() => import("./pages/dashboard/register/class.page"))}
+					Component={lazy(() => import("./pages/admin/school/dashboard/register/class.page"))}
 				/>
 
 				<Route
 					path="students/view-all"
-					Component={lazy(() => import("./pages/dashboard/students/view-all/page"))}
+					Component={lazy(() => import("./pages/admin/school/dashboard/students/view-all/page"))}
 				/>
 				<Route
 					path="students/view-all/table"
-					Component={lazy(() => import("./pages/dashboard/students/view-all/table.page"))}
+					Component={lazy(
+						() => import("./pages/admin/school/dashboard/students/view-all/table.page")
+					)}
 				/>
 				<Route
 					path="students/view-single"
-					Component={lazy(() => import("./pages/dashboard/students/view-single/page"))}
+					Component={lazy(() => import("./pages/admin/school/dashboard/students/view-single/page"))}
 				/>
 				<Route
 					path="students/view-single/table"
-					Component={lazy(() => import("./pages/dashboard/students/view-single/table.page"))}
+					Component={lazy(
+						() => import("./pages/admin/school/dashboard/students/view-single/table.page")
+					)}
 				/>
 				<Route
 					path="students/input-scores"
-					Component={lazy(() => import("./pages/dashboard/students/input-scores/page"))}
+					Component={lazy(() => import("./pages/admin/school/dashboard/students/input-scores/page"))}
 				/>
 				<Route
 					path="students/input-scores/table"
-					Component={lazy(() => import("./pages/dashboard/students/input-scores/table.page"))}
+					Component={lazy(
+						() => import("./pages/admin/school/dashboard/students/input-scores/table.page")
+					)}
 				/>
 				<Route
 					path="students/input-scores/upload"
-					Component={lazy(() => import("./pages/dashboard/students/input-scores/upload.page"))}
+					Component={lazy(
+						() => import("./pages/admin/school/dashboard/students/input-scores/upload.page")
+					)}
 				/>
 			</Route>
 		</Route>
 
-		<Route Component={AdminLayout}>
-			<Route path="/admin/register" Component={lazy(() => import("./pages/admin/register/page"))} />
+		<Route path="/admin/school/register" Component={AdminSchoolRegisterLayout}>
+			<Route index={true} Component={lazy(() => import("./pages/admin/school/register/page"))} />
 		</Route>
 
-		<Route Component={SuperAdminDashboardLayout}>
+		<Route path="/admin/super/dashboard" Component={AdminSuperDashboardLayout}>
+			<Route index={true} Component={lazy(() => import("./pages/admin/super/dashboard/page"))} />
 			<Route
-				path="/super-admin/dashboard"
-				Component={lazy(() => import("./pages/super-admin/dashboard/page"))}
+				path="notifications"
+				Component={lazy(() => import("./pages/admin/super/dashboard/notifications/page"))}
+			/>
+			<Route path="blogs" Component={lazy(() => import("./pages/admin/super/dashboard/blogs/page"))} />
+			<Route
+				path="schools"
+				Component={lazy(() => import("./pages/admin/super/dashboard/schools/page"))}
+			/>
+			<Route
+				path="settings"
+				Component={lazy(() => import("./pages/admin/super/dashboard/settings/page"))}
 			/>
 		</Route>
 
-		{/* eslint-enable react/no-nested-lazy-component-declarations */}
+		{/* eslint-enable react-x/no-nested-lazy-component-declarations */}
 	</Route>
 );
 
