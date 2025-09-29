@@ -35,7 +35,7 @@ function UploadPage() {
 
 			onSuccess: () => {
 				resetFormStore();
-				void navigate("/dashboard");
+				void navigate("/admin/school/dashboard");
 			},
 		});
 	});
@@ -115,7 +115,7 @@ function UploadPage() {
 										</span>
 
 										<p className="text-[14px] md:text-base">
-											Drag and drop or <span className="text-school-blue">Browse</span> your
+											Drag and drop or <span className="text-school-blue-500">Browse</span> your
 											file
 										</p>
 									</DropZone.Area>
@@ -129,8 +129,8 @@ function UploadPage() {
 					<Form.Submit
 						disabled={form.formState.isSubmitting || !form.formState.isValid}
 						className={cnMerge(
-							`flex w-[120.5px] items-center justify-center self-end rounded-[10px] bg-school-blue
-							px-8 py-4 text-[18px] font-bold text-white`,
+							`flex w-[120.5px] items-center justify-center self-end rounded-[10px]
+							bg-school-blue-500 px-8 py-4 text-[18px] font-bold text-white`,
 							form.formState.isSubmitting && "grid",
 							!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 						)}

@@ -1,5 +1,6 @@
-function SuperAdminDashboardPage() {
-	return <div>page</div>;
+
+function DashboardPage() {
+	return <div>DashboardPage</div>;
 }
 
-export default SuperAdminDashboardPage;
+export default DashboardPage;

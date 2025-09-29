@@ -24,11 +24,11 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@zayne-labs/callapi':
-        specifier: 1.10.4
-        version: 1.10.4
+        specifier: 1.10.6
+        version: 1.10.6
       '@zayne-labs/callapi-plugins':
-        specifier: ^3.1.6
-        version: 3.1.6(@zayne-labs/callapi@1.10.4)(@zayne-labs/toolkit-type-helpers@0.11.17)(consola@3.4.2)
+        specifier: ^3.1.8
+        version: 3.1.8(@zayne-labs/callapi@1.10.6)(@zayne-labs/toolkit-type-helpers@0.11.17)(consola@3.4.2)
       '@zayne-labs/toolkit-core':
         specifier: ^0.11.17
         version: 0.11.17
@@ -1715,16 +1715,16 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
 
-  '@zayne-labs/callapi-plugins@3.1.6':
-    resolution: {integrity: sha512-+Bg2Hhfj/J6UfpEUz2gMpgUGB0DWiO3mJvlneulqDwNRe0QSdd6bfs2Fl7MsH18EOvMY2VA25OPAwSW1Wai3lw==}
+  '@zayne-labs/callapi-plugins@3.1.8':
+    resolution: {integrity: sha512-l+Eq6IIWWBukX+Ydems1PQbWTk9i5YVgqC8fNYeUZxm9h5b2QEeUWa497mdMrO/O8BfgTysUm3xoFThrXMyvtA==}
     engines: {node: '>=v18.17.0'}
     peerDependencies:
-      '@zayne-labs/callapi': 1.10.4
+      '@zayne-labs/callapi': 1.10.6
       '@zayne-labs/toolkit-type-helpers': '>=0.9.35'
       consola: ^3.4.2
 
-  '@zayne-labs/callapi@1.10.4':
-    resolution: {integrity: sha512-BSD2G2f2AmB6ajU/n1QToFimCvdPM4RvX9y/3kRswuUVSkQYnLzpq+1QEKSP4Dhm7CmSL9a6l55kRrnQt2qcKg==}
+  '@zayne-labs/callapi@1.10.6':
+    resolution: {integrity: sha512-S1+WrPzeaciR4z5dAUwjrAbQ/1o3ghAIuVDfALbS8BUB1/O0TtmBYLvmVAOfCJELukCspEDhlbJ4zop+VzrbEw==}
     engines: {node: '>=v18.17.0'}
 
   '@zayne-labs/eslint-config@0.10.2':
@@ -5322,13 +5322,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@zayne-labs/callapi-plugins@3.1.6(@zayne-labs/callapi@1.10.4)(@zayne-labs/toolkit-type-helpers@0.11.17)(consola@3.4.2)':
+  '@zayne-labs/callapi-plugins@3.1.8(@zayne-labs/callapi@1.10.6)(@zayne-labs/toolkit-type-helpers@0.11.17)(consola@3.4.2)':
     dependencies:
-      '@zayne-labs/callapi': 1.10.4
+      '@zayne-labs/callapi': 1.10.6
       '@zayne-labs/toolkit-type-helpers': 0.11.17
       consola: 3.4.2
 
-  '@zayne-labs/callapi@1.10.4': {}
+  '@zayne-labs/callapi@1.10.6': {}
 
   '@zayne-labs/eslint-config@0.10.2(@eslint-react/eslint-plugin@2.0.1(eslint@9.36.0(jiti@2.5.1))(typescript@5.9.2))(@tanstack/eslint-plugin-query@5.91.0(eslint@9.36.0(jiti@2.5.1))(typescript@5.9.2))(@typescript-eslint/utils@8.44.1(eslint@9.36.0(jiti@2.5.1))(typescript@5.9.2))(eslint-plugin-better-tailwindcss@3.7.9(eslint@9.36.0(jiti@2.5.1))(tailwindcss@4.1.13))(eslint-plugin-react-hooks@5.2.0(eslint@9.36.0(jiti@2.5.1)))(eslint-plugin-react-refresh@0.4.22(eslint@9.36.0(jiti@2.5.1)))(eslint-plugin-react-you-might-not-need-an-effect@0.5.4(eslint@9.36.0(jiti@2.5.1)))(eslint@9.36.0(jiti@2.5.1))(typescript@5.9.2)':
     dependencies:

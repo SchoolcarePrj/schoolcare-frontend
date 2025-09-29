@@ -127,7 +127,7 @@ function RegisterSubjectPage() {
 						disabled={form.formState.isSubmitting}
 						className={cnMerge(
 							`mt-12 flex h-9 w-fit items-center justify-center self-end rounded-[10px]
-							bg-school-blue px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8
+							bg-school-blue-500 px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8
 							md:text-[18px]`,
 							!form.formState.isValid && "cursor-not-allowed bg-gray-400",
 							form.formState.isSubmitting && "grid"

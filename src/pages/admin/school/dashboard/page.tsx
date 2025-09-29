@@ -53,13 +53,13 @@ function DashboardPage() {
 					>
 						<Card.Content className="flex flex-col items-center px-0">
 							<span
-								className="flex size-6 items-center justify-center rounded-full border-[3px]
-									border-school-blue md:size-[70px]"
+								className="flex size-6 items-center justify-center rounded-full
+									border-[3px] border-school-blue-500 md:size-[70px]"
 							>
 								{item.icon}
 							</span>
 
-							<hr className="my-2 h-2 w-full bg-school-blue md:hidden" />
+							<hr className="my-2 h-2 w-full bg-school-blue-500 md:hidden" />
 
 							<Card.Title
 								className="px-3 text-center text-[10px] font-medium md:mt-3.5 md:text-[12px]"
@@ -74,7 +74,7 @@ function DashboardPage() {
 							</Card.Description>
 						</Card.Content>
 
-						<hr className="mt-3 h-4 w-full bg-school-blue max-md:hidden" />
+						<hr className="mt-3 h-4 w-full bg-school-blue-500 max-md:hidden" />
 					</Card.Root>
 				)}
 			/>

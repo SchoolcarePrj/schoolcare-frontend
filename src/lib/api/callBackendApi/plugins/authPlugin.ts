@@ -1,5 +1,6 @@
 import { definePlugin, type ResponseErrorContext } from "@zayne-labs/callapi";
 import { isHTTPError } from "@zayne-labs/callapi/utils";
+import type { Awaitable, CallbackFn } from "@zayne-labs/toolkit-type-helpers";
 import type { BaseApiErrorResponse } from "../apiSchema";
 import {
 	authTokenObject,
@@ -9,7 +10,6 @@ import {
 	redirectTo,
 } from "./utils";
 import { getNewUserSession } from "./utils/session";
-import type { Awaitable, CallbackFn } from "@zayne-labs/toolkit-type-helpers";
 
 export type AuthPluginMeta = {
 	auth?: {

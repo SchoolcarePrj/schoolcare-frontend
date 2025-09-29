@@ -1,6 +1,8 @@
 import { toast } from "sonner";
 
-const validateInputValue = (existingValues: string[], newValue: string | undefined) => {
+export const getUserAvatar = (firstName: string, lastName: string) => `${firstName[0]}${lastName[0]}`;
+
+export const validateInputValue = (existingValues: string[], newValue: string | undefined) => {
 	if (!newValue) return;
 
 	if (existingValues.includes(newValue)) {
@@ -13,5 +15,3 @@ const validateInputValue = (existingValues: string[], newValue: string | undefin
 
 	return newValue;
 };
-
-export { validateInputValue };

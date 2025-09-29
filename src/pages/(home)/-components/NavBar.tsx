@@ -112,8 +112,8 @@ function MobileNavigation(props: MobileNavigationProps) {
 		<>
 			<article
 				className={cnMerge(
-					`fixed inset-[0_0_0_auto] w-full overflow-x-hidden bg-school-dark-blue pt-[72px] text-white
-					transition-[width,translate] duration-300`,
+					`fixed inset-[0_0_0_auto] w-full overflow-x-hidden bg-school-darker-blue pt-[72px]
+					text-white transition-[width,translate] duration-300`,
 					// isNavShow ? "translate-x-0 ease-in-out" : "translate-x-full ease-in-out",
 					isNavShow ? "w-full duration-500 ease-initial" : "w-0 duration-250 ease-initial",
 					className,
@@ -138,7 +138,7 @@ function MobileNavigation(props: MobileNavigationProps) {
 							<NavLink
 								key={linkItem.title}
 								to={linkItem.href}
-								className="[.active]:text-school-blue"
+								className="[.active]:text-school-blue-500"
 							>
 								{linkItem.title}
 							</NavLink>

@@ -105,9 +105,9 @@ export function ViewAllStudentsPage() {
 					<div className="flex gap-6 self-end">
 						<button
 							type="reset"
-							className="flex h-9 w-fit items-center justify-center self-end rounded-[10px] border
-								border-school-blue bg-white px-5 text-[14px] font-semibold text-school-blue
-								md:h-[56px] md:px-8 md:text-[18px]"
+							className="flex h-9 w-fit items-center justify-center self-end
+								rounded-[10px] border border-school-blue-500 bg-white px-5 text-[14px] font-semibold
+								text-school-blue-500 md:h-[56px] md:px-8 md:text-[18px]"
 						>
 							Cancel
 						</button>
@@ -115,8 +115,9 @@ export function ViewAllStudentsPage() {
 						<Form.Submit
 							disabled={form.formState.isSubmitting}
 							className={cnMerge(
-								`flex h-9 w-fit items-center justify-center self-end rounded-[10px] bg-school-blue
-								px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8 md:text-[18px]`,
+								`flex h-9 w-fit items-center justify-center self-end rounded-[10px]
+								bg-school-blue-500 px-5 text-[14px] font-semibold text-white md:h-[56px] md:px-8
+								md:text-[18px]`,
 								form.formState.isSubmitting && "grid",
 								!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 							)}

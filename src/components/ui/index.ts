@@ -12,3 +12,5 @@ export { Form } from "./form";
 export * as Popover from "./popover";
 export * as Select from "./select";
 export * as Table from "./table";
+export * as Avatar from "./avatar";
+export * as AvatarGroup from "./avatar-group-animated";

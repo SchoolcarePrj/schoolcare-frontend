@@ -23,11 +23,10 @@ export function NavBar() {
 
 	return (
 		<header
-			id="NavBar"
 			className={cnJoin(
-				`flex h-[70px] flex-col bg-school-dark-blue px-(--padding-value) [--padding-value:--spacing(5)]
-				max-md:sticky max-md:inset-[0_0_auto_0] max-md:z-100 max-md:justify-center md:h-[140px]
-				md:bg-white md:px-9`,
+				`flex h-[70px] flex-col bg-school-darker-blue px-(--padding-value)
+				[--padding-value:--spacing(5)] max-md:sticky max-md:inset-[0_0_auto_0] max-md:z-100
+				max-md:justify-center md:h-[140px] md:bg-white md:px-9`,
 				isNavShow && "w-svw pr-[calc(var(--padding-value)+var(--scrollbar-padding))]"
 			)}
 		>
@@ -104,8 +103,8 @@ function MobileNavigation(props: MobileNavProps) {
 	return (
 		<section
 			className={cnMerge(
-				`fixed inset-[0_auto_0_0] mt-[70px] scrollbar-hidden overflow-x-hidden bg-school-dark-blue pt-1
-				text-white transition-[width] ease-initial`,
+				`fixed inset-[0_auto_0_0] mt-[70px] scrollbar-hidden overflow-x-hidden bg-school-darker-blue
+				pt-1 text-white transition-[width] ease-initial`,
 				isNavShow ? "w-svw duration-500" : "w-0 duration-250",
 				className
 			)}
@@ -147,7 +146,7 @@ function MobileNavigation(props: MobileNavProps) {
 												data-active={innerItem.link === pathname}
 												to={innerItem.link}
 												className="mx-7.5 flex h-[42px] items-center gap-3 rounded-[8px] border
-													border-white pl-6 data-[active=true]:bg-school-blue"
+													border-white pl-6 data-[active=true]:bg-school-blue-500"
 											>
 												{innerItem.label}
 											</NavLink>
@@ -161,7 +160,7 @@ function MobileNavigation(props: MobileNavProps) {
 							<NavLink
 								data-active={item.link === pathname}
 								className="flex h-[42px] items-center gap-3 rounded-r-[10px] pl-6
-									data-[active=true]:bg-school-blue"
+									data-[active=true]:bg-school-blue-500"
 								to={item.link}
 							>
 								<IconBox icon={item.icon} className="size-5" />

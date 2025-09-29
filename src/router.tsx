@@ -8,7 +8,7 @@ import {
 	Route,
 	RouterProvider,
 } from "react-router";
-import { dashboardLoader, protectionLoader, rootLoader } from "./lib/react-query/loaders";
+import { dashboardLoader, sessionLoader } from "./lib/react-query/loaders";
 import { getQueryClient } from "./lib/react-query/queryClient";
 import RootLayout from "./pages/layout";
 
@@ -26,12 +26,12 @@ const AdminSchoolRegisterLayout = lazy(() => import("./pages/admin/school/regist
 const AdminSuperDashboardLayout = lazy(() => import("./pages/admin/super/dashboard/layout"));
 
 const routes = createRoutesFromElements(
-	<Route Component={RootLayout} loader={rootLoader}>
+	<Route Component={RootLayout}>
 		{/* eslint-disable react-x/no-nested-lazy-component-declarations */}
 
 		<Route path="/test" Component={lazy(() => import("./pages/page.test"))} />
 
-		<Route Component={HomeLayout}>
+		<Route Component={HomeLayout} loader={sessionLoader}>
 			<Route path="/" Component={lazy(() => import("./pages/(home)/page"))} />
 		</Route>
 
@@ -49,7 +49,7 @@ const routes = createRoutesFromElements(
 			/>
 		</Route>
 
-		<Route Component={AuthLayout}>
+		<Route Component={AuthLayout} loader={sessionLoader}>
 			<Route Component={RegisterLayout}>
 				<Route path="/auth/register" element={<Navigate to="/auth/register/personal-info" />} />
 
@@ -67,7 +67,7 @@ const routes = createRoutesFromElements(
 			<Route path="/auth/login" Component={lazy(() => import("./pages/auth/login/page"))} />
 		</Route>
 
-		<Route Component={ProtectionLayout} loader={protectionLoader}>
+		<Route Component={ProtectionLayout} loader={sessionLoader}>
 			<Route path="/admin/school/dashboard" Component={AdminSchoolDashboardLayout}>
 				<Route
 					index={true}

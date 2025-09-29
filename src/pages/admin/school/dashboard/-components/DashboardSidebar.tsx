@@ -21,10 +21,11 @@ function DashboardSidebar(props: { className?: string }) {
 		<Drawer.Root direction="left" trapFocus={false} modal={false} open={true} dismissible={false}>
 			<aside
 				className={cnMerge(
-					// NOTE - These classes allow the sidebar to scroll only within itself
+					// NOTE - These classes allow the sidebar to scroll only within itself.
+					// NOTE - Also ensure the direct parent of this drawer is a flex container with the vertical axis set to flex-stretch (which is the default)
 					"relative flex overflow-y-auto",
 
-					"custom-scrollbar min-w-[300px]",
+					"custom-scrollbar w-[300px] shrink-0",
 					className
 				)}
 			>
@@ -40,7 +41,7 @@ function DashboardSidebar(props: { className?: string }) {
 						// NOTE - These classes allow the sidebar to scroll only within itself
 						"absolute flex size-full grow flex-col",
 
-						`bg-school-dark-blue pt-[100px] text-white outline-hidden
+						`bg-school-darker-blue pt-[100px] text-white outline-hidden
 						data-vaul-drawer:[animation-duration:1300ms]`
 					)}
 				>
@@ -53,7 +54,7 @@ function DashboardSidebar(props: { className?: string }) {
 									<NavLink
 										data-active={item.link === pathname}
 										className="flex items-center gap-3 rounded-r-[10px] pl-6
-											data-[active=true]:h-[48px] data-[active=true]:bg-school-blue"
+											data-[active=true]:h-[48px] data-[active=true]:bg-school-blue-500"
 										to={item.link}
 									>
 										<IconBox icon={item.icon} className="size-5" />
@@ -85,7 +86,8 @@ function DashboardSidebar(props: { className?: string }) {
 													<NavLink
 														to={innerItem.link}
 														className="mx-7.5 flex h-[38px] items-center gap-3 rounded-[8px]
-															border border-white pl-6 data-[active=true]:bg-school-blue"
+															border border-white pl-6
+															data-[active=true]:bg-school-blue-500"
 													>
 														{innerItem.label}
 													</NavLink>

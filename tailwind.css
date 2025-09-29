@@ -13,11 +13,14 @@
 	--color-210-78-82: hsl(210, 78%, 82%);
 	--color-210-77-95: hsl(210, 77%, 95%);
 
-	--color-school-blue: hsl(209, 97%, 50%);
+	--color-school-blue-500: hsl(209, 97%, 50%);
+	--color-school-dark-blue-500: hsl(210, 100%, 13%);
+	--color-school-darker-blue: hsl(201, 100%, 4%);
+	--color-school-red-500: hsl(2, 84%, 59%);
+
 	--color-school-body-color: hsl(0, 0%, 20%);
 	--color-school-gray: hsl(313, 0%, 42%);
 	--color-school-gray-lighter: hsl(0, 0%, 76%);
-	--color-school-dark-blue: hsl(201, 100%, 4%);
 }
 
 /* ------------------*/
