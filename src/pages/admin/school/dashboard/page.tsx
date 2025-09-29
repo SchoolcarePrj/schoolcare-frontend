@@ -53,8 +53,8 @@ function DashboardPage() {
 					>
 						<Card.Content className="flex flex-col items-center px-0">
 							<span
-								className="flex size-6 items-center justify-center rounded-full
-									border-[3px] border-school-blue-500 md:size-[70px]"
+								className="flex size-6 items-center justify-center rounded-full border-[3px]
+									border-school-blue-500 md:size-[70px]"
 							>
 								{item.icon}
 							</span>

@@ -83,8 +83,8 @@ function TablePage() {
 			<section className="mt-auto flex gap-6 self-end">
 				<button
 					type="reset"
-					className="max-w-fit rounded-[10px] border border-school-blue-500 bg-white
-						px-8 py-4 text-[18px] font-bold text-school-blue-500"
+					className="max-w-fit rounded-[10px] border border-school-blue-500 bg-white px-8 py-4
+						text-[18px] font-bold text-school-blue-500"
 				>
 					Cancel
 				</button>

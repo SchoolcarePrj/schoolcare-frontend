@@ -105,9 +105,9 @@ export function ViewAllStudentsPage() {
 					<div className="flex gap-6 self-end">
 						<button
 							type="reset"
-							className="flex h-9 w-fit items-center justify-center self-end
-								rounded-[10px] border border-school-blue-500 bg-white px-5 text-[14px] font-semibold
-								text-school-blue-500 md:h-[56px] md:px-8 md:text-[18px]"
+							className="flex h-9 w-fit items-center justify-center self-end rounded-[10px] border
+								border-school-blue-500 bg-white px-5 text-[14px] font-semibold text-school-blue-500
+								md:h-[56px] md:px-8 md:text-[18px]"
 						>
 							Cancel
 						</button>

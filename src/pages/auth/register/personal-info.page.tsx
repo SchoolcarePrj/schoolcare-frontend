@@ -107,9 +107,9 @@ function PersonalInfoPage() {
 					<Form.Submit
 						disabled={form.formState.isSubmitting}
 						className={cnMerge(
-							`flex max-w-fit min-w-[77px] items-center justify-center gap-3 self-end
-							rounded-[4px] bg-school-blue-500 px-3 py-[6px] text-[14px] font-semibold text-white
-							md:rounded-[8px] md:px-5 md:py-2 md:text-[18px]`
+							`flex max-w-fit min-w-[77px] items-center justify-center gap-3 self-end rounded-[4px]
+							bg-school-blue-500 px-3 py-[6px] text-[14px] font-semibold text-white md:rounded-[8px]
+							md:px-5 md:py-2 md:text-[18px]`
 						)}
 					>
 						Next
