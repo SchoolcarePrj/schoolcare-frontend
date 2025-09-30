@@ -9,7 +9,7 @@ import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib
 import { nigeriaStatesAndLGA } from "@/lib/api/nigeria";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
-import { Main } from "@/pages/dashboard/-components/Main";
+import { Main } from "@/pages/admin/school/dashboard/-components/Main";
 
 function AddressPage() {
 	const {
@@ -302,8 +302,8 @@ function AddressPage() {
 							disabled={form.formState.isSubmitting || !form.formState.isValid}
 							className={cnMerge(
 								`flex max-w-fit min-w-[77px] items-center justify-center gap-3 rounded-[4px]
-								bg-school-blue px-3 py-[6px] text-[14px] font-semibold text-white md:rounded-[8px]
-								md:px-5 md:py-2 md:text-[18px]`,
+								bg-school-blue-500 px-3 py-[6px] text-[14px] font-semibold text-white
+								md:rounded-[8px] md:px-5 md:py-2 md:text-[18px]`,
 								form.formState.isSubmitting && "grid",
 								!form.formState.isValid && "cursor-not-allowed bg-gray-400"
 							)}

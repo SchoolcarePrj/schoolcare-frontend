@@ -6,3 +6,4 @@ export * from "./LoadingSpinner";
 export * from "./Show";
 export * from "./Switch";
 export { SonnerToaster } from "./Toaster";
+export { NavLink } from "./NavLink";

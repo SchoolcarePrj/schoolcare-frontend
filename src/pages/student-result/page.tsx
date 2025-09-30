@@ -2,7 +2,7 @@ import { useStorageState } from "@zayne-labs/toolkit-react";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Table } from "@/components/ui";
 import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
-import { Main } from "../dashboard/-components/Main";
+import { Main } from "../admin/school/dashboard/-components/Main";
 
 const columns = defineEnum(["Subject", "First CA", "Second CA", "Exam", "Total", "Grade", "Remark"]);
 
@@ -114,12 +114,13 @@ function ResultSheetPage() {
 
 			<section className="flex gap-5 md:gap-7">
 				<article
-					className="flex w-full flex-col gap-4 rounded-[24px] border-[1px] border-school-blue
+					className="flex w-full flex-col gap-4 rounded-[24px] border-[1px] border-school-blue-500
 						bg-[hsl(208,76%,98%)] p-6 md:gap-7 md:p-9"
 				>
 					<button
 						type="button"
-						className="grid h-10 w-full place-items-center rounded-[8px] bg-school-blue text-white"
+						className="grid h-10 w-full place-items-center rounded-[8px] bg-school-blue-500
+							text-white"
 					>
 						Key to grade
 					</button>
@@ -135,12 +136,13 @@ function ResultSheetPage() {
 				</article>
 
 				<article
-					className="flex w-full flex-col gap-4 rounded-[24px] border-[1px] border-school-blue
+					className="flex w-full flex-col gap-4 rounded-[24px] border-[1px] border-school-blue-500
 						bg-[hsl(208,76%,98%)] p-7 md:gap-7 md:p-9"
 				>
 					<button
 						type="button"
-						className="grid h-10 w-full place-items-center rounded-[8px] bg-school-blue text-white"
+						className="grid h-10 w-full place-items-center rounded-[8px] bg-school-blue-500
+							text-white"
 					>
 						Key to remark
 					</button>

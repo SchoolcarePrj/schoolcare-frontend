@@ -1,9 +1,6 @@
-"use client";
-
 import { dataAttr, lockScroll } from "@zayne-labs/toolkit-core";
 import { useToggle } from "@zayne-labs/toolkit-react";
-import { NavLink } from "react-router";
-import { IconBox } from "@/components/common";
+import { IconBox, NavLink } from "@/components/common";
 import { getElementList } from "@/components/common/For";
 import { cnMerge } from "@/lib/utils/cn";
 
@@ -115,10 +112,10 @@ function MobileNavigation(props: MobileNavigationProps) {
 		<>
 			<article
 				className={cnMerge(
-					`fixed inset-[0_0_0_auto] w-full overflow-x-hidden bg-school-dark-blue pt-[72px] text-white
-					transition-transform duration-300 ease-in-out`,
-					// isNavShow ? "translate-x-0" : "translate-x-full",
-					isNavShow ? "w-full [transition:width_450ms_ease]" : "w-0 [transition:width_250ms_ease]",
+					`fixed inset-[0_0_0_auto] w-full overflow-x-hidden bg-school-darker-blue pt-[72px]
+					text-white transition-[width,translate] duration-300`,
+					// isNavShow ? "translate-x-0 ease-in-out" : "translate-x-full ease-in-out",
+					isNavShow ? "w-full duration-500 ease-initial" : "w-0 duration-250 ease-initial",
 					className,
 					classNames?.base
 				)}
@@ -141,7 +138,7 @@ function MobileNavigation(props: MobileNavigationProps) {
 							<NavLink
 								key={linkItem.title}
 								to={linkItem.href}
-								className="[.active]:text-school-blue"
+								className="[.active]:text-school-blue-500"
 							>
 								{linkItem.title}
 							</NavLink>

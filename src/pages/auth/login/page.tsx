@@ -44,7 +44,7 @@ function LoginPage() {
 					data: omitKeys(ctx.data.data, ["access", "refresh"]),
 				});
 
-				void navigate("/dashboard");
+				void navigate("/admin/school/dashboard");
 			},
 		});
 	});
@@ -104,7 +104,7 @@ function LoginPage() {
 							<Form.InputPrimitive type="checkbox" className="size-4 md:size-[20px]" />
 						</Form.Field>
 
-						<Link to="#" className="text-[13px] text-school-blue md:text-base">
+						<Link to="#" className="text-[13px] text-school-blue-500 md:text-base">
 							Forgotten Password?
 						</Link>
 					</div>
@@ -113,7 +113,7 @@ function LoginPage() {
 						disabled={form.formState.isSubmitting || !form.formState.isValid}
 						className={cnMerge(
 							`mt-3 flex h-12 w-full max-w-[200px] items-center justify-center gap-4 self-center
-							rounded-[60px] bg-school-blue text-[18px] font-bold text-white md:h-[65px]
+							rounded-[60px] bg-school-blue-500 text-[18px] font-bold text-white md:h-[65px]
 							md:max-w-[300px] md:text-[22px]`,
 							form.formState.isSubmitting && "grid",
 							!form.formState.isValid && "cursor-not-allowed bg-gray-400"

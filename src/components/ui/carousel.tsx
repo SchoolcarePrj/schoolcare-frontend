@@ -60,11 +60,9 @@ function CarouselRoot(props: CarouselProps & InferProps<"div">) {
 	const onSelect = useCallbackRef((api: CarouselApi) => {
 		if (!api) return;
 
-		/* eslint-disable react-hooks-extra/no-direct-set-state-in-use-effect */
 		setCanScrollPrev(api.canScrollPrev());
 		setCanScrollNext(api.canScrollNext());
 		setSelectedIndex(api.selectedScrollSnap());
-		/* eslint-enable react-hooks-extra/no-direct-set-state-in-use-effect */
 	});
 
 	const scrollPrev = useCallbackRef(() => carouselApi?.scrollPrev());
@@ -95,6 +93,7 @@ function CarouselRoot(props: CarouselProps & InferProps<"div">) {
 	useEffect(() => {
 		if (!carouselApi || !setApi) return;
 
+		// eslint-disable-next-line react-you-might-not-need-an-effect/no-pass-data-to-parent
 		setApi(carouselApi);
 	}, [carouselApi, setApi]);
 

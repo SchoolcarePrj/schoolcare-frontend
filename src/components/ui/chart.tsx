@@ -76,8 +76,7 @@ export function ChartContainer(
 	const uniqueId = useId();
 	const chartId = `chart-${id ?? uniqueId.replaceAll(":", "")}`;
 
-	// eslint-disable-next-line react/no-unstable-context-value -- Adding a useMemo is useless here
-	const contextValue = { config };
+	const contextValue = useMemo(() => ({ config }), [config]);
 
 	return (
 		<ChartContext value={contextValue}>
@@ -227,7 +226,6 @@ export function ChartTooltipContent(
 								indicator === "dot" && "items-center"
 							)}
 						>
-							{/* eslint-disable react/no-complex-conditional-rendering */}
 							{formatter && item.value !== undefined && item.name ?
 								// eslint-disable-next-line ts-eslint/no-unsafe-argument
 								formatter(item.value, item.name, item, index, item.payload)
@@ -330,8 +328,7 @@ export function ChartLegendContent(
 			)}
 		>
 			{payload.map((item, index) => {
-				// eslint-disable-next-line ts-eslint/restrict-template-expressions
-				const key = `${nameKey ?? item.dataKey ?? "value"}`;
+				const key = String(nameKey ?? item.dataKey ?? "value");
 				const itemConfig = getConfigItemFromPayload(config, item, key);
 
 				if (renderItem) {
@@ -344,8 +341,7 @@ export function ChartLegendContent(
 
 				return (
 					<div
-						// eslint-disable-next-line react/no-array-index-key
-						key={index}
+						key={key}
 						className={cnMerge(
 							"flex items-center gap-1.5 [&>svg]:size-3 [&>svg]:text-shadcn-muted-foreground",
 							classNames?.legendItem
@@ -366,7 +362,6 @@ export function ChartLegendContent(
 		</div>
 	);
 }
-/* eslint-enable react/no-complex-conditional-rendering */
 /* eslint-enable ts-eslint/no-unsafe-assignment */
 /* eslint-enable ts-eslint/no-unsafe-member-access */
 

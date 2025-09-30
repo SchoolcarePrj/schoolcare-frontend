@@ -1,5 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
 import { useDragScroll } from "@zayne-labs/ui-react/ui/drag-scroll";
-import { NavLink } from "react-router";
 import {
 	cardOne,
 	cardThree,
@@ -13,13 +13,12 @@ import {
 	schoolThree,
 	schoolTwo,
 } from "@/assets/images/home";
-import { For, ForWithWrapper, Image } from "@/components/common";
+import { For, ForWithWrapper, Image, NavLink } from "@/components/common";
 import { BrainIcon, LineGraphIcon, PageIcon, PieIcon, StudentIcon, UploadIcon } from "@/components/icons";
 import { Card, Carousel } from "@/components/ui";
+import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { AccordionFaqs } from "./-components/AccordionFaqs";
 import { ResultCheckForm } from "./-components/ResultCheckForm";
-import { sessionQuery } from "@/lib/react-query/queryOptions";
-import { useQuery } from "@tanstack/react-query";
 
 const experiences = [
 	{
@@ -129,7 +128,7 @@ function HomePage() {
 					<div className="mt-9 flex flex-col items-center gap-5.5 lg:mt-[64px] lg:flex-row lg:gap-7">
 						<button type="button" className="shrink-0">
 							<NavLink
-								to={sessionQueryResult.data ? "/dashboard" : "/auth/login"}
+								to={sessionQueryResult.data ? "/admin/school/dashboard" : "/auth/login"}
 								className="block rounded-[8px] border border-[hsla(0,0%,98%,1)] px-6 py-2
 									font-semibold lg:rounded-[12px] lg:py-4 lg:text-[24px]"
 							>

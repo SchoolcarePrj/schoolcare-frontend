@@ -65,7 +65,7 @@ function HowItWorks() {
 							className="flex flex-col justify-center gap-1 rounded-[16px] border border-210-78-82
 								px-4.5 py-9 lg:rounded-[24px] lg:border-2 lg:px-7 lg:py-12"
 						>
-							<IconBox icon={step.icon} className="size-5 text-school-blue lg:size-7" />
+							<IconBox icon={step.icon} className="size-5 text-school-blue-500 lg:size-7" />
 
 							<h1 className="text-[14px] font-semibold lg:text-base">{step.title}</h1>
 

@@ -7,7 +7,7 @@ import { DropZone, Form } from "@/components/ui";
 import { PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
 import { cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
-import { Main } from "@/pages/dashboard/-components/Main";
+import { Main } from "@/pages/admin/school/dashboard/-components/Main";
 
 function PersonalInfoPage() {
 	const {
@@ -65,7 +65,7 @@ function PersonalInfoPage() {
 											<EditIcon
 												className={cnMerge(
 													"absolute right-3 bottom-2 size-[18px] md:size-[40px]",
-													logoPreview && "[&_path]:stroke-school-blue"
+													logoPreview && "[&_path]:stroke-school-blue-500"
 												)}
 											/>
 										</DropZone.Trigger>
@@ -108,7 +108,7 @@ function PersonalInfoPage() {
 						disabled={form.formState.isSubmitting}
 						className={cnMerge(
 							`flex max-w-fit min-w-[77px] items-center justify-center gap-3 self-end rounded-[4px]
-							bg-school-blue px-3 py-[6px] text-[14px] font-semibold text-white md:rounded-[8px]
+							bg-school-blue-500 px-3 py-[6px] text-[14px] font-semibold text-white md:rounded-[8px]
 							md:px-5 md:py-2 md:text-[18px]`
 						)}
 					>

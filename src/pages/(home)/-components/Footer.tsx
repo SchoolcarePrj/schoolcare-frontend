@@ -1,10 +1,9 @@
-import { NavLink } from "react-router";
-import { IconBox } from "@/components/common";
+import { IconBox, NavLink } from "@/components/common";
 
 function Footer() {
 	return (
 		<footer
-			className="flex flex-col gap-12 bg-school-dark-blue px-6 py-10 text-white lg:grid lg:grid-cols-3
+			className="flex flex-col gap-12 bg-school-darker-blue px-6 py-10 text-white lg:grid lg:grid-cols-3
 				lg:justify-items-center lg:gap-12 lg:px-[80px] lg:py-[100px]"
 		>
 			<article className="flex flex-col gap-5 lg:gap-8">
@@ -27,19 +26,19 @@ function Footer() {
 				<div className="flex gap-2.5">
 					<IconBox
 						icon="entypo-social:facebook-with-circle"
-						className="size-[22px] text-school-blue"
+						className="size-[22px] text-school-blue-500"
 					/>
 					<IconBox
 						icon="entypo-social:twitter-with-circle"
-						className="size-[22px] text-school-blue"
+						className="size-[22px] text-school-blue-500"
 					/>
 					<IconBox
 						icon="entypo-social:linkedin-with-circle"
-						className="size-[22px] text-school-blue"
+						className="size-[22px] text-school-blue-500"
 					/>
 					<IconBox
 						icon="entypo-social:instagram-with-circle"
-						className="size-[22px] text-school-blue"
+						className="size-[22px] text-school-blue-500"
 					/>
 				</div>
 			</article>
@@ -82,13 +81,14 @@ function Footer() {
 				<div className="flex flex-col gap-4">
 					<textarea
 						className="min-h-[100px] w-full rounded-lg border border-white bg-transparent p-3
-							text-base text-white placeholder-gray-400 focus:border-school-blue focus:outline-none"
+							text-base text-white placeholder-gray-400 focus:border-school-blue-500
+							focus:outline-none"
 						placeholder="Type your message here..."
 					/>
 
 					<button
 						type="submit"
-						className="w-fit rounded-lg bg-school-blue px-4 py-2 text-base font-medium
+						className="w-fit rounded-lg bg-school-blue-500 px-4 py-2 text-base font-medium
 							transition-colors hover:bg-blue-600 lg:w-fit"
 					>
 						Send Message
