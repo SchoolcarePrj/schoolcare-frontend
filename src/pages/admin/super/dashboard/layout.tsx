@@ -1,8 +1,8 @@
 import { useToggle } from "@zayne-labs/toolkit-react";
 import { Outlet } from "react-router";
+import { cnJoin } from "@/lib/utils/cn";
 import { DashboardSidebar } from "./-components/DashboardSidebar";
 import { NavBar } from "./-components/NavBar";
-import { cnJoin } from "@/lib/utils/cn";
 
 function SuperAdminDashboardLayout() {
 	const [isSidebarOpen, toggleIsSidebarOpen] = useToggle(true);
