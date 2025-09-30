@@ -3,8 +3,8 @@ import { lockScroll } from "@zayne-labs/toolkit-core";
 import { useToggle } from "@zayne-labs/toolkit-react";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router";
-import { ForWithWrapper, getElementList, IconBox, Image, Show } from "@/components/common";
+import { useLocation, useNavigate } from "react-router";
+import { ForWithWrapper, getElementList, IconBox, Image, NavLink, Show } from "@/components/common";
 import { CollapsibleAnimated } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
@@ -104,7 +104,7 @@ function MobileNavigation(props: MobileNavProps) {
 		<section
 			className={cnMerge(
 				`fixed inset-[0_auto_0_0] mt-[70px] scrollbar-hidden overflow-x-hidden bg-school-darker-blue
-				pt-1 text-white transition-[width] ease-initial`,
+				pt-1 text-white transition-[width] ease-in-out`,
 				isNavShow ? "w-svw duration-500" : "w-0 duration-250",
 				className
 			)}
@@ -116,17 +116,29 @@ function MobileNavigation(props: MobileNavProps) {
 		>
 			<NavLinksList
 				as="nav"
-				className="flex flex-col gap-5 px-5 pb-6 text-nowrap"
+				className="flex flex-col gap-9 px-5 text-nowrap"
 				each={dashboardLinkItems}
 				renderItem={(item) => (
 					<Fragment key={item.label}>
+						{isString(item.link) && (
+							<NavLink
+								data-active={item.link === pathname}
+								className="flex items-center gap-3 rounded-r-[8px] pl-4.5
+									data-[active=true]:h-[43px] data-[active=true]:bg-school-blue-500"
+								to={item.link}
+							>
+								<IconBox icon={item.icon} className="size-5" />
+								{item.label}
+							</NavLink>
+						)}
+
 						{item.link === null && (
 							<CollapsibleAnimated.Root
 								className="group/collapsible"
 								defaultOpen={item.items.some((innerItem) => innerItem.link === pathname)}
 							>
 								<CollapsibleAnimated.Trigger
-									className="ml-6 flex h-[42px] items-center gap-3 rounded-r-[10px]"
+									className="flex items-center gap-3 rounded-r-[10px] pl-4.5"
 								>
 									<IconBox icon={item.icon} className="size-5" />
 									{item.label}
@@ -138,14 +150,13 @@ function MobileNavigation(props: MobileNavProps) {
 								</CollapsibleAnimated.Trigger>
 
 								<ForWithWrapper
-									className="flex flex-col gap-5 group-data-[state=open]/collapsible:mt-3"
 									each={item.items}
+									className="flex flex-col gap-6 group-data-[state=open]/collapsible:mt-6"
 									renderItem={(innerItem) => (
 										<CollapsibleAnimated.Content key={innerItem.label} asChild={true}>
 											<NavLink
-												data-active={innerItem.link === pathname}
 												to={innerItem.link}
-												className="mx-7.5 flex h-[42px] items-center gap-3 rounded-[8px] border
+												className="mx-7.5 flex h-[38px] items-center gap-3 rounded-[8px] border
 													border-white pl-6 data-[active=true]:bg-school-blue-500"
 											>
 												{innerItem.label}
@@ -156,22 +167,10 @@ function MobileNavigation(props: MobileNavProps) {
 							</CollapsibleAnimated.Root>
 						)}
 
-						{isString(item.link) && (
-							<NavLink
-								data-active={item.link === pathname}
-								className="flex h-[42px] items-center gap-3 rounded-r-[10px] pl-6
-									data-[active=true]:bg-school-blue-500"
-								to={item.link}
-							>
-								<IconBox icon={item.icon} className="size-5" />
-								{item.label}
-							</NavLink>
-						)}
-
 						{isFunction(item.link) && (
 							<button
 								type="button"
-								className="flex h-[42px] items-center gap-3 pl-6"
+								className="flex items-center gap-3 pl-4.5"
 								onClick={item.link(queryClient, navigate)}
 							>
 								<IconBox icon={item.icon} className="size-5" />

@@ -1,7 +1,8 @@
+import { Icon } from "@iconify/react";
 import NumberFlow from "@number-flow/react";
 import { useQuery } from "@tanstack/react-query";
 import { ForWithWrapper } from "@/components/common";
-import { BookIcon, SchoolIcon, StudentIcon } from "@/components/icons";
+import { BookIcon, SchoolIcon } from "@/components/icons";
 import { Card } from "@/components/ui";
 import {
 	allClassesInSchoolQuery,
@@ -24,17 +25,17 @@ function DashboardPage() {
 	const infoCardArray = [
 		{
 			description: allStudentsInSchoolQueryResult.data?.data.length ?? 0,
-			icon: <StudentIcon className="max-md:size-3" />,
+			icon: <Icon icon="hugeicons:student" className="size-3 *:stroke-school-blue-500 md:size-8.5" />,
 			title: "Registered Students",
 		},
 		{
 			description: allSubjectsInSchoolQueryResult.data?.data.length ?? 0,
-			icon: <BookIcon className="max-md:size-3" />,
+			icon: <BookIcon className="size-3 md:size-8.5" />,
 			title: "Number of Subjects",
 		},
 		{
 			description: allClassesInSchoolQueryResult.data?.data.length ?? 0,
-			icon: <SchoolIcon className="max-md:size-3" />,
+			icon: <SchoolIcon className="size-3 md:size-8.5" />,
 			title: "Numbers of Classes",
 		},
 	];
@@ -48,7 +49,7 @@ function DashboardPage() {
 				renderItem={(item) => (
 					<Card.Root
 						key={item.title}
-						className="w-[calc(100%/3)] rounded-[8px] border-2 border-school-gray-lighter bg-white
+						className="w-full rounded-[8px] border-2 border-school-gray-lighter bg-white
 							py-[20px_9px] md:rounded-[30px] md:py-[30px_32px]"
 					>
 						<Card.Content className="flex flex-col items-center px-0">

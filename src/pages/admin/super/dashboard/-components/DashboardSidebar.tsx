@@ -49,7 +49,9 @@ function DashboardSidebar(props: { className?: string; isOpen: boolean }) {
 								className="flex items-center gap-3 rounded-[8px] pl-9 data-[active=true]:h-12
 									data-[active=true]:bg-school-blue-500 data-[active=true]:text-white"
 							>
-								<IconBox icon={item.icon} className="size-6" />
+								<span className="inline-block size-6">
+									<IconBox icon={item.icon} className="size-full" />
+								</span>
 								{item.label}
 							</NavLink>
 						)}

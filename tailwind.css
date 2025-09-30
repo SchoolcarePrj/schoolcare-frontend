@@ -14,7 +14,19 @@
 	--color-210-77-95: hsl(210, 77%, 95%);
 
 	--color-school-blue-500: hsl(209, 97%, 50%);
+
+	--color-school-dark-blue-50: hsla(205, 100%, 99%);
+	--color-school-dark-blue-200: hsl(210, 100%, 83%);
 	--color-school-dark-blue-500: hsl(210, 100%, 13%);
+
+	--color-school-green-50: hsl(133, 100%, 99%);
+	--color-school-green-200: hsl(134, 47%, 80%);
+	--color-school-green-500: hsl(133, 46%, 49%);
+
+	--color-school-yellow-50: hsl(40, 100%, 98%);
+	--color-school-yellow-200: hsl(40, 100%, 80%);
+	--color-school-yellow-500: hsl(40, 100%, 50%);
+
 	--color-school-darker-blue: hsl(201, 100%, 4%);
 	--color-school-red-500: hsl(2, 84%, 59%);
 

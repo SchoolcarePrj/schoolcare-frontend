@@ -26,8 +26,8 @@
 
 		<link rel="stylesheet" href="/tailwind.css" />
 
-		<script type="module" src="/src/preloader.ts"></script>
 		<script type="module" src="/src/main.tsx"></script>
+		<script type="module" src="/src/preloader.ts"></script>
 
 		<title>School App</title>
 	</head>
@@ -36,24 +36,65 @@
 
 		<aside
 			id="preloader"
-			class="fixed inset-0 flex items-center justify-center transition-opacity duration-1500
-				ease-linear"
+			class="backdrop-blur-4xl fixed inset-0 flex items-center justify-center bg-white/60
+				transition-opacity duration-1500 ease-initial"
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="32"
-				height="32"
-				viewBox="0 0 24 24"
-				class="mb-7 size-[40px] animate-spin text-school-blue-500"
-			>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" class="mb-7 size-13">
 				<path
 					fill="none"
-					stroke="currentColor"
+					stroke="#0484fb"
+					stroke-width="15"
 					stroke-linecap="round"
-					stroke-width="2"
-					d="M8.124 5a8 8 0 1 0 7.752 0M12 4h.05"
-				/>
+					stroke-dasharray="300 385"
+					stroke-dashoffset="0"
+					d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"
+				>
+					<animate
+						attributeName="stroke-dashoffset"
+						calcMode="spline"
+						dur="2"
+						values="685;-685"
+						keySplines="0 0 1 1"
+						repeatCount="indefinite"
+					></animate>
+				</path>
 			</svg>
+
+			<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="mb-7 size-20">
+				<circle fill="#0484fb" stroke="#0484fb" stroke-width="15" r="15" cx="40" cy="65">
+					<animate
+						attributeName="cy"
+						calcMode="spline"
+						dur="2"
+						values="65;135;65;"
+						keySplines=".5 0 .5 1;.5 0 .5 1"
+						repeatCount="indefinite"
+						begin="-.4"
+					></animate>
+				</circle>
+				<circle fill="#0484fb" stroke="#0484fb" stroke-width="15" r="15" cx="100" cy="65">
+					<animate
+						attributeName="cy"
+						calcMode="spline"
+						dur="2"
+						values="65;135;65;"
+						keySplines=".5 0 .5 1;.5 0 .5 1"
+						repeatCount="indefinite"
+						begin="-.2"
+					></animate>
+				</circle>
+				<circle fill="#0484fb" stroke="#0484fb" stroke-width="15" r="15" cx="160" cy="65">
+					<animate
+						attributeName="cy"
+						calcMode="spline"
+						dur="2"
+						values="65;135;65;"
+						keySplines=".5 0 .5 1;.5 0 .5 1"
+						repeatCount="indefinite"
+						begin="0"
+					></animate>
+				</circle>
+			</svg> -->
 		</aside>
 	</body>
 </html>

@@ -9,10 +9,9 @@ const removePreloader = () => {
 
 	preloaderElement.style.opacity = "0";
 
-	const cleanUpForTransitionEnd = on("transitionend", preloaderElement, () => {
+	on("transitionend", preloaderElement, () => {
 		preloaderElement.remove();
-		cleanUpForTransitionEnd();
 	});
 };
 
-on("load", window, removePreloader);
+on("DOMContentLoaded", document, removePreloader);
