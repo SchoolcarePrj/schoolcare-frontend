@@ -23,8 +23,8 @@ export const isAuthTokenRelatedError = (
 };
 export type PossibleAuthToken = "getAccessToken" | "getRefreshToken";
 
-const refreshTokenKey = "refreshToken";
-const accessTokenKey = "accessToken";
+const refreshTokenKey = "admin-school-refreshToken";
+const accessTokenKey = "admin-school-accessToken";
 
 /* eslint-disable ts-eslint/no-unnecessary-condition */
 export const authTokenObject = {

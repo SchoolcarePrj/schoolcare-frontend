@@ -10,6 +10,7 @@ export * as Command from "./command";
 export * as DialogAnimated from "./dialog-animated";
 export * as Drawer from "./drawer";
 export { DropZone } from "./drop-zone";
+export * as DropdownMenu from "./dropdown-menu";
 export { Form } from "./form";
 export * as Popover from "./popover";
 export * as Select from "./select";

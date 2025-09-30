@@ -132,8 +132,8 @@ function ResultCheckForm() {
 											<Select.Item
 												key={item}
 												value={item}
-												className="h-6 text-[11px] font-medium focus:bg-gray-300
-													focus:text-210-79-44 data-[state=checked]:bg-gray-300"
+												className="h-6 text-[11px] font-medium focus:bg-gray-200
+													data-[state=checked]:bg-gray-300"
 											>
 												{item}
 											</Select.Item>
