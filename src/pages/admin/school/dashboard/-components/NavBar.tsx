@@ -4,7 +4,7 @@ import { useToggle } from "@zayne-labs/toolkit-react";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { ForWithWrapper, getElementList, IconBox, Image, NavLink, Show } from "@/components/common";
+import { ForWithWrapper, IconBox, Image, NavLink, Show } from "@/components/common";
 import { CollapsibleAnimated } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
@@ -51,8 +51,6 @@ export function NavBar() {
 	);
 }
 
-const [NavLinksList] = getElementList();
-
 type MobileNavProps = {
 	className?: string;
 	isNavShow: boolean;
@@ -94,7 +92,7 @@ function DesktopNavContent(props: { className?: string }) {
 function MobileNavigation(props: MobileNavProps) {
 	const { className, isNavShow, toggleNavShow } = props;
 
-	const pathname = useLocation().pathname;
+	const { pathname } = useLocation();
 
 	const queryClient = useQueryClient();
 
@@ -114,15 +112,14 @@ function MobileNavigation(props: MobileNavProps) {
 				element.tagName === "A" && toggleNavShow();
 			}}
 		>
-			<NavLinksList
+			<ForWithWrapper
 				as="nav"
-				className="flex flex-col gap-9 px-5 text-nowrap"
 				each={dashboardLinkItems}
+				className="flex flex-col gap-9 px-5 text-nowrap"
 				renderItem={(item) => (
 					<Fragment key={item.label}>
 						{isString(item.link) && (
 							<NavLink
-								data-active={item.link === pathname}
 								className="flex items-center gap-3 rounded-r-[8px] pl-4.5
 									data-[active=true]:h-[43px] data-[active=true]:bg-school-blue-500"
 								to={item.link}

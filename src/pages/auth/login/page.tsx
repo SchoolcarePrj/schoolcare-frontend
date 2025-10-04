@@ -44,7 +44,7 @@ function LoginPage() {
 					data: omitKeys(ctx.data.data, ["access", "refresh"]),
 				});
 
-				void navigate("/admin/school/dashboard");
+				void navigate("/admin/school/dashboard", { replace: true });
 			},
 		});
 	});
