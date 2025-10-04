@@ -23,7 +23,7 @@ function TablePage() {
 	if (students.length === 0) {
 		toast.error("No students found");
 
-		return <Navigate to="/dashboard/students/input-scores" />;
+		return <Navigate to="/admin/school/dashboard/students/input-scores" />;
 	}
 
 	const tableData = students.map((student) => ({
@@ -41,7 +41,7 @@ function TablePage() {
 
 		download(csvConfig)(csv);
 
-		void navigate("/dashboard/students/input-scores/upload");
+		void navigate("/admin/school/dashboard/students/input-scores/upload");
 	};
 
 	return (

@@ -138,7 +138,7 @@ function HomePage() {
 
 						<button type="button" className="shrink-0">
 							<NavLink
-								to="/register"
+								to="/auth/register"
 								className="block rounded-[8px] bg-210-79-44 px-6 py-2 font-semibold
 									lg:rounded-[12px] lg:py-4 lg:text-[24px]"
 							>

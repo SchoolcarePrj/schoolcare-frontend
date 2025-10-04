@@ -45,7 +45,7 @@ function AddScoresPage() {
 
 			onSuccess: (ctx) => {
 				useInputScoreFormStore.setState({ responseData: ctx.data.data });
-				void navigate("/dashboard/students/input-scores/table");
+				void navigate("/admin/school/dashboard/students/input-scores/table");
 			},
 		});
 	});
