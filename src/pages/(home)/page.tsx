@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useDragScroll } from "@zayne-labs/ui-react/ui/drag-scroll";
 import {
 	cardOne,
 	cardThree,
@@ -13,7 +12,7 @@ import {
 	schoolThree,
 	schoolTwo,
 } from "@/assets/images/home";
-import { For, ForWithWrapper, Image, NavLink } from "@/components/common";
+import { For, ForWithWrapper, IconBox, Image, NavLink } from "@/components/common";
 import { BrainIcon, LineGraphIcon, PageIcon, PieIcon, StudentIcon, UploadIcon } from "@/components/icons";
 import { Card, Carousel } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
@@ -97,13 +96,39 @@ const blogPosts = [
 		imageURL: cardThree,
 		title: "From Refugee to Medical Doctor . Young Nigerian Lady Celebrates Inspiring Achievement",
 	},
+	{
+		description:
+			"Bunmi-Alade Opeyemi, a young Nigerian woman, has overcome incredible odds to graduate as a licensed medical doctor from Bukovinian State Medical University in Chernivtsi, Ukraine",
+		imageURL: cardThree,
+		title: "From Refugee to Medical Doctor . Young Nigerian Lady Celebrates Inspiring Achievement",
+	},
+	{
+		description:
+			"Bunmi-Alade Opeyemi, a young Nigerian woman, has overcome incredible odds to graduate as a licensed medical doctor from Bukovinian State Medical University in Chernivtsi, Ukraine",
+		imageURL: cardThree,
+		title: "From Refugee to Medical Doctor . Young Nigerian Lady Celebrates Inspiring Achievement",
+	},
+	{
+		description:
+			"Bunmi-Alade Opeyemi, a young Nigerian woman, has overcome incredible odds to graduate as a licensed medical doctor from Bukovinian State Medical University in Chernivtsi, Ukraine",
+		imageURL: cardThree,
+		title: "From Refugee to Medical Doctor . Young Nigerian Lady Celebrates Inspiring Achievement",
+	},
 ];
 
-const carouselItems = [{ imageURL: carouselOne }, { imageURL: carouselTwo }, { imageURL: carouselThree }];
+const carouselItems = [
+	{
+		imageURL: carouselOne,
+	},
+	{
+		imageURL: carouselTwo,
+	},
+	{
+		imageURL: carouselThree,
+	},
+];
 
 function HomePage() {
-	const { getItemProps, getRootProps } = useDragScroll<HTMLUListElement>();
-
 	const sessionQueryResult = useQuery(sessionQuery());
 
 	return (
@@ -241,7 +266,7 @@ function HomePage() {
 
 				<div className="flex flex-col gap-[54px] max-lg:items-center lg:flex-row-reverse lg:gap-10">
 					<Carousel.Root className="flex w-full max-w-[379px] flex-col gap-5.5 lg:max-w-[623px]">
-						<Carousel.Content className="size-full">
+						<Carousel.Content className="size-full cursor-grab gap-5.5">
 							<For
 								each={carouselItems}
 								renderItem={(item) => (
@@ -257,7 +282,7 @@ function HomePage() {
 							/>
 						</Carousel.Content>
 
-						<Carousel.IndicatorGroup
+						<Carousel.IndicatorList
 							classNames={{
 								indicator: "size-2 bg-[hsl(0,0%,85%)] data-[selected=true]:bg-210-79-44 lg:size-3",
 								indicatorGroup: "-bottom-5.5 lg:-bottom-[52px]",
@@ -291,53 +316,88 @@ function HomePage() {
 				<AccordionFaqs />
 			</section>
 
-			<section className="flex flex-col items-center gap-6 px-6 lg:gap-[52px] lg:px-[80px]">
-				<h3 className="text-center font-bold lg:text-[32px]">Latest Blog Posts</h3>
+			<section className="px-6 lg:px-[80px]">
+				<Carousel.Root className="flex flex-col items-center gap-3.5 lg:gap-10">
+					<div className="flex w-full items-center *:ml-auto">
+						<h3 className="text-center font-bold lg:text-[32px]">Latest Blog Posts</h3>
+						<Carousel.Context>
+							{(ctx) => (
+								<div
+									className="flex shrink-0 items-center gap-2 rounded-[40px] bg-[hsl(0,0%,96%)]
+										p-1 text-[12px] lg:gap-4.5 lg:text-base"
+								>
+									<button
+										type="button"
+										onClick={ctx.scrollPrev}
+										className="grid size-4.5 place-content-center rounded-full
+											bg-[hsl(209,93%,95%)] lg:size-12"
+									>
+										<IconBox icon="lucide:chevron-left" className="lg:size-6" />
+									</button>
+									<p>
+										{ctx.selectedIndex + 1}/{ctx.totalItems}
+									</p>
+									<button
+										type="button"
+										onClick={ctx.scrollNext}
+										className="grid size-4.5 place-content-center rounded-full bg-school-blue-500
+											text-white lg:size-12"
+									>
+										<IconBox icon="lucide:chevron-right" className="lg:size-6" />
+									</button>
+								</div>
+							)}
+						</Carousel.Context>
+					</div>
 
-				<ForWithWrapper
-					{...getRootProps({ className: "select-none gap-7.5 md:justify-between" })}
-					each={blogPosts}
-					renderItem={(post) => (
-						<Card.Root
-							key={post.imageURL}
-							as="li"
-							{...getItemProps({
-								className: "max-w-[379px] lg:max-w-[408px] flex flex-col shrink-0 w-full",
-							})}
-						>
-							<div className="h-[258px]">
-								<Image
-									className="h-full rounded-t-[24px] object-cover"
-									src={post.imageURL}
-									draggable={false}
-									width={383}
-									height={258}
-								/>
-							</div>
+					<Carousel.Content className="size-full cursor-grab justify-between gap-6.5">
+						<For
+							each={blogPosts}
+							renderItem={(post) => (
+								<Carousel.Item className="max-w-[379px] lg:max-w-[408px]">
+									<Card.Root key={post.imageURL} className="size-full">
+										<div className="h-[258px]">
+											<Image
+												className="h-full rounded-t-[24px] object-cover"
+												src={post.imageURL}
+												draggable={false}
+												width={383}
+												height={258}
+											/>
+										</div>
 
-							<div
-								className="flex grow flex-col gap-3 rounded-b-[12px] border-[2px]
-									border-[hsl(0,0%,78%)] px-4 py-6 lg:rounded-b-[24px] lg:border-[3px]"
-							>
-								<Card.Header className="flex grow flex-col justify-between gap-5">
-									<Card.Title className="text-[14px] font-medium lg:text-base">
-										{post.title}
-									</Card.Title>
+										<div
+											className="flex grow flex-col gap-3 rounded-b-[12px] border-[2px]
+												border-[hsl(0,0%,78%)] px-4 py-6 select-none lg:rounded-b-[24px]
+												lg:border-[3px]"
+										>
+											<Card.Header className="flex grow flex-col justify-between gap-5">
+												<Card.Title className="text-[14px] font-medium lg:text-base">
+													{post.title}
+												</Card.Title>
 
-									<Card.Description className="text-[12px] text-[color:inherit] lg:text-[14px]">
-										{post.description}
-									</Card.Description>
-								</Card.Header>
+												<Card.Description
+													className="text-[12px] text-[color:inherit] lg:text-[14px]"
+												>
+													{post.description}
+												</Card.Description>
+											</Card.Header>
 
-								<Card.Footer>
-									<a href="#" className="text-[12px] text-[hsl(0,0%,46%)] lg:text-[14px]">
-										See more...
-									</a>
-								</Card.Footer>
-							</div>
-						</Card.Root>
-					)}
-				/>
+											<Card.Footer>
+												<a
+													href="#"
+													className="text-[12px] text-[hsl(0,0%,46%)] lg:text-[14px]"
+												>
+													See more...
+												</a>
+											</Card.Footer>
+										</div>
+									</Card.Root>
+								</Carousel.Item>
+							)}
+						/>
+					</Carousel.Content>
+				</Carousel.Root>
 			</section>
 		</main>
 	);
