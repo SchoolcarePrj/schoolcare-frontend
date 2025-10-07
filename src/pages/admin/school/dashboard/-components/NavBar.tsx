@@ -5,7 +5,7 @@ import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { ForWithWrapper, IconBox, Image, NavLink, Show } from "@/components/common";
-import { CollapsibleAnimated } from "@/components/ui";
+import { AvatarGroup, CollapsibleAnimated } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
@@ -73,17 +73,27 @@ function DesktopNavContent(props: { className?: string }) {
 			<div className="flex items-center gap-6">
 				<IconBox icon="material-symbols:notifications-outline-rounded" className="size-8" />
 
-				<Show.Root when={sessionQueryResult.data?.data.logo}>
-					{(logo) => (
-						<>
-							<Image src={logo} width={70} height={70} className="rounded-full" />
+				<AvatarGroup.Root invertOverlap={true} translate="5%">
+					<Show.Root when={sessionQueryResult.data?.data.logo}>
+						{(logo) => (
+							<>
+								<Image src={logo} width={70} height={70} className="rounded-full object-cover" />
 
-							<Show.Otherwise>
-								<span className="block size-[70px] shrink-0 rounded-full bg-[hsl(0,0%,85%)]" />
-							</Show.Otherwise>
-						</>
-					)}
-				</Show.Root>
+								<Show.Otherwise>
+									<span
+										className="inline-flex size-[70px] shrink-0 items-center justify-center
+											rounded-full bg-[hsl(0,0%,85%)] text-[18px]"
+									>
+										{sessionQueryResult.data?.data.school[0]}
+										{sessionQueryResult.data?.data.school[1]}
+									</span>
+								</Show.Otherwise>
+							</>
+						)}
+					</Show.Root>
+
+					<AvatarGroup.Tooltip>{sessionQueryResult.data?.data.school}</AvatarGroup.Tooltip>
+				</AvatarGroup.Root>
 			</div>
 		</section>
 	);

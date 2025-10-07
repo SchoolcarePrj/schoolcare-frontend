@@ -14,6 +14,7 @@ function AvatarRoot(props: React.ComponentProps<typeof AvatarPrimitive.Root>) {
 
 function AvatarImage(props: React.ComponentProps<typeof AvatarPrimitive.Image>) {
 	const { className, ...restOfProps } = props;
+
 	return (
 		<AvatarPrimitive.Image
 			data-slot="avatar-image"

@@ -167,7 +167,7 @@ function DashboardPage() {
 					<header className="flex justify-between gap-5 text-nowrap">
 						<h3 className="text-[24px] font-medium">Recent Activities</h3>
 						<DateTimePicker
-							className="gap-1.5 rounded-[8px] border border-[hsl(0,0%,84%)] p-2.5 text-base"
+							className="h-11 gap-1.5 rounded-[8px] border border-[hsl(0,0%,84%)] p-2.5 text-base"
 							defaultDateString={new Date().toDateString()}
 							startMonth={new Date(2025, 0)}
 							formats={{ visibleDate: "do MMMM" }}
@@ -195,8 +195,8 @@ function DashboardPage() {
 						<div className="flex gap-2">
 							<DropdownMenu.Root>
 								<DropdownMenu.Trigger
-									className="group/trigger flex items-center justify-between gap-2 rounded-[8px]
-										border border-[hsl(0,0%,84%)] p-2.5 text-[12px] font-medium"
+									className="group/trigger flex h-9 items-center justify-between gap-2
+										rounded-[8px] border border-[hsl(0,0%,84%)] p-2.5 text-[12px] font-medium"
 								>
 									<p className="font-medium">{selectedSession}</p>
 
@@ -235,8 +235,8 @@ function DashboardPage() {
 
 							<DropdownMenu.Root>
 								<DropdownMenu.Trigger
-									className="group/trigger flex items-center justify-between gap-2 rounded-[8px]
-										border border-[hsl(0,0%,84%)] p-2.5 text-[12px] font-medium"
+									className="group/trigger flex h-9 items-center justify-between gap-2
+										rounded-[8px] border border-[hsl(0,0%,84%)] p-2.5 text-[12px] font-medium"
 								>
 									<p className="font-medium">{selectedTerm}</p>
 

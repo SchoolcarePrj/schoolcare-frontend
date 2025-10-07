@@ -38,7 +38,7 @@ function GenderRatioChart(props: { genderResponseData: StudentGenderRatioData | 
 				border-school-gray-lighter bg-white py-[36px_18px]"
 		>
 			<Card.Header className="shrink-0">
-				<Card.Title className="text-[22px] font-semibold">Gender Composition</Card.Title>
+				<Card.Title className="text-center text-[22px] font-semibold">Gender Composition</Card.Title>
 			</Card.Header>
 
 			<Card.Content className="-mt-3 flex size-full justify-center">
