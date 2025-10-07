@@ -71,7 +71,7 @@ function AvatarGroupRoot(props: AvatarGroupProps) {
 			<div
 				ref={ref}
 				data-slot="avatar-group"
-				className={cnMerge("flex h-8 flex-row items-center -space-x-2", className)}
+				className={cnMerge("flex flex-row items-center -space-x-2", className)}
 				{...restOfProps}
 			>
 				{childrenArray.map((child, index) => (
