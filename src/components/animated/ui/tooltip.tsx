@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import * as TooltipPrimitive from "@/components/primitives-animated/tooltip";
+import * as TooltipPrimitive from "@/components/animated/primitives/tooltip";
 import { cnMerge } from "@/lib/utils/cn";
 
 type TooltipProviderProps = React.ComponentProps<typeof TooltipPrimitive.Provider>;

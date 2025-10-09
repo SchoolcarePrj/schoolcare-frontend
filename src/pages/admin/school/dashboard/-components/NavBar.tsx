@@ -4,8 +4,9 @@ import { useToggle } from "@zayne-labs/toolkit-react";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { AvatarGroupAnimated, CollapsibleAnimated } from "@/components/animated/ui";
 import { ForWithWrapper, IconBox, Image, NavLink, Show } from "@/components/common";
-import { Avatar, AvatarGroup, CollapsibleAnimated } from "@/components/ui";
+import { Avatar } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
@@ -73,7 +74,7 @@ function DesktopNavContent(props: { className?: string }) {
 			<div className="flex items-center gap-6">
 				<IconBox icon="material-symbols:notifications-outline-rounded" className="size-8" />
 
-				<AvatarGroup.Root translate="5%">
+				<AvatarGroupAnimated.Root translate="5%">
 					<Avatar.Root className="size-[70px]">
 						<Show.Root when={sessionQueryResult.data?.data.logo}>
 							{(logo) => (
@@ -98,11 +99,11 @@ function DesktopNavContent(props: { className?: string }) {
 							)}
 						</Show.Root>
 
-						<AvatarGroup.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
+						<AvatarGroupAnimated.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
 							{sessionQueryResult.data?.data.school}
-						</AvatarGroup.Tooltip>
+						</AvatarGroupAnimated.Tooltip>
 					</Avatar.Root>
-				</AvatarGroup.Root>
+				</AvatarGroupAnimated.Root>
 			</div>
 		</section>
 	);

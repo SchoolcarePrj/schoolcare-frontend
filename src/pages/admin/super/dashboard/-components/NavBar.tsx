@@ -1,5 +1,6 @@
+import { AvatarGroupAnimated } from "@/components/animated/ui";
 import { IconBox } from "@/components/common";
-import { Avatar, AvatarGroup } from "@/components/ui";
+import { Avatar } from "@/components/ui";
 
 type NavBarProps = {
 	toggleIsSidebarOpen: () => void;
@@ -21,16 +22,17 @@ function NavBar(props: NavBarProps) {
 			</div>
 
 			<div className="flex items-center gap-3">
-				<AvatarGroup.Root translate="5%">
+				<AvatarGroupAnimated.Root translate="5%">
 					<Avatar.Root className="size-9 cursor-pointer rounded-full">
 						<Avatar.Fallback className="bg-school-dark-blue-500 text-[14px] text-white">
 							ES
 						</Avatar.Fallback>
-						<AvatarGroup.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
+
+						<AvatarGroupAnimated.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
 							Emperor
-						</AvatarGroup.Tooltip>
+						</AvatarGroupAnimated.Tooltip>
 					</Avatar.Root>
-				</AvatarGroup.Root>
+				</AvatarGroupAnimated.Root>
 
 				<p className="font-medium text-black">Emperor SchoolCare</p>
 			</div>

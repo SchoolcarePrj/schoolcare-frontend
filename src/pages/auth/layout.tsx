@@ -4,13 +4,13 @@ import { usePageBlocker } from "@/lib/hooks";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 
 function AuthLayout() {
-	// const sessionQueryResult = useQuery(sessionQuery());
+	const sessionQueryResult = useQuery(sessionQuery());
 
-	// usePageBlocker({
-	// 	condition: Boolean(sessionQueryResult.data),
-	// 	message: "You're already logged in! Redirecting to dashboard...",
-	// 	redirectPath: "/admin/school/dashboard",
-	// });
+	usePageBlocker({
+		condition: Boolean(sessionQueryResult.data),
+		message: "You're already logged in! Redirecting to dashboard...",
+		redirectPath: "/admin/school/dashboard",
+	});
 
 	return <Outlet />;
 }

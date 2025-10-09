@@ -1,13 +1,10 @@
 export * as Accordion from "./accordion";
 export * as Avatar from "./avatar";
-export * as AvatarGroup from "./avatar-group-animated";
 export { Card } from "./card";
 export * as Carousel from "./carousel";
 export * as Chart from "./chart";
-export * as CollapsibleAnimated from "./collapsible-animated";
 export * as Combobox from "./combobox";
 export * as Command from "./command";
-export * as DialogAnimated from "./dialog-animated";
 export * as Drawer from "./drawer";
 export { DropZone } from "./drop-zone";
 export * as DropdownMenu from "./dropdown-menu";

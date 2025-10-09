@@ -2,8 +2,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { CollapsibleAnimated } from "@/components/animated/ui";
 import { ForWithWrapper, IconBox, NavLink } from "@/components/common";
-import { CollapsibleAnimated, Drawer } from "@/components/ui";
+import { Drawer } from "@/components/ui";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
 

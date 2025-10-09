@@ -4,7 +4,7 @@ import { AnimatePresence, type HTMLMotionProps, motion, type Transition } from "
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { useMemo } from "react";
 import { cnMerge } from "@/lib/utils/cn";
-import { IconBox } from "../common/IconBox";
+import { IconBox } from "../../common/IconBox";
 
 type ContextValue = {
 	isOpen: boolean;
