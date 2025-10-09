@@ -1,6 +1,7 @@
 import type { CallApiResultErrorVariant } from "@zayne-labs/callapi";
 import { isHTTPError } from "@zayne-labs/callapi/utils";
 import { hardNavigate, isBrowser } from "@zayne-labs/toolkit-core";
+import { isObject } from "@zayne-labs/toolkit-type-helpers";
 import type { BaseApiErrorResponse } from "../../apiSchema";
 
 type ErrorWithCodeAndDetail = CallApiResultErrorVariant<BaseApiErrorResponse>["error"] & {
@@ -15,6 +16,10 @@ export const isAuthTokenRelatedError = (
 	}
 
 	const errorData = error.errorData;
+
+	if (!isObject(errorData)) {
+		return false;
+	}
 
 	return (
 		("code" in errorData && errorData.code === "token_not_valid")

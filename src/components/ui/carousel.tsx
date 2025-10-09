@@ -1,7 +1,7 @@
 "use client";
 
 import { createCustomContext, useCallbackRef } from "@zayne-labs/toolkit-react";
-import type { InferProps } from "@zayne-labs/toolkit-react/utils";
+import type { DiscriminatedRenderProps, InferProps } from "@zayne-labs/toolkit-react/utils";
 import type { AnyFunction } from "@zayne-labs/toolkit-type-helpers";
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import { useEffect, useMemo, useState } from "react";
@@ -21,7 +21,7 @@ type CarouselProps = {
 	setApi?: (api: CarouselApi) => void;
 };
 
-type CarouselContextProps = CarouselProps & {
+type CarouselContextType = CarouselProps & {
 	api: ReturnType<typeof useEmblaCarousel>[1];
 	canScrollNext: boolean;
 	canScrollPrev: boolean;
@@ -30,9 +30,10 @@ type CarouselContextProps = CarouselProps & {
 	scrollPrev: () => void;
 	scrollTo: (index: number) => void;
 	selectedIndex: number;
+	totalItems: number;
 };
 
-const [CarouselContextProvider, useCarouselContext] = createCustomContext<CarouselContextProps>({
+const [CarouselContextProvider, useCarouselContext] = createCustomContext<CarouselContextType>({
 	hookName: "useCarouselContext",
 	name: "CarouselContext",
 	providerName: "CarouselRoot",
@@ -123,7 +124,8 @@ function CarouselRoot(props: CarouselProps & InferProps<"div">) {
 				scrollPrev,
 				scrollTo,
 				selectedIndex,
-			}) satisfies CarouselContextProps,
+				totalItems: carouselApi?.scrollSnapList().length ?? 0,
+			}) satisfies CarouselContextType,
 		[
 			carouselApi,
 			canScrollNext,
@@ -139,16 +141,18 @@ function CarouselRoot(props: CarouselProps & InferProps<"div">) {
 	);
 
 	return (
-		<div
-			onKeyDownCapture={handleKeyDown}
-			className={cnMerge("relative", className)}
-			role="region"
-			aria-roledescription="carousel"
-			data-slot="carousel-root"
-			{...restOfProps}
-		>
-			<CarouselContextProvider value={contextValue}>{children}</CarouselContextProvider>
-		</div>
+		<CarouselContextProvider value={contextValue}>
+			<div
+				onKeyDownCapture={handleKeyDown}
+				className={cnMerge("relative", className)}
+				role="region"
+				aria-roledescription="carousel"
+				data-slot="carousel-root"
+				{...restOfProps}
+			>
+				{children}
+			</div>
+		</CarouselContextProvider>
 	);
 }
 
@@ -158,12 +162,14 @@ function CarouselContent(props: InferProps<"div">) {
 	const { carouselRef, orientation } = useCarouselContext();
 
 	return (
-		<div ref={carouselRef} data-slot="carousel-content" className="size-full overflow-hidden">
+		<div ref={carouselRef} data-slot="carousel-content-outer" className="size-full overflow-hidden">
 			<div
+				data-slot="carousel-content-inner"
 				className={cnMerge(
-					"flex",
-					orientation === "horizontal" && "-ml-4",
-					orientation === "vertical" && "-mt-4 flex-col",
+					"flex gap-4",
+					// orientation === "horizontal" && "-ml-4",
+					// orientation === "vertical" && "-mt-4 flex-col",
+					orientation === "vertical" && "flex-col",
 					className
 				)}
 				{...restOfProps}
@@ -175,7 +181,7 @@ function CarouselContent(props: InferProps<"div">) {
 function CarouselItem(props: InferProps<"div">) {
 	const { className, ...restOfProps } = props;
 
-	const { orientation } = useCarouselContext();
+	// const { orientation } = useCarouselContext();
 
 	return (
 		<div
@@ -184,8 +190,8 @@ function CarouselItem(props: InferProps<"div">) {
 			data-slot="carousel-item"
 			className={cnMerge(
 				"w-full min-w-0 shrink-0 grow-0",
-				orientation === "horizontal" && "pl-4",
-				orientation === "vertical" && "pt-4",
+				// orientation === "horizontal" && "pl-4",
+				// orientation === "vertical" && "pt-4",
 				className
 			)}
 			{...restOfProps}
@@ -246,7 +252,7 @@ function CarouselNext(props: ShadcnButtonProps) {
 	);
 }
 
-export function CarouselIndicator(props: InferProps<"button"> & { currentIndex: number }) {
+function CarouselIndicator(props: InferProps<"button"> & { currentIndex: number }) {
 	const { className, currentIndex, ...restOfProps } = props;
 	const { scrollTo, selectedIndex } = useCarouselContext();
 
@@ -274,7 +280,7 @@ type RenderPropFn = (context: {
 	snapPointArray: number[];
 }) => React.ReactNode;
 
-export function CarouselIndicatorGroup(
+function CarouselIndicatorList(
 	props: Omit<InferProps<"ul">, "children"> & {
 		children?: RenderPropFn;
 		classNames?: { indicator?: string; indicatorGroup?: string };
@@ -309,12 +315,25 @@ export function CarouselIndicatorGroup(
 	);
 }
 
+type RenderFn = (props: CarouselContextType) => React.ReactNode;
+
+function CarouselContext(props: DiscriminatedRenderProps<RenderFn>) {
+	const { children, render } = props;
+
+	const contextValue = useCarouselContext();
+
+	const selectedRenderFn = typeof children === "function" ? children : render;
+
+	return selectedRenderFn(contextValue);
+}
+
 export const Root = CarouselRoot;
 export const Content = CarouselContent;
 export const Item = CarouselItem;
 export const Previous = CarouselPrevious;
 export const Next = CarouselNext;
-export const IndicatorGroup = CarouselIndicatorGroup;
+export const IndicatorList = CarouselIndicatorList;
 export const Indicator = CarouselIndicator;
+export const Context = CarouselContext;
 
 export { type CarouselApi };

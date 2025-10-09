@@ -5,14 +5,14 @@ import { useMemo } from "react";
 import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common";
 
-type ContextValue = {
+type ContextType = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 	toggleClose: () => void;
 	toggleOpen: () => void;
 };
 
-const [DialogStateContextProvider, useDialogStateContext] = createCustomContext<ContextValue>();
+const [DialogStateContextProvider, useDialogStateContext] = createCustomContext<ContextType>();
 
 function DialogRoot(props: InferProps<typeof DialogPrimitive.Root>) {
 	// eslint-disable-next-line ts-eslint/unbound-method
@@ -34,7 +34,7 @@ function DialogRoot(props: InferProps<typeof DialogPrimitive.Root>) {
 				setOpen,
 				toggleClose,
 				toggleOpen,
-			}) satisfies ContextValue,
+			}) satisfies ContextType,
 		[toggleClose, toggleOpen, setOpen, open]
 	);
 
@@ -45,7 +45,7 @@ function DialogRoot(props: InferProps<typeof DialogPrimitive.Root>) {
 	);
 }
 
-type RenderFn = (props: ContextValue) => React.ReactNode;
+type RenderFn = (props: ContextType) => React.ReactNode;
 
 function DialogContext(props: DiscriminatedRenderProps<RenderFn>) {
 	const { children, render } = props;
