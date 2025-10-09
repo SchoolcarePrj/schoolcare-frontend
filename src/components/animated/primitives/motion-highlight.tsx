@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-you-might-not-need-an-effect/no-derived-state */
+/* eslint-disable react-x/no-unstable-default-props */
 "use client";
 
 import { AnimatePresence, type Transition, motion } from "motion/react";
@@ -111,7 +114,7 @@ type HighlightProps<T extends React.ElementType = "div"> =
 	| UncontrolledChildrenModeHighlightProps<T>
 	| UncontrolledParentModeHighlightProps<T>;
 
-function HighlightRoot<T extends React.ElementType = "div">(props: HighlightProps<T>) {
+function MotionHighlightRoot<T extends React.ElementType = "div">(props: HighlightProps<T>) {
 	const {
 		as: Component = "div",
 		children,
@@ -127,7 +130,6 @@ function HighlightRoot<T extends React.ElementType = "div">(props: HighlightProp
 		onValueChange,
 		ref,
 		style,
-		// eslint-disable-next-line react-x/no-unstable-default-props
 		transition = { damping: 35, stiffness: 350, type: "spring" },
 		value,
 	} = props;
@@ -139,10 +141,8 @@ function HighlightRoot<T extends React.ElementType = "div">(props: HighlightProp
 
 	useEffect(() => {
 		if (value !== undefined) {
-			// eslint-disable-next-line react-you-might-not-need-an-effect/no-derived-state, react-hooks/set-state-in-effect
 			setActiveValue(value);
 		} else if (defaultValue !== undefined) {
-			// eslint-disable-next-line react-you-might-not-need-an-effect/no-derived-state
 			setActiveValue(defaultValue);
 		}
 	}, [value, defaultValue]);
@@ -313,9 +313,9 @@ function HighlightRoot<T extends React.ElementType = "div">(props: HighlightProp
 				:	render(
 						toArray(children).map((child, index) => (
 							// eslint-disable-next-line react-x/no-array-index-key, react-x/prefer-destructuring-assignment
-							<HighlightItem key={index} className={props.itemsClassName}>
+							<MotionHighlightItem key={index} className={props.itemsClassName}>
 								{child}
-							</HighlightItem>
+							</MotionHighlightItem>
 						))
 					)
 
@@ -363,7 +363,7 @@ type HighlightItemProps<T extends React.ElementType = "div"> = PolymorphicProps<
 	}
 >;
 
-function HighlightItem<T extends React.ElementType = "div">(props: HighlightItemProps<T>) {
+function MotionHighlightItem<T extends React.ElementType = "div">(props: HighlightItemProps<T>) {
 	const {
 		activeClassName,
 		as: Component = "div",
@@ -617,9 +617,9 @@ function HighlightItem<T extends React.ElementType = "div">(props: HighlightItem
 		:	children;
 }
 
-export const Root = HighlightRoot;
+export const Root = MotionHighlightRoot;
 
-export const Item = HighlightItem;
+export const Item = MotionHighlightItem;
 
 // eslint-disable-next-line react-refresh/only-export-components
 export { useHighlightContext };

@@ -7,10 +7,10 @@ type UseIsInViewOptions = {
 	inViewOnce?: boolean;
 };
 
-function useIsInView<TElement extends HTMLElement = HTMLElement>(
+export const useIsInView = <TElement extends HTMLElement = HTMLElement>(
 	ref: React.Ref<TElement>,
 	options: UseIsInViewOptions = {}
-) {
+) => {
 	const { inView, inViewMargin = "0px", inViewOnce = false } = options;
 	const localRef = useRef<TElement>(null);
 
@@ -24,6 +24,4 @@ function useIsInView<TElement extends HTMLElement = HTMLElement>(
 	const isInView = !inView || inViewResult;
 
 	return { isInView, ref: localRef };
-}
-
-export { useIsInView, type UseIsInViewOptions };
+};

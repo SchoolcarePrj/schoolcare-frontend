@@ -7,19 +7,29 @@ function TabsRoot(props: React.ComponentProps<typeof TabsPrimitive.Root>) {
 	return <TabsPrimitive.Root className={cnMerge("flex flex-col gap-2", className)} {...restOfProps} />;
 }
 
-function TabsList(props: React.ComponentProps<typeof TabsPrimitive.List>) {
-	const { className, ...restOfProps } = props;
+function TabsList(
+	props: React.ComponentProps<typeof TabsPrimitive.List> & {
+		classNames?: {
+			highlight?: string;
+			list?: string;
+		};
+	}
+) {
+	const { className, classNames, ...restOfProps } = props;
 
 	return (
 		<TabsPrimitive.Highlight
-			className="absolute inset-0 z-0 rounded-md border border-transparent bg-shadcn-background
-				shadow-sm"
+			className={cnMerge(
+				"absolute inset-0 z-0 rounded-md border border-transparent bg-shadcn-background shadow-sm",
+				classNames?.highlight
+			)}
 		>
 			<TabsPrimitive.List
 				className={cnMerge(
 					`inline-flex h-9 w-fit items-center justify-center rounded-lg bg-shadcn-muted p-[3px]
 					text-shadcn-muted-foreground`,
-					className
+					className,
+					classNames?.list
 				)}
 				{...restOfProps}
 			/>
@@ -27,11 +37,21 @@ function TabsList(props: React.ComponentProps<typeof TabsPrimitive.List>) {
 	);
 }
 
-function TabsTrigger(props: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
-	const { className, ...restOfProps } = props;
+function TabsTrigger(
+	props: React.ComponentProps<typeof TabsPrimitive.Trigger> & {
+		classNames?: {
+			highlight?: string;
+			trigger?: string;
+		};
+	}
+) {
+	const { className, classNames, ...restOfProps } = props;
 
 	return (
-		<TabsPrimitive.HighlightItem value={restOfProps.value} className="flex-1">
+		<TabsPrimitive.HighlightItem
+			value={restOfProps.value}
+			className={cnMerge("flex-1", classNames?.highlight)}
+		>
 			<TabsPrimitive.Trigger
 				className={cnMerge(
 					`inline-flex h-[calc(100%-1px)] w-full flex-1 items-center justify-center gap-1.5 rounded-md
@@ -41,7 +61,8 @@ function TabsTrigger(props: React.ComponentProps<typeof TabsPrimitive.Trigger>) 
 					focus-visible:outline-shadcn-ring disabled:pointer-events-none disabled:opacity-50
 					data-[state=active]:text-shadcn-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0
 					[&_svg:not([class*='size-'])]:size-4`,
-					className
+					className,
+					classNames?.trigger
 				)}
 				{...restOfProps}
 			/>

@@ -3,8 +3,8 @@
 "use client";
 
 import { motion, type Transition, type HTMLMotionProps } from "motion/react";
-import * as HighlightPrimitive from "./highlight";
-import { SlotAnimated, type WithAsChild } from "./slot";
+import * as MotionHighlightPrimitive from "./motion-highlight";
+import { Slot, type WithAsChild } from "./slot";
 import { createCustomContext } from "@zayne-labs/toolkit-react";
 import {
 	useState,
@@ -108,7 +108,7 @@ function TabsRoot(props: TabsProps) {
 }
 
 type TabsHighlightProps = Omit<
-	React.ComponentProps<typeof HighlightPrimitive.Root>,
+	React.ComponentProps<typeof MotionHighlightPrimitive.Root>,
 	"controlledItems" | "value"
 >;
 
@@ -117,12 +117,11 @@ function TabsHighlight(props: TabsHighlightProps) {
 	const { activeValue } = useTabsContext();
 
 	return (
-		<HighlightPrimitive.Root
-			data-slot="tabs-highlight"
+		<MotionHighlightPrimitive.Root
+			data-slot="tabs-highlight-root"
 			controlledItems={true}
 			value={activeValue}
 			transition={transition}
-			click={false}
 			{...restOfProps}
 		/>
 	);
@@ -136,12 +135,12 @@ function TabsList(props: TabsListProps) {
 	return <div role="tablist" data-slot="tabs-list" {...props} />;
 }
 
-type TabsHighlightItemProps = React.ComponentProps<typeof HighlightPrimitive.Item> & {
+type TabsHighlightItemProps = React.ComponentProps<typeof MotionHighlightPrimitive.Item> & {
 	value: string;
 };
 
 function TabsHighlightItem(props: TabsHighlightItemProps) {
-	return <HighlightPrimitive.Item data-slot="tabs-highlight-item" {...props} />;
+	return <MotionHighlightPrimitive.Item data-slot="tabs-highlight-item" {...props} />;
 }
 
 type TabsTriggerProps = WithAsChild<
@@ -163,7 +162,7 @@ function TabsTrigger(props: TabsTriggerProps) {
 		return () => registerTrigger(value, null);
 	}, [value, registerTrigger]);
 
-	const Component = asChild ? SlotAnimated : motion.button;
+	const Component = asChild ? Slot : motion.button;
 
 	return (
 		<Component
@@ -300,7 +299,7 @@ function TabsContent({ asChild = false, style, value, ...props }: TabsContentPro
 	const { activeValue } = useTabsContext();
 	const isActive = activeValue === value;
 
-	const Component = asChild ? SlotAnimated : motion.div;
+	const Component = asChild ? Slot : motion.div;
 
 	return (
 		<Component

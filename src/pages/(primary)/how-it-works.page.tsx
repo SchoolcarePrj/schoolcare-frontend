@@ -44,14 +44,21 @@ const steps = [
 function HowItWorks() {
 	return (
 		<main className="flex flex-col gap-10 lg:gap-[55px]">
-			<section>
-				<picture>
+			<section className="relative flex h-[214px] items-center justify-center lg:h-[300px]">
+				<div className="flex flex-col items-center text-center text-white">
+					<h1 className="text-[24px] font-semibold lg:text-[48px]">See How SchoolCare Works</h1>
+					<p className="max-lg:max-w-[250px] lg:text-[24px]">
+						Learn the Simple Steps Behind How SchoolCare Works
+					</p>
+				</div>
+
+				<picture className="absolute inset-0 -z-1">
 					<source media="(min-width: 1000px)" srcSet={howItWorksBgDesktop} />
 					<Image
 						layout="fullWidth"
 						src={howItWorksBgMobile}
 						fetchPriority="high"
-						className="max-h-[214px] rounded-[24px] object-cover lg:max-h-[300px]"
+						className="h-full rounded-[24px] object-cover"
 					/>
 				</picture>
 			</section>

@@ -23,7 +23,7 @@ import React, {
 	useRef,
 	useState,
 } from "react";
-import { SlotAnimated, type WithAsChild } from "./slot";
+import { Slot, type WithAsChild } from "./slot";
 
 type Side = "bottom" | "left" | "right" | "top";
 type Align = "center" | "end" | "start";
@@ -280,7 +280,7 @@ function TooltipOverlay() {
 
 	// eslint-disable-next-line ts-eslint/no-unnecessary-condition
 	const ready = x != null && y != null;
-	const Component = rendered.data?.contentAsChild ? SlotAnimated : motion.div;
+	const Component = rendered.data?.contentAsChild ? Slot : motion.div;
 	const resolvedSide = getResolvedSide(context.placement);
 
 	return (
@@ -523,7 +523,7 @@ function TooltipTrigger(props: TooltipTriggerProps) {
 		[hideTooltip, onBlur]
 	);
 
-	const Component = asChild ? SlotAnimated : motion.div;
+	const Component = asChild ? Slot : motion.div;
 
 	return (
 		<Component

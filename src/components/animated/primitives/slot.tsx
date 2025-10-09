@@ -20,7 +20,7 @@ type SlotProps<TElement extends HTMLElement = HTMLElement> = DOMMotionProps<TEle
 	children?: unknown;
 };
 
-function SlotAnimated<TElement extends HTMLElement = HTMLElement>(props: SlotProps<TElement>) {
+function Slot<TElement extends HTMLElement = HTMLElement>(props: SlotProps<TElement>) {
 	const { children, ref, ...restOfProps } = props;
 	const childrenType = (children as React.ReactElement | undefined)?.type as React.ElementType;
 	const isAlreadyMotion = isObject(childrenType) && isMotionComponent(childrenType);
@@ -42,4 +42,4 @@ function SlotAnimated<TElement extends HTMLElement = HTMLElement>(props: SlotPro
 	return <Base {...mergedProps} ref={composeRefs(childRef as React.Ref<TElement>, ref)} />;
 }
 
-export { SlotAnimated, type SlotProps, type WithAsChild, type DOMMotionProps, type AnyProps };
+export { Slot, type SlotProps, type WithAsChild, type DOMMotionProps, type AnyProps };
