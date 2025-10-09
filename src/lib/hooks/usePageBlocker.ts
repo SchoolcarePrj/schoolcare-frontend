@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-export const usePageBlocker = (options: { condition: boolean; message: string; redirectPath: string }) => {
+const usePageBlocker = (options: { condition: boolean; message: string; redirectPath: string }) => {
 	const { condition, message, redirectPath } = options;
 
 	const navigate = useNavigate();
@@ -19,3 +19,5 @@ export const usePageBlocker = (options: { condition: boolean; message: string; r
 		return () => clearTimeout(timeout);
 	}, [navigate, condition, message, redirectPath]);
 };
+
+export { usePageBlocker };
