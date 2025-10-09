@@ -24,6 +24,7 @@ function AdminRegisterPage() {
 	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/school/admin/register", {
 			body: data,
+			meta: { auth: { skipHeaderAddition: true } },
 
 			onSuccess: () => {
 				void navigate("/auth/login");

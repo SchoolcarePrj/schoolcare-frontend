@@ -5,7 +5,7 @@ import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { ForWithWrapper, IconBox, Image, NavLink, Show } from "@/components/common";
-import { AvatarGroup, CollapsibleAnimated } from "@/components/ui";
+import { Avatar, AvatarGroup, CollapsibleAnimated } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
@@ -73,26 +73,35 @@ function DesktopNavContent(props: { className?: string }) {
 			<div className="flex items-center gap-6">
 				<IconBox icon="material-symbols:notifications-outline-rounded" className="size-8" />
 
-				<AvatarGroup.Root invertOverlap={true} translate="5%">
-					<Show.Root when={sessionQueryResult.data?.data.logo}>
-						{(logo) => (
-							<>
-								<Image src={logo} width={70} height={70} className="rounded-full object-cover" />
+				<AvatarGroup.Root translate="5%">
+					<Avatar.Root className="size-[70px]">
+						<Show.Root when={sessionQueryResult.data?.data.logo}>
+							{(logo) => (
+								<>
+									<Image
+										src={logo}
+										width={70}
+										height={70}
+										className="size-full rounded-full object-cover"
+									/>
 
-								<Show.Otherwise>
-									<span
-										className="inline-flex size-[70px] shrink-0 items-center justify-center
-											rounded-full bg-[hsl(0,0%,85%)] text-[18px]"
-									>
-										{sessionQueryResult.data?.data.school[0]}
-										{sessionQueryResult.data?.data.school[1]}
-									</span>
-								</Show.Otherwise>
-							</>
-						)}
-					</Show.Root>
+									<Show.Otherwise>
+										<span
+											className="inline-flex size-full shrink-0 items-center justify-center
+												rounded-full bg-[hsl(0,0%,85%)] text-[18px]"
+										>
+											{sessionQueryResult.data?.data.school[0]}
+											{sessionQueryResult.data?.data.school[1]}
+										</span>
+									</Show.Otherwise>
+								</>
+							)}
+						</Show.Root>
 
-					<AvatarGroup.Tooltip>{sessionQueryResult.data?.data.school}</AvatarGroup.Tooltip>
+						<AvatarGroup.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
+							{sessionQueryResult.data?.data.school}
+						</AvatarGroup.Tooltip>
+					</Avatar.Root>
 				</AvatarGroup.Root>
 			</div>
 		</section>

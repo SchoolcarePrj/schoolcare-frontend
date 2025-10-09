@@ -1,5 +1,5 @@
-import { Avatar as AvatarPrimitive } from "radix-ui";
 import { cnMerge } from "@/lib/utils/cn";
+import { Avatar as AvatarPrimitive } from "radix-ui";
 
 function AvatarRoot(props: React.ComponentProps<typeof AvatarPrimitive.Root>) {
 	const { className, ...restOfProps } = props;

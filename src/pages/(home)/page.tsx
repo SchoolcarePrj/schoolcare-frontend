@@ -99,7 +99,7 @@ const blogPosts = [
 	{
 		description:
 			"Bunmi-Alade Opeyemi, a young Nigerian woman, has overcome incredible odds to graduate as a licensed medical doctor from Bukovinian State Medical University in Chernivtsi, Ukraine",
-		imageURL: cardThree,
+		imageURL: cardTwo,
 		title: "From Refugee to Medical Doctor . Young Nigerian Lady Celebrates Inspiring Achievement",
 	},
 	{
@@ -110,9 +110,9 @@ const blogPosts = [
 	},
 	{
 		description:
-			"Bunmi-Alade Opeyemi, a young Nigerian woman, has overcome incredible odds to graduate as a licensed medical doctor from Bukovinian State Medical University in Chernivtsi, Ukraine",
-		imageURL: cardThree,
-		title: "From Refugee to Medical Doctor . Young Nigerian Lady Celebrates Inspiring Achievement",
+			"Lagos State Governor, Mr Babajide Sanwo-Olu, on Thursday, announced a cash gift of N10 million for Miss Isioma Sybil Nwosu, who emerged as the...",
+		imageURL: cardOne,
+		title: "Lagos State Governor, Mr Babajide Sanwo-Olu, on Thursday, announced a cash gift of N10 million for Miss Isioma Sybil Nwosu",
 	},
 ];
 

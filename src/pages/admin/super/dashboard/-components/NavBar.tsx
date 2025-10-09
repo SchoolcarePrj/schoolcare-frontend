@@ -21,20 +21,18 @@ function NavBar(props: NavBarProps) {
 			</div>
 
 			<div className="flex items-center gap-3">
-				<AvatarGroup.Root
-					invertOverlap={true}
-					tooltipProps={{ side: "top", sideOffset: 15 }}
-					translate="5%"
-				>
-					<Avatar.Root className="size-9 rounded-full">
+				<AvatarGroup.Root translate="5%">
+					<Avatar.Root className="size-9 cursor-pointer rounded-full">
 						<Avatar.Fallback className="bg-school-dark-blue-500 text-[14px] text-white">
-							CS
+							ES
 						</Avatar.Fallback>
-						<AvatarGroup.Tooltip>Clement Sarah</AvatarGroup.Tooltip>
+						<AvatarGroup.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
+							Emperor
+						</AvatarGroup.Tooltip>
 					</Avatar.Root>
 				</AvatarGroup.Root>
 
-				<p className="font-medium text-black">Clement Sarah</p>
+				<p className="font-medium text-black">Emperor SchoolCare</p>
 			</div>
 		</header>
 	);
