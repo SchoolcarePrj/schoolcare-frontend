@@ -18,23 +18,23 @@ function NavBar(props: NavBarProps) {
 					<IconBox icon="mynaui:panel-left-close" className="size-full" />
 				</button>
 
-				<h1 className="text-[24px] font-medium">Welcome Back, Admin</h1>
+				<h1 className="text-[24px] font-medium">Welcome Back, Sovereign</h1>
 			</div>
 
 			<div className="flex items-center gap-3">
 				<AvatarGroupAnimated.Root translate="5%">
 					<Avatar.Root className="size-9 cursor-pointer rounded-full">
 						<Avatar.Fallback className="bg-school-dark-blue-500 text-[14px] text-white">
-							ES
+							SS
 						</Avatar.Fallback>
 
 						<AvatarGroupAnimated.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
-							Emperor
+							Sovereign
 						</AvatarGroupAnimated.Tooltip>
 					</Avatar.Root>
 				</AvatarGroupAnimated.Root>
 
-				<p className="font-medium text-black">Emperor SchoolCare</p>
+				<p className="font-medium text-black">SchoolCare Sovereign</p>
 			</div>
 		</header>
 	);
