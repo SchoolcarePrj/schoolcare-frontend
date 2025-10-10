@@ -15,9 +15,9 @@ function DashboardSidebar(props: { className?: string; isOpen: boolean }) {
 					// NOTE - Also ensure the direct parent of this drawer is a flex container with the vertical axis set to flex-stretch (which is the default)
 					"relative flex overflow-y-auto",
 
-					"custom-scrollbar shrink-0 transition-[width]",
+					"custom-scrollbar shrink-0 transition-[width] duration-500",
 
-					isOpen ? "w-[250px] duration-500" : "w-0 duration-350",
+					isOpen ? "w-[250px]" : "w-0",
 
 					className
 				)}

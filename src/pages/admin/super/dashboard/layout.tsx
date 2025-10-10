@@ -8,7 +8,12 @@ function SuperAdminDashboardLayout() {
 	const [isSidebarOpen, toggleIsSidebarOpen] = useToggle(true);
 
 	return (
-		<div className={cnJoin("flex grow bg-[hsl(0,0%,95%)] px-5 pt-5.5 pb-11", isSidebarOpen && "gap-8")}>
+		<div
+			className={cnJoin(
+				"flex grow bg-[hsl(0,0%,95%)] px-5 pt-5.5 pb-11 transition-[gap] duration-500",
+				isSidebarOpen ? "gap-8" : "gap-0"
+			)}
+		>
 			<DashboardSidebar isOpen={isSidebarOpen} />
 
 			<div className="flex w-full grow flex-col gap-6">
