@@ -2,20 +2,20 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { motion, type Transition, type HTMLMotionProps } from "motion/react";
-import * as MotionHighlightPrimitive from "./motion-highlight";
-import { Slot, type WithAsChild } from "./slot";
+import { toArray } from "@zayne-labs/toolkit-core";
 import { createCustomContext } from "@zayne-labs/toolkit-react";
+import { type HTMLMotionProps, motion, type Transition } from "motion/react";
 import {
-	useState,
-	useRef,
-	useEffect,
+	isValidElement,
 	useCallback,
+	useEffect,
 	useImperativeHandle,
 	useLayoutEffect,
-	isValidElement,
+	useRef,
+	useState,
 } from "react";
-import { toArray } from "@zayne-labs/toolkit-core";
+import * as MotionHighlightPrimitive from "./motion-highlight";
+import { Slot, type WithAsChild } from "./slot";
 
 type TabsContextType = {
 	activeValue: string;
@@ -100,7 +100,7 @@ function TabsRoot(props: TabsProps) {
 				registerTrigger,
 			}}
 		>
-			<div data-slot="tabs" {...restOfProps}>
+			<div data-slot="tabs-root" {...restOfProps}>
 				{children}
 			</div>
 		</TabsProvider>
@@ -260,7 +260,7 @@ function TabsContentList(props: TabsContentsProps) {
 	return (
 		<motion.div
 			ref={containerRef}
-			data-slot="tabs-contents"
+			data-slot="tabs-content-list"
 			style={{ overflow: "hidden" }}
 			animate={{ height }}
 			transition={transition}

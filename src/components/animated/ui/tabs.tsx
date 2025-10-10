@@ -1,5 +1,5 @@
-import * as TabsPrimitive from "../primitives/tabs";
 import { cnMerge } from "@/lib/utils/cn";
+import * as TabsPrimitive from "../primitives/tabs";
 
 function TabsRoot(props: React.ComponentProps<typeof TabsPrimitive.Root>) {
 	const { className, ...restOfProps } = props;
@@ -70,7 +70,7 @@ function TabsTrigger(
 	);
 }
 
-function TabsContentList(props: React.ComponentProps<typeof TabsPrimitive.Content>) {
+function TabsContentList(props: React.ComponentProps<typeof TabsPrimitive.ContentList>) {
 	return <TabsPrimitive.ContentList {...props} />;
 }
 

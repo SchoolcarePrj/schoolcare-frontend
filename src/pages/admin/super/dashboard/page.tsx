@@ -282,7 +282,7 @@ function DashboardPage() {
 										layout="fullWidth"
 										src={item.schoolLogoSrc}
 										alt={item.schoolName}
-										className="size-6"
+										className="size-6 object-cover"
 									/>
 
 									<p>{item.schoolName}</p>
