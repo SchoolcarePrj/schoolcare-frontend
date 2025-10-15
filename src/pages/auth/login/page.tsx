@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router";
 import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
-import { authTokenObject } from "@/lib/api/callBackendApi/plugins/utils";
+import { authTokenStore } from "@/lib/api/callBackendApi/plugins/utils";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 
@@ -34,7 +34,7 @@ function LoginPage() {
 			},
 
 			onSuccess: (ctx) => {
-				authTokenObject.setTokens({
+				authTokenStore.setTokens({
 					access: ctx.data.data.access,
 					refresh: ctx.data.data.refresh,
 				});

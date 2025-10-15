@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react";
+import { Pagination } from "@ark-ui/react/pagination";
 import { tw } from "@zayne-labs/toolkit-core";
 import { useState } from "react";
 import {
@@ -137,7 +137,7 @@ function DashboardPage() {
 						<Card.Content className="flex flex-col gap-1">
 							<div className="flex items-center justify-between">
 								<h3 className="font-medium">{item.mainTitle.label}</h3>
-								<Icon
+								<IconBox
 									icon={item.icon}
 									className={cnJoin("size-6 shrink-0", item.classNames.textColor)}
 								/>
@@ -176,7 +176,7 @@ function DashboardPage() {
 
 					<ForWithWrapper
 						each={activitiesArray}
-						className="flex flex-col gap-6"
+						className="flex grow flex-col gap-6"
 						renderItem={(item) => (
 							<li className="flex flex-col gap-1" key={item.activity}>
 								<p>{item.activity}</p>
@@ -184,6 +184,52 @@ function DashboardPage() {
 							</li>
 						)}
 					/>
+
+					<Pagination.Root
+						count={5}
+						pageSize={1}
+						siblingCount={3}
+						className="flex items-center justify-center gap-6"
+					>
+						<Pagination.PrevTrigger>
+							<IconBox icon="lucide:chevron-left" />
+						</Pagination.PrevTrigger>
+
+						<Pagination.Context>
+							{(pagination) => (
+								<ForWithWrapper
+									as="div"
+									each={pagination.pages}
+									className="flex items-center gap-7"
+									renderItem={(page, index) => {
+										if (page.type === "page") {
+											return (
+												<Pagination.Item
+													key={index}
+													{...page}
+													className="text-center data-selected:h-6 data-selected:min-w-7
+														data-selected:rounded-[4px] data-selected:bg-school-dark-blue-500
+														data-selected:text-[hsl(0,0%,98%)]"
+												>
+													{page.value}
+												</Pagination.Item>
+											);
+										}
+
+										return (
+											<Pagination.Ellipsis key={index} index={index}>
+												&#8230;
+											</Pagination.Ellipsis>
+										);
+									}}
+								/>
+							)}
+						</Pagination.Context>
+
+						<Pagination.NextTrigger>
+							<IconBox icon="lucide:chevron-right" />
+						</Pagination.NextTrigger>
+					</Pagination.Root>
 				</article>
 
 				<article

@@ -1,7 +1,9 @@
+import { header } from "motion/react-client";
 import { schoolFour } from "@/assets/images/home";
 import { TabsAnimated } from "@/components/animated/ui";
 import { ForWithWrapper, IconBox, Image } from "@/components/common";
 import { Card, Form } from "@/components/ui";
+import { Heading } from "../-components/Heading";
 import { Main } from "../-components/Main";
 
 const allSchools = [
@@ -38,10 +40,10 @@ function SchoolsPage() {
 	return (
 		<Main className="gap-6">
 			<header className="flex flex-col gap-6">
-				<div>
-					<h1 className="text-[24px] font-medium">Schools Management</h1>
-					<p className="text-[hsl(0,0%,52%)]">Manage and monitor all educational institutions</p>
-				</div>
+				<Heading
+					title="Schools Management"
+					description="Manage and monitor all educational institutions"
+				/>
 
 				<form>
 					<Form.InputGroup
@@ -65,7 +67,7 @@ function SchoolsPage() {
 			</header>
 
 			<section>
-				<TabsAnimated.Root className="gap-6">
+				<TabsAnimated.Root defaultValue="all" className="gap-6">
 					<TabsAnimated.List
 						classNames={{
 							highlight: "rounded-[36px] border-none bg-school-dark-blue-500",
@@ -99,8 +101,6 @@ function SchoolsPage() {
 								renderItem={(item) => (
 									<SchoolCard key={item.id} item={item}>
 										<Card.Action
-											as="button"
-											type="button"
 											className="rounded-[8px] border border-school-dark-blue-500 px-4 py-2"
 										>
 											<IconBox
@@ -120,8 +120,6 @@ function SchoolsPage() {
 								renderItem={(item) => (
 									<SchoolCard key={item.id} item={item}>
 										<Card.Action
-											as="button"
-											type="button"
 											className="rounded-[8px] border border-school-green-500 bg-school-green-50
 												p-2.5"
 										>

@@ -32,7 +32,7 @@ const refreshTokenKey = "admin-school-refreshToken";
 const accessTokenKey = "admin-school-accessToken";
 
 /* eslint-disable ts-eslint/no-unnecessary-condition */
-export const authTokenObject = {
+export const authTokenStore = {
 	clearTokens: () => {
 		globalThis.localStorage?.removeItem(accessTokenKey);
 		globalThis.localStorage?.removeItem(refreshTokenKey);

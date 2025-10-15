@@ -3,7 +3,7 @@ import { isHTTPError } from "@zayne-labs/callapi/utils";
 import type { Awaitable, CallbackFn } from "@zayne-labs/toolkit-type-helpers";
 import type { BaseApiErrorResponse } from "../apiSchema";
 import {
-	authTokenObject,
+	authTokenStore,
 	isAuthTokenRelatedError,
 	isPathnameMatchingRoute,
 	type PossibleAuthToken,
@@ -46,7 +46,7 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 				(route) => isPathnameMatchingRoute(route)
 			);
 
-			if (authTokenObject.getRefreshToken() === null) {
+			if (authTokenStore.getRefreshToken() === null) {
 				const redirectFn = authMeta?.redirectFn ?? redirectTo;
 
 				!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
@@ -59,7 +59,7 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 				throw new Error(defaultRedirectionMessage);
 			}
 
-			const selectedAuthToken = authTokenObject[authMeta?.tokenToAdd ?? "getAccessToken"]();
+			const selectedAuthToken = authTokenStore[authMeta?.tokenToAdd ?? "getAccessToken"]();
 
 			ctx.options.auth = selectedAuthToken;
 		},
@@ -76,7 +76,7 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 				(route) => isPathnameMatchingRoute(route)
 			);
 
-			const refreshToken = authTokenObject.getRefreshToken();
+			const refreshToken = authTokenStore.getRefreshToken();
 
 			const redirectFn = authMeta?.redirectFn ?? redirectTo;
 
@@ -94,9 +94,8 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 				throw new Error("Session invalid or expired! Redirecting to login...");
 			}
 
-			result.data?.data && authTokenObject.setAccessToken({ access: result.data.data.access });
+			result.data?.data && authTokenStore.setAccessToken({ access: result.data.data.access });
 
-			// NOTE: This will not work for requests made via react query, which in that case retries are up to react query
 			ctx.options.retryAttempts = 1;
 		},
 	},

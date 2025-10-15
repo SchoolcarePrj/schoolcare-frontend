@@ -25,8 +25,10 @@ const BASE_API_URL = `${BACKEND_HOST}/api`;
 const sharedBaseCallApiConfig = defineBaseConfig((instanceCtx) => ({
 	baseURL: BASE_API_URL,
 
-	dedupeCacheScope: "global",
-	dedupeCacheScopeKey: instanceCtx.options.baseURL,
+	dedupe: {
+		cacheScope: "global",
+		cacheScopeKey: instanceCtx.options.baseURL,
+	},
 
 	plugins: [authPlugin(), toastPlugin(), loggerPlugin({ enabled: { onError: true } })],
 

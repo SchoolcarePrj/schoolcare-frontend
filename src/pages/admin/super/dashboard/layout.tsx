@@ -10,8 +10,8 @@ function SuperAdminDashboardLayout() {
 	return (
 		<div
 			className={cnJoin(
-				"flex grow bg-[hsl(0,0%,95%)] px-5 pt-5.5 pb-11 transition-[gap] duration-500",
-				isSidebarOpen ? "gap-8" : "gap-0"
+				"flex grow bg-[hsl(0,0%,95%)] px-5 pt-5.5 pb-11 transition-[gap]",
+				isSidebarOpen ? "gap-8 duration-500" : "gap-0"
 			)}
 		>
 			<DashboardSidebar isOpen={isSidebarOpen} />
