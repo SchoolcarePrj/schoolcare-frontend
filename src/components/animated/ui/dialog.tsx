@@ -1,235 +1,119 @@
-import { createCustomContext, useCallbackRef, useControllableState } from "@zayne-labs/toolkit-react";
-import { composeEventHandlers, type InferProps } from "@zayne-labs/toolkit-react/utils";
-import { AnimatePresence, type HTMLMotionProps, motion, type Transition } from "motion/react";
-import { Dialog as DialogPrimitive } from "radix-ui";
-import { useMemo } from "react";
+import type { InferProps } from "@zayne-labs/toolkit-react/utils";
+import { IconBox } from "@/components/common";
 import { cnMerge } from "@/lib/utils/cn";
-import { IconBox } from "../../common/IconBox";
+import * as DialogPrimitive from "../primitives/dialog-radix";
 
-type ContextValue = {
-	isOpen: boolean;
-	onClose: () => void;
-	onOpen: () => void;
-	setIsOpen: (open: boolean) => void;
-};
+type DialogProps = InferProps<typeof DialogPrimitive.Root>;
 
-const [DialogContextProvider, useDialogContext] = createCustomContext<ContextValue>();
-
-function DialogRoot(props: InferProps<typeof DialogPrimitive.Root>) {
-	// eslint-disable-next-line ts-eslint/unbound-method
-	const { defaultOpen, onOpenChange, open, ...restOfProps } = props;
-
-	const [isOpen, setIsOpen] = useControllableState({
-		defaultValue: defaultOpen,
-		onChange: onOpenChange,
-		value: open,
-	});
-
-	const onClose = useCallbackRef(() => setIsOpen(false));
-	const onOpen = useCallbackRef(() => setIsOpen(true));
-
-	const contextValue = useMemo(
-		() => ({ isOpen, onClose, onOpen, setIsOpen }) satisfies ContextValue,
-		[onClose, onOpen, isOpen, setIsOpen]
-	);
-
-	return (
-		<DialogContextProvider value={contextValue}>
-			<DialogPrimitive.Root
-				{...restOfProps}
-				data-slot="dialog-root"
-				open={isOpen}
-				onOpenChange={setIsOpen}
-			/>
-		</DialogContextProvider>
-	);
+function DialogRoot(props: DialogProps) {
+	return <DialogPrimitive.Root {...props} />;
 }
 
-type RenderFn = (props: ContextValue) => React.ReactNode;
+type DialogTriggerProps = InferProps<typeof DialogPrimitive.Trigger>;
 
-function DialogContext(props: { children: RenderFn }) {
-	const { children } = props;
-
-	const dialogCtx = useDialogContext();
-
-	return children(dialogCtx);
+function DialogTrigger(props: DialogTriggerProps) {
+	return <DialogPrimitive.Trigger {...props} />;
 }
 
-function DialogTrigger(props: InferProps<typeof DialogPrimitive.Trigger>) {
-	const { onClick, ...restOfProps } = props;
-	const { onOpen } = useDialogContext();
+type DialogCloseProps = InferProps<typeof DialogPrimitive.Close>;
 
-	return (
-		<DialogPrimitive.Trigger
-			data-slot="dialog-trigger"
-			{...restOfProps}
-			onClick={composeEventHandlers(onClick, onOpen)}
-		/>
-	);
+function DialogClose(props: DialogCloseProps) {
+	return <DialogPrimitive.Close {...props} />;
 }
 
-function DialogPortal(props: InferProps<typeof DialogPrimitive.Portal>) {
-	return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
-}
+type DialogOverlayProps = InferProps<typeof DialogPrimitive.Overlay>;
 
-function DialogClose(props: InferProps<typeof DialogPrimitive.Close>) {
-	return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
-}
-
-function DialogOverlay(props: InferProps<typeof DialogPrimitive.Overlay>) {
+function DialogOverlay(props: DialogOverlayProps) {
 	const { className, ...restOfProps } = props;
 
 	return (
 		<DialogPrimitive.Overlay
-			className={cnMerge(
-				`fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-				data-[state=open]:animate-in data-[state=open]:fade-in-0`,
-				className
-			)}
+			className={cnMerge("fixed inset-0 z-50 bg-black/50", className)}
 			{...restOfProps}
 		/>
 	);
 }
 
-type FlipDirection = "bottom" | "left" | "right" | "top";
+type DialogContentProps = InferProps<typeof DialogPrimitive.Content> & {
+	withCloseButton?: boolean;
+};
 
-type DialogContentProps = HTMLMotionProps<"div">
-	& React.ComponentProps<typeof DialogPrimitive.Content> & {
-		from?: FlipDirection;
-		transition?: Transition;
-	};
-
-function DialogContent(
-	props: DialogContentProps & {
-		classNames?: { base?: string; overlay?: string };
-		withCloseBtn?: boolean;
-	}
-) {
-	const {
-		children,
-		className,
-		classNames,
-		from = "top",
-		transition,
-		withCloseBtn = true,
-		...restOfProps
-	} = props;
-	const { isOpen } = useDialogContext();
-
-	const initialRotation = from === "top" || from === "left" ? "20deg" : "-20deg";
-	const isVertical = from === "top" || from === "bottom";
-	const rotateAxis = isVertical ? "rotateX" : "rotateY";
-
+function DialogContent({ children, className, withCloseButton = true, ...props }: DialogContentProps) {
 	return (
-		<AnimatePresence>
-			{isOpen && (
-				<DialogPortal forceMount={true}>
-					<DialogOverlay asChild={true} forceMount={true} className={classNames?.overlay}>
-						<motion.div
-							key="dialog-overlay"
-							initial={{ filter: "blur(4px)", opacity: 0 }}
-							animate={{ filter: "blur(0px)", opacity: 1 }}
-							exit={{ filter: "blur(4px)", opacity: 0 }}
-							transition={{ duration: 0.2, ease: "easeInOut" }}
-						/>
-					</DialogOverlay>
-
-					<DialogPrimitive.Content
-						data-slot="dialog-content"
-						asChild={true}
-						forceMount={true}
-						{...restOfProps}
+		<DialogPrimitive.Portal>
+			<DialogOverlay />
+			<DialogPrimitive.Content
+				className={cnMerge(
+					`fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-[-50%] gap-4
+					rounded-lg border bg-shadcn-background p-6 shadow-lg sm:max-w-lg`,
+					className
+				)}
+				{...props}
+			>
+				{children}
+				{withCloseButton && (
+					<DialogPrimitive.Close
+						className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-shadcn-background
+							transition-opacity hover:opacity-100 focus:ring-2 focus:ring-shadcn-ring
+							focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none
+							data-[state=open]:bg-shadcn-accent data-[state=open]:text-shadcn-muted-foreground
+							[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
 					>
-						<motion.div
-							key="dialog-content"
-							initial={{
-								filter: "blur(4px)",
-								opacity: 0,
-								transform: `perspective(500px) ${rotateAxis}(${initialRotation}) scale(0.8)`,
-							}}
-							animate={{
-								filter: "blur(0px)",
-								opacity: 1,
-								transform: `${rotateAxis}(0deg) scale(1)`,
-							}}
-							exit={{
-								filter: "blur(4px)",
-								opacity: 0,
-								transform: `perspective(500px) ${rotateAxis}(${initialRotation}) scale(0.8)`,
-							}}
-							transition={transition ?? { damping: 25, stiffness: 150, type: "spring" }}
-							className={cnMerge(
-								`fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-[-50%] gap-4
-								rounded-lg border bg-shadcn-background p-6 shadow-lg`,
-								className,
-								classNames?.base
-							)}
-						>
-							{children}
-
-							{withCloseBtn && (
-								<DialogClose
-									className="absolute top-4 right-4 rounded-xs opacity-70
-										ring-offset-shadcn-background transition-opacity hover:opacity-100
-										focus:ring-2 focus:ring-shadcn-ring focus:ring-offset-2 focus:outline-hidden
-										disabled:pointer-events-none data-[state=open]:bg-shadcn-accent
-										data-[state=open]:text-shadcn-muted-foreground [&_svg]:pointer-events-none
-										[&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
-								>
-									<IconBox icon="lucide:x" className="size-4" />
-									<span className="sr-only">Close</span>
-								</DialogClose>
-							)}
-						</motion.div>
-					</DialogPrimitive.Content>
-				</DialogPortal>
-			)}
-		</AnimatePresence>
+						<IconBox icon="lucide:x" />
+						<span className="sr-only">Close</span>
+					</DialogPrimitive.Close>
+				)}
+			</DialogPrimitive.Content>
+		</DialogPrimitive.Portal>
 	);
 }
 
-function DialogHeader(props: InferProps<"div">) {
+type DialogHeaderProps = InferProps<typeof DialogPrimitive.Header>;
+
+function DialogHeader(props: DialogHeaderProps) {
 	const { className, ...restOfProps } = props;
 
 	return (
-		<div
-			data-slot="dialog-header"
-			className={cnMerge("flex flex-col gap-2 text-center", className)}
+		<DialogPrimitive.Header
+			className={cnMerge("flex flex-col gap-2 text-center sm:text-left", className)}
 			{...restOfProps}
 		/>
 	);
 }
 
-function DialogFooter(props: InferProps<"div">) {
+type DialogFooterProps = InferProps<typeof DialogPrimitive.Footer>;
+
+function DialogFooter(props: DialogFooterProps) {
 	const { className, ...restOfProps } = props;
 
 	return (
-		<div
-			data-slot="dialog-footer"
+		<DialogPrimitive.Footer
 			className={cnMerge("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}
 			{...restOfProps}
 		/>
 	);
 }
 
-function DialogTitle(props: InferProps<typeof DialogPrimitive.Title>) {
+type DialogTitleProps = InferProps<typeof DialogPrimitive.Title>;
+
+function DialogTitle(props: DialogTitleProps) {
 	const { className, ...restOfProps } = props;
 
 	return (
 		<DialogPrimitive.Title
-			data-slot="dialog-title"
 			className={cnMerge("text-lg leading-none font-semibold", className)}
 			{...restOfProps}
 		/>
 	);
 }
 
-function DialogDescription(props: InferProps<typeof DialogPrimitive.Description>) {
+type DialogDescriptionProps = InferProps<typeof DialogPrimitive.Description>;
+
+function DialogDescription(props: DialogDescriptionProps) {
 	const { className, ...restOfProps } = props;
 
 	return (
 		<DialogPrimitive.Description
-			data-slot="dialog-description"
 			className={cnMerge("text-sm text-shadcn-muted-foreground", className)}
 			{...restOfProps}
 		/>
@@ -237,26 +121,11 @@ function DialogDescription(props: InferProps<typeof DialogPrimitive.Description>
 }
 
 export const Root = DialogRoot;
-
-export const Context = DialogContext;
-
-export const Close = DialogClose;
-
-export const Content = DialogContent;
-
-export const Description = DialogDescription;
-
-export const Footer = DialogFooter;
-
-export const Header = DialogHeader;
-
-export const Overlay = DialogOverlay;
-
-export const Portal = DialogPortal;
-
-export const Title = DialogTitle;
-
 export const Trigger = DialogTrigger;
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { useDialogContext };
+export const Close = DialogClose;
+export const Overlay = DialogOverlay;
+export const Content = DialogContent;
+export const Header = DialogHeader;
+export const Footer = DialogFooter;
+export const Title = DialogTitle;
+export const Description = DialogDescription;

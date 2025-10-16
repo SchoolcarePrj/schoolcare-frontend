@@ -1,4 +1,3 @@
-import { header } from "motion/react-client";
 import { schoolFour } from "@/assets/images/home";
 import { TabsAnimated } from "@/components/animated/ui";
 import { ForWithWrapper, IconBox, Image } from "@/components/common";

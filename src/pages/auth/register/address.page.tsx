@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -62,14 +62,14 @@ function AddressPage() {
 		});
 	});
 
-	const state = form.watch("state");
+	const watchedState = useWatch({ control: form.control, name: "state" });
 
 	const formattedNigeriaStatesAndLGA = nigeriaStatesAndLGA.map((item) => ({
 		label: item.state,
 		value: item.state,
 	}));
 
-	const LGAResult = nigeriaStatesAndLGA.find((item) => item.state === state)?.lgas ?? [];
+	const LGAResult = nigeriaStatesAndLGA.find((item) => item.state === watchedState)?.lgas ?? [];
 
 	const formattedLGAResult = LGAResult.map((item) => ({
 		label: item,

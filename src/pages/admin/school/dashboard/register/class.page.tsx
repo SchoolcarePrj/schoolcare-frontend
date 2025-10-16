@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { For, IconBox } from "@/components/common";
 import { Combobox, Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
@@ -43,7 +43,7 @@ function RegisterClassPage() {
 		});
 	});
 
-	const watchedSchoolClass = form.watch("school_class");
+	const watchedSchoolClass = useWatch({ control: form.control, name: "school_class" });
 
 	const formattedClasses =
 		allClassesQueryResult.data?.data.map((school_class) => ({

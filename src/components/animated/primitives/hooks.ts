@@ -1,4 +1,4 @@
-import { useInView, type UseInViewOptions } from "motion/react";
+import { type UseInViewOptions, useInView } from "motion/react";
 import { useImperativeHandle, useRef } from "react";
 
 type UseIsInViewOptions = {
