@@ -1,5 +1,3 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { lazy } from "react";
 import {
 	createBrowserRouter,
@@ -9,17 +7,15 @@ import {
 	RouterProvider,
 } from "react-router";
 import { dashboardLoader, sessionLoader } from "./lib/react-query/loaders";
-import { getQueryClient } from "./lib/react-query/queryClient";
+import { Providers } from "./Providers";
 import RootLayout from "./pages/layout";
-
-const queryClient = getQueryClient();
 
 /* Layouts */
 const PrimaryLayout = lazy(() => import("./pages/(primary)/layout"));
 const HomeLayout = lazy(() => import("./pages/(home)/layout"));
 const ProtectionLayout = lazy(() => import("./pages/layout.protect"));
 const AuthLayout = lazy(() => import("./pages/auth/layout"));
-const RegisterLayout = lazy(() => import("./pages/auth/register/layout"));
+const RegisterLayout = lazy(() => import("./pages/auth/signup/layout"));
 const AdminSchoolDashboardLayout = lazy(() => import("./pages/admin/school/dashboard/layout"));
 const StudentResultLayout = lazy(() => import("./pages/student-result/layout"));
 const AdminSchoolRegisterLayout = lazy(() => import("./pages/admin/school/register/layout"));
@@ -51,23 +47,25 @@ const routes = createRoutesFromElements(
 
 		<Route Component={AuthLayout} loader={sessionLoader}>
 			<Route Component={RegisterLayout}>
-				<Route path="/auth/register" element={<Navigate to="/auth/register/personal-info" />} />
+				<Route path="/auth/signup" element={<Navigate to="/auth/signup/personal-info" />} />
 
 				<Route
-					path="/auth/register/personal-info"
-					Component={lazy(() => import("./pages/auth/register/personal-info.page"))}
+					path="/auth/signup/personal-info"
+					Component={lazy(() => import("./pages/auth/signup/personal-info.page"))}
 				/>
 
 				<Route
-					path="/auth/register/address"
-					Component={lazy(() => import("./pages/auth/register/address.page"))}
+					path="/auth/signup/address"
+					Component={lazy(() => import("./pages/auth/signup/address.page"))}
 				/>
 			</Route>
 
-			<Route path="/auth/login" Component={lazy(() => import("./pages/auth/login/page"))} />
+			<Route path="/auth/signin" Component={lazy(() => import("./pages/auth/signin/page"))} />
 		</Route>
 
 		<Route Component={ProtectionLayout} loader={sessionLoader}>
+			<Route path="/admin/school" element={<Navigate to="/admin/school/dashboard" />} />
+
 			<Route path="/admin/school/dashboard" Component={AdminSchoolDashboardLayout}>
 				<Route
 					index={true}
@@ -131,21 +129,28 @@ const routes = createRoutesFromElements(
 			<Route index={true} Component={lazy(() => import("./pages/admin/school/register/page"))} />
 		</Route>
 
-		<Route path="/admin/super/dashboard" Component={AdminSuperDashboardLayout}>
-			<Route index={true} Component={lazy(() => import("./pages/admin/super/dashboard/page"))} />
-			<Route
-				path="notifications"
-				Component={lazy(() => import("./pages/admin/super/dashboard/notifications/page"))}
-			/>
-			<Route path="blogs" Component={lazy(() => import("./pages/admin/super/dashboard/blogs/page"))} />
-			<Route
-				path="schools"
-				Component={lazy(() => import("./pages/admin/super/dashboard/schools/page"))}
-			/>
-			<Route
-				path="settings"
-				Component={lazy(() => import("./pages/admin/super/dashboard/settings/page"))}
-			/>
+		<Route>
+			<Route path="/admin/super" element={<Navigate to="/admin/super/dashboard" />} />
+
+			<Route path="/admin/super/dashboard" Component={AdminSuperDashboardLayout}>
+				<Route index={true} Component={lazy(() => import("./pages/admin/super/dashboard/page"))} />
+				<Route
+					path="notifications"
+					Component={lazy(() => import("./pages/admin/super/dashboard/notifications/page"))}
+				/>
+				<Route
+					path="blogs"
+					Component={lazy(() => import("./pages/admin/super/dashboard/blogs/page"))}
+				/>
+				<Route
+					path="schools"
+					Component={lazy(() => import("./pages/admin/super/dashboard/schools/page"))}
+				/>
+				<Route
+					path="settings"
+					Component={lazy(() => import("./pages/admin/super/dashboard/settings/page"))}
+				/>
+			</Route>
 		</Route>
 
 		{/* eslint-enable react-x/no-nested-lazy-component-declarations */}
@@ -156,10 +161,8 @@ const browserRouter = createBrowserRouter(routes);
 
 export function Router() {
 	return (
-		<QueryClientProvider client={queryClient}>
+		<Providers>
 			<RouterProvider router={browserRouter} />
-
-			<ReactQueryDevtools buttonPosition="bottom-left" initialIsOpen={false} />
-		</QueryClientProvider>
+		</Providers>
 	);
 }

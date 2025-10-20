@@ -40,7 +40,7 @@ function AddressPage() {
 				);
 			}
 
-			void navigate("/auth/register/personal-info");
+			void navigate("/auth/signup/personal-info");
 
 			return;
 		}
@@ -292,7 +292,7 @@ function AddressPage() {
 							className="flex max-w-fit items-center gap-3 rounded-[4px] border-2
 								border-[hsl(0,0%,26%)] px-3 py-[6px] text-[14px] font-semibold text-[hsl(0,0%,13%)]
 								md:rounded-[8px] md:px-5 md:py-2 md:text-[18px]"
-							onClick={() => void navigate("/auth/register/personal-info")}
+							onClick={() => void navigate("/auth/signup/personal-info")}
 						>
 							<IconBox icon="material-symbols:arrow-forward-ios-rounded" className="rotate-180" />
 							Back

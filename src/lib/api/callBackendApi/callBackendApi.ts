@@ -30,7 +30,25 @@ const sharedBaseCallApiConfig = defineBaseConfig((instanceCtx) => ({
 		cacheScopeKey: instanceCtx.options.baseURL,
 	},
 
-	plugins: [authPlugin(), toastPlugin(), loggerPlugin({ enabled: { onError: true } })],
+	plugins: [
+		authPlugin({
+			routesToExemptFromRedirectOnAuthError: ["/", "/auth/**"],
+			signInRoute: "/auth/signin",
+		}),
+		toastPlugin({
+			endpointsToSkip: {
+				errorAndSuccess: ["/token/refresh"],
+				success: ["/check-user-session"],
+			},
+			error: true,
+			errorsToSkip: ["AbortError"],
+			errorsToSkipCondition: (error) => isAuthTokenRelatedError(error),
+			success: false,
+		}),
+		loggerPlugin({
+			enabled: { onError: true },
+		}),
+	],
 
 	schema: apiSchema,
 
@@ -42,7 +60,10 @@ const sharedBaseCallApiConfig = defineBaseConfig((instanceCtx) => ({
 		...instanceCtx.options.meta,
 
 		auth: {
+			// routesToExemptFromHeaderAddition: ["/auth/**"],
 			routesToExemptFromRedirectOnAuthError: ["/", "/auth/**"],
+			signInRoute: "/auth/signin",
+			// navigateFn: redirectTo,
 			...instanceCtx.options.meta?.auth,
 		},
 

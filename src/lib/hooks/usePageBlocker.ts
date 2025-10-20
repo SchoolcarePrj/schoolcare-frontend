@@ -11,10 +11,9 @@ const usePageBlocker = (options: { condition: boolean; message: string; redirect
 		if (!condition) return;
 
 		const timeout = setTimeout(() => {
-			toast.error(message);
-
 			void navigate(redirectPath, { replace: true });
-		}, 300);
+			toast.error(message);
+		}, 100);
 
 		return () => clearTimeout(timeout);
 	}, [navigate, condition, message, redirectPath]);

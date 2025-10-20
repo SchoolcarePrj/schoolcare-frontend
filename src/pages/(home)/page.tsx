@@ -153,7 +153,7 @@ function HomePage() {
 					<div className="mt-9 flex flex-col items-center gap-5.5 lg:mt-[64px] lg:flex-row lg:gap-7">
 						<button type="button" className="shrink-0">
 							<NavLink
-								to={sessionQueryResult.data ? "/admin/school/dashboard" : "/auth/login"}
+								to={sessionQueryResult.data ? "/admin/school/dashboard" : "/auth/signin"}
 								className="block rounded-[8px] border border-[hsla(0,0%,98%,1)] px-6 py-2
 									font-semibold lg:rounded-[12px] lg:py-4 lg:text-[24px]"
 							>
@@ -163,7 +163,7 @@ function HomePage() {
 
 						<button type="button" className="shrink-0">
 							<NavLink
-								to="/auth/register"
+								to="/auth/signup"
 								className="block rounded-[8px] bg-210-79-44 px-6 py-2 font-semibold
 									lg:rounded-[12px] lg:py-4 lg:text-[24px]"
 							>
@@ -353,9 +353,9 @@ function HomePage() {
 					<Carousel.Content className="size-full cursor-grab justify-between gap-6.5">
 						<For
 							each={blogPosts}
-							renderItem={(post) => (
-								<Carousel.Item className="max-w-[379px] lg:max-w-[408px]">
-									<Card.Root key={post.imageURL} className="size-full">
+							renderItem={(post, index) => (
+								<Carousel.Item key={index} className="max-w-[379px] lg:max-w-[408px]">
+									<Card.Root className="size-full">
 										<div className="h-[258px]">
 											<Image
 												className="h-full rounded-t-[24px] object-cover"
@@ -367,7 +367,7 @@ function HomePage() {
 										</div>
 
 										<div
-											className="flex grow flex-col gap-3 rounded-b-[12px] border-[2px]
+											className="flex grow flex-col gap-3 rounded-b-[12px] border-2
 												border-[hsl(0,0%,78%)] px-4 py-6 select-none lg:rounded-b-[24px]
 												lg:border-[3px]"
 										>
@@ -376,9 +376,7 @@ function HomePage() {
 													{post.title}
 												</Card.Title>
 
-												<Card.Description
-													className="text-[12px] text-[color:inherit] lg:text-[14px]"
-												>
+												<Card.Description className="text-[12px] text-inherit lg:text-[14px]">
 													{post.description}
 												</Card.Description>
 											</Card.Header>

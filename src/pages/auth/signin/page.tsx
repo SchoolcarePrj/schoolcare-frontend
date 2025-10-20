@@ -18,6 +18,7 @@ function LoginPage() {
 			email: "",
 			password: "",
 		},
+		mode: "onChange",
 		resolver: zodResolver(SignInSchema),
 	});
 

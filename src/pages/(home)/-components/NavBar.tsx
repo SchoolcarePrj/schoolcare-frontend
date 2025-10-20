@@ -88,7 +88,7 @@ function DesktopNavigation(props: DesktopNavigationProps) {
 
 			<button type="button">
 				<NavLink
-					to="/auth/register"
+					to="/auth/signup"
 					className="block rounded-[12px] bg-210-79-44 px-6 py-4 font-semibold text-white"
 				>
 					Register
@@ -147,7 +147,7 @@ function MobileNavigation(props: MobileNavigationProps) {
 
 					<button type="button">
 						<NavLink
-							to="/auth/register"
+							to="/auth/signup"
 							className="block w-full rounded-[8px] bg-210-79-44 py-2.5 font-semibold text-white"
 						>
 							Register

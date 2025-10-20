@@ -27,7 +27,7 @@ function PersonalInfoPage() {
 	const onSubmit = form.handleSubmit((data) => {
 		updateFormData(data);
 
-		void navigate("/auth/register/address");
+		void navigate("/auth/signup/address");
 	});
 
 	return (

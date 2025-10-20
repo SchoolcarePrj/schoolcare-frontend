@@ -16,12 +16,13 @@ export type AuthPluginMeta = {
 		redirectFn?: CallbackFn<`/${string}`, Awaitable<void>>;
 		routesToExemptFromHeaderAddition?: Array<`/${string}` | `${string}/**`>;
 		routesToExemptFromRedirectOnAuthError?: Array<`/${string}` | `${string}/**`>;
+		signInRoute?: `/${string}`;
 		skipHeaderAddition?: boolean;
 		tokenToAdd?: PossibleAuthToken;
 	};
 };
 
-const signInRoute = "/auth/login";
+const defaultSignInRoute = "/auth/signin";
 
 const defaultRedirectionMessage = "Session is missing! Redirecting to login...";
 
@@ -30,73 +31,73 @@ export const authPlugin = definePlugin((authOptions?: AuthPluginMeta["auth"]) =>
 	name: "authPlugin",
 
 	// eslint-disable-next-line perfectionist/sort-objects
-	hooks: {
-		onRequest: (ctx) => {
-			const authMeta = authOptions ?? ctx.options.meta?.auth;
+	hooks: (setupCtx) => {
+		const authMeta =
+			authOptions ? { ...authOptions, ...setupCtx.options.meta?.auth } : setupCtx.options.meta?.auth;
 
-			const isExemptedRoute = Boolean(
-				authMeta?.routesToExemptFromHeaderAddition?.some((route) => isPathnameMatchingRoute(route))
-			);
+		const redirectFn = authMeta?.redirectFn ?? redirectTo;
+		const signInRoute = authMeta?.signInRoute ?? defaultSignInRoute;
 
-			const shouldSkipAuthHeaderAddition = isExemptedRoute || authMeta?.skipHeaderAddition;
+		const isExemptedRoute = Boolean(
+			authMeta?.routesToExemptFromHeaderAddition?.some((route) => isPathnameMatchingRoute(route))
+		);
 
-			if (shouldSkipAuthHeaderAddition) return;
+		const shouldSkipAuthHeaderAddition = isExemptedRoute || authMeta?.skipHeaderAddition;
 
-			const shouldSkipRouteFromRedirect = authMeta?.routesToExemptFromRedirectOnAuthError?.some(
-				(route) => isPathnameMatchingRoute(route)
-			);
+		const shouldSkipRouteFromRedirect = authMeta?.routesToExemptFromRedirectOnAuthError?.some((route) =>
+			isPathnameMatchingRoute(route)
+		);
 
-			if (authTokenStore.getRefreshToken() === null) {
-				const redirectFn = authMeta?.redirectFn ?? redirectTo;
+		return {
+			onRequest: (ctx) => {
+				if (shouldSkipAuthHeaderAddition) return;
 
-				!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
+				const refreshToken = authTokenStore.getRefreshToken();
 
-				// == Turn off error toast if redirect is skipped
-				shouldSkipRouteFromRedirect
-					&& ctx.options.meta?.toast
-					&& (ctx.options.meta.toast.error = false);
+				if (refreshToken === null) {
+					!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
 
-				throw new Error(defaultRedirectionMessage);
-			}
+					// == Turn off error toast if redirect is skipped
+					shouldSkipRouteFromRedirect
+						&& ctx.options.meta?.toast
+						&& (ctx.options.meta.toast.error = false);
 
-			const selectedAuthToken = authTokenStore[authMeta?.tokenToAdd ?? "getAccessToken"]();
+					throw new Error(defaultRedirectionMessage);
+				}
 
-			ctx.options.auth = selectedAuthToken;
-		},
+				const selectedAuthToken = authTokenStore[authMeta?.tokenToAdd ?? "getAccessToken"]();
 
-		onResponseError: async (ctx: ResponseErrorContext<BaseApiErrorResponse>) => {
-			const authMeta = authOptions ?? ctx.options.meta?.auth;
+				ctx.options.auth = selectedAuthToken;
+			},
 
-			// NOTE: Only call refreshUserSession on auth token related errors, and remake the request
-			const shouldRefreshToken = ctx.response.status === 401 && isAuthTokenRelatedError(ctx.error);
+			onResponseError: async (ctx: ResponseErrorContext<BaseApiErrorResponse>) => {
+				if (shouldSkipAuthHeaderAddition) return;
 
-			if (!shouldRefreshToken) return;
+				// NOTE: Only call refreshUserSession on auth token related errors, and remake the request
+				const shouldRefreshToken = ctx.response.status === 401 && isAuthTokenRelatedError(ctx.error);
 
-			const shouldSkipRouteFromRedirect = authMeta?.routesToExemptFromRedirectOnAuthError?.some(
-				(route) => isPathnameMatchingRoute(route)
-			);
+				if (!shouldRefreshToken) return;
 
-			const refreshToken = authTokenStore.getRefreshToken();
+				const refreshToken = authTokenStore.getRefreshToken();
 
-			const redirectFn = authMeta?.redirectFn ?? redirectTo;
+				if (refreshToken === null) {
+					!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
 
-			if (refreshToken === null) {
-				!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
+					throw new Error(defaultRedirectionMessage);
+				}
 
-				throw new Error(defaultRedirectionMessage);
-			}
+				const result = await getNewUserSession(refreshToken);
 
-			const result = await getNewUserSession(refreshToken);
+				if (isHTTPError(result.error)) {
+					!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
 
-			if (isHTTPError(result.error)) {
-				!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
+					throw new Error("Session invalid or expired! Redirecting to login...");
+				}
 
-				throw new Error("Session invalid or expired! Redirecting to login...");
-			}
+				result.data?.data && authTokenStore.setAccessToken({ access: result.data.data.access });
 
-			result.data?.data && authTokenStore.setAccessToken({ access: result.data.data.access });
-
-			ctx.options.retryAttempts = 1;
-		},
+				ctx.options.retryAttempts = 1;
+			},
+		};
 	},
 }));

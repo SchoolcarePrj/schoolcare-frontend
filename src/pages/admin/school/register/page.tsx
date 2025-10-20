@@ -27,7 +27,7 @@ function AdminRegisterPage() {
 			meta: { auth: { skipHeaderAddition: true } },
 
 			onSuccess: () => {
-				void navigate("/auth/login");
+				void navigate("/auth/signin");
 			},
 		});
 	});
