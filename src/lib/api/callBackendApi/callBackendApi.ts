@@ -22,12 +22,12 @@ const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
 const BASE_API_URL = `${BACKEND_HOST}/api`;
 
-const sharedBaseCallApiConfig = defineBaseConfig((instanceCtx) => ({
+const sharedBaseCallApiConfig = defineBaseConfig({
 	baseURL: BASE_API_URL,
 
 	dedupe: {
 		cacheScope: "global",
-		cacheScopeKey: instanceCtx.options.baseURL,
+		cacheScopeKey: (ctx) => ctx.options.baseURL,
 	},
 
 	plugins: [
@@ -51,43 +51,12 @@ const sharedBaseCallApiConfig = defineBaseConfig((instanceCtx) => ({
 	],
 
 	schema: apiSchema,
-
-	skipAutoMergeFor: "options",
-
-	...(instanceCtx.options as object),
-
-	meta: {
-		...instanceCtx.options.meta,
-
-		auth: {
-			// routesToExemptFromHeaderAddition: ["/auth/**"],
-			routesToExemptFromRedirectOnAuthError: ["/", "/auth/**"],
-			signInRoute: "/auth/signin",
-			// navigateFn: redirectTo,
-			...instanceCtx.options.meta?.auth,
-		},
-
-		toast: {
-			endpointsToSkip: {
-				errorAndSuccess: ["/token/refresh"],
-				success: ["/check-user-session"],
-			},
-			error: true,
-			errorsToSkip: ["AbortError"],
-			errorsToSkipCondition: (error) => isAuthTokenRelatedError(error),
-			success: false,
-			...instanceCtx.options.meta?.toast,
-		},
-	} satisfies GlobalMeta,
-}));
+});
 
 export const callBackendApi = createFetchClient(sharedBaseCallApiConfig);
 
-export const callBackendApiForQuery = createFetchClient(
-	(instanceConfig) =>
-		({
-			...sharedBaseCallApiConfig(instanceConfig),
-			resultMode: "onlyData",
-			throwOnError: true,
-		}) satisfies ReturnType<typeof defineBaseConfig>
-);
+export const callBackendApiForQuery = createFetchClient({
+	...sharedBaseCallApiConfig,
+	resultMode: "onlyData",
+	throwOnError: true,
+});

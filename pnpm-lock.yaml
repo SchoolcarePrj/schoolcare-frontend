@@ -30,19 +30,19 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@zayne-labs/callapi':
-        specifier: 1.11.3
-        version: 1.11.3
+        specifier: 1.11.5
+        version: 1.11.5
       '@zayne-labs/callapi-plugins':
-        specifier: ^4.0.3
-        version: 4.0.3(@zayne-labs/callapi@1.11.3)(@zayne-labs/toolkit-type-helpers@0.12.4)(consola@3.4.2)
+        specifier: ^4.0.5
+        version: 4.0.5(@zayne-labs/callapi@1.11.5)(@zayne-labs/toolkit-type-helpers@0.12.4)(consola@3.4.2)
       '@zayne-labs/toolkit-core':
-        specifier: ^0.12.3
+        specifier: ^0.12.4
         version: 0.12.4
       '@zayne-labs/toolkit-react':
-        specifier: ^0.12.3
+        specifier: ^0.12.4
         version: 0.12.4(@types/react@19.2.2)(react@19.2.0)(tailwind-merge@3.3.1)
       '@zayne-labs/toolkit-type-helpers':
-        specifier: ^0.12.3
+        specifier: ^0.12.4
         version: 0.12.4
       '@zayne-labs/ui-react':
         specifier: ^0.10.35
@@ -1969,16 +1969,16 @@ packages:
   '@zag-js/utils@1.26.3':
     resolution: {integrity: sha512-C5PlGTVfuMYc/GydvyIyxjSoHib9ZNcinLoucZaRjXF4l6ClDPIlujXc11//XZ0EajpxOKNhfjP9m9stj5Vk0A==}
 
-  '@zayne-labs/callapi-plugins@4.0.3':
-    resolution: {integrity: sha512-yN+LFOoGY8c1fe7+dCqe9Pq1f7irrOQPtg16VRzYtkocPOYOgjT9MuhcNL/1MeR8ht05nGRyiMWgDT+FWppe2g==}
+  '@zayne-labs/callapi-plugins@4.0.5':
+    resolution: {integrity: sha512-oqzTFEZWACPDUDSvUkF1Dsy5T54Uk1CqyfOPnH1Q0aPD92GWpkGj5VgNOFiLRLpOI5qqKjiD9uRXK3OWvfxV8w==}
     engines: {node: '>=v18.17.0'}
     peerDependencies:
-      '@zayne-labs/callapi': 1.11.3
+      '@zayne-labs/callapi': 1.11.5
       '@zayne-labs/toolkit-type-helpers': '>=0.11.17'
       consola: 3.x.x
 
-  '@zayne-labs/callapi@1.11.3':
-    resolution: {integrity: sha512-eUyiWOyvnugCDj3Ndk2u09bQ/47cUzz1oSx3IKj0H4rnm+YDTdUaDRLRa/KCgiY98Fn7BDDeqUkO7/gQqSqK7A==}
+  '@zayne-labs/callapi@1.11.5':
+    resolution: {integrity: sha512-50L1N3JmNS81pgylFIyRHnWQ6Ou8s8UFlY3lwUlpo3ADREnmeVSg6tQJSJhmIFZgyc5XaZWN5FVkYjcCpVgCXA==}
     engines: {node: '>=v18.17.0'}
 
   '@zayne-labs/eslint-config@0.10.10':
@@ -3150,8 +3150,8 @@ packages:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
 
-  package-manager-detector@1.4.1:
-    resolution: {integrity: sha512-dSMiVLBEA4XaNJ0PRb4N5cV/SEP4BWrWZKBmfF+OUm2pQTiZ6DDkKeWaltwu3JRhLoy59ayIkJ00cx9K9CaYTg==}
+  package-manager-detector@1.5.0:
+    resolution: {integrity: sha512-uBj69dVlYe/+wxj8JOpr97XfsxH/eumMt6HqjNTmJDf/6NO9s+0uxeOneIz3AsPt2m6y9PqzDzd3ATcU17MNfw==}
 
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -3897,7 +3897,7 @@ snapshots:
 
   '@antfu/install-pkg@1.1.0':
     dependencies:
-      package-manager-detector: 1.4.1
+      package-manager-detector: 1.5.0
       tinyexec: 1.0.1
 
   '@ark-ui/react@5.26.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
@@ -6157,13 +6157,13 @@ snapshots:
 
   '@zag-js/utils@1.26.3': {}
 
-  '@zayne-labs/callapi-plugins@4.0.3(@zayne-labs/callapi@1.11.3)(@zayne-labs/toolkit-type-helpers@0.12.4)(consola@3.4.2)':
+  '@zayne-labs/callapi-plugins@4.0.5(@zayne-labs/callapi@1.11.5)(@zayne-labs/toolkit-type-helpers@0.12.4)(consola@3.4.2)':
     dependencies:
-      '@zayne-labs/callapi': 1.11.3
+      '@zayne-labs/callapi': 1.11.5
       '@zayne-labs/toolkit-type-helpers': 0.12.4
       consola: 3.4.2
 
-  '@zayne-labs/callapi@1.11.3': {}
+  '@zayne-labs/callapi@1.11.5': {}
 
   '@zayne-labs/eslint-config@0.10.10(@eslint-react/eslint-plugin@2.2.2(eslint@9.38.0(jiti@2.6.1))(typescript@5.9.3))(@tanstack/eslint-plugin-query@5.91.2(eslint@9.38.0(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/utils@8.46.1(eslint@9.38.0(jiti@2.6.1))(typescript@5.9.3))(eslint-plugin-better-tailwindcss@3.7.10(eslint@9.38.0(jiti@2.6.1))(tailwindcss@4.1.15))(eslint-plugin-react-hooks@7.0.0(eslint@9.38.0(jiti@2.6.1)))(eslint-plugin-react-refresh@0.4.24(eslint@9.38.0(jiti@2.6.1)))(eslint-plugin-react-you-might-not-need-an-effect@0.6.1(eslint@9.38.0(jiti@2.6.1)))(eslint@9.38.0(jiti@2.6.1))(typescript@5.9.3)':
     dependencies:
@@ -7328,7 +7328,7 @@ snapshots:
     dependencies:
       p-limit: 3.1.0
 
-  package-manager-detector@1.4.1: {}
+  package-manager-detector@1.5.0: {}
 
   parent-module@1.0.1:
     dependencies:
