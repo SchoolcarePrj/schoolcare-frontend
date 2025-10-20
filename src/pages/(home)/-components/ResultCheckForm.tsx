@@ -209,21 +209,23 @@ function ResultCheckForm() {
 				</Form.Field>
 			</div>
 
-			<Form.SubscribeToFormState
-				render={({ isSubmitting, isValid }) => (
+			<Form.WatchFormState
+				render={(formState) => (
 					<Form.Submit
-						disabled={isSubmitting}
+						disabled={formState.isSubmitting}
 						className={cnMerge(
 							`mx-auto mt-12 flex h-10 w-full max-w-[120px] items-center justify-center
 							rounded-[8px] bg-210-79-44 text-[14px] font-semibold lg:mt-14 lg:h-[64px]
 							lg:max-w-[216px] lg:rounded-[12px] lg:text-[24px]`,
-							isSubmitting && "grid",
-							!isValid && "cursor-not-allowed bg-gray-400"
+							formState.isSubmitting && "grid",
+							!formState.isValid && "cursor-not-allowed bg-gray-400"
 						)}
 					>
-						<p className={cnJoin(isSubmitting && "invisible [grid-area:1/1]")}>Check Result</p>
+						<p className={cnJoin(formState.isSubmitting && "invisible [grid-area:1/1]")}>
+							Check Result
+						</p>
 
-						{isSubmitting && (
+						{formState.isSubmitting && (
 							<span className="flex justify-center [grid-area:1/1]">
 								<IconBox icon="svg-spinners:6-dots-rotate" className="size-6" />
 							</span>

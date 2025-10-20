@@ -1,5 +1,5 @@
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
-import { IconBox } from "@/components/common";
+import { IconBox } from "@/components/common/IconBox";
 import { cnMerge } from "@/lib/utils/cn";
 import * as DialogPrimitive from "../primitives/dialog-radix";
 
@@ -35,20 +35,27 @@ function DialogOverlay(props: DialogOverlayProps) {
 }
 
 type DialogContentProps = InferProps<typeof DialogPrimitive.Content> & {
+	classNames?: {
+		base?: string;
+		overlay?: string;
+	};
 	withCloseButton?: boolean;
 };
 
-function DialogContent({ children, className, withCloseButton = true, ...props }: DialogContentProps) {
+function DialogContent(props: DialogContentProps) {
+	const { children, className, classNames, withCloseButton = true, ...restOfProps } = props;
+
 	return (
 		<DialogPrimitive.Portal>
-			<DialogOverlay />
+			<DialogOverlay className={classNames?.overlay} />
 			<DialogPrimitive.Content
 				className={cnMerge(
 					`fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-[-50%] gap-4
 					rounded-lg border bg-shadcn-background p-6 shadow-lg sm:max-w-lg`,
-					className
+					className,
+					classNames?.base
 				)}
-				{...props}
+				{...restOfProps}
 			>
 				{children}
 				{withCloseButton && (
