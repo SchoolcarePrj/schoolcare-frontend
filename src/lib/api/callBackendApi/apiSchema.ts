@@ -97,16 +97,6 @@ export const UploadResultBodySchema = z.object({
 	subject: z.string().min(1, "Subject is required"),
 });
 
-const toFormData = (data: Record<string, string | Blob>) => {
-	const formData = new FormData();
-
-	for (const [key, value] of Object.entries(data)) {
-		formData.set(key, value);
-	}
-
-	return formData;
-};
-
 export const apiSchema = defineSchema(
 	{
 		/* eslint-disable perfectionist/sort-objects */
@@ -281,17 +271,15 @@ export const apiSchema = defineSchema(
 		},
 
 		"@post/school/register": {
-			body: z
-				.object({
-					...PersonalInfoBodySchema.shape,
-					...AddressBodySchema.shape,
-				})
-				.transform((data) => toFormData(data)),
+			body: z.object({
+				...PersonalInfoBodySchema.shape,
+				...AddressBodySchema.shape,
+			}),
 			data: withBaseSuccessResponse(SchoolDetailsDataSchema),
 		},
 
 		"@post/school/results": {
-			body: UploadResultBodySchema.transform((data) => toFormData(data)),
+			body: UploadResultBodySchema,
 		},
 
 		"@post/school/results/get-class-session-term": {

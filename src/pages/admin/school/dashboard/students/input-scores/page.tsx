@@ -1,8 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { z } from "zod";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
 import { callBackendApi } from "@/lib/api/callBackendApi";
@@ -13,6 +8,12 @@ import {
 } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { toFormData } from "@zayne-labs/callapi/utils";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { z } from "zod";
 import { Main } from "../../-components/Main";
 
 const AddScoresSchema = z.object({
@@ -41,7 +42,7 @@ function AddScoresPage() {
 
 	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/school/results/get-class-session-term", {
-			body: data,
+			body: toFormData(data, { returnType: "inputType" }),
 
 			onSuccess: (ctx) => {
 				useInputScoreFormStore.setState({ responseData: ctx.data.data });

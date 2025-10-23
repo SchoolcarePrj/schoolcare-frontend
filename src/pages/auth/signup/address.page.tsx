@@ -1,15 +1,16 @@
+import { For, IconBox } from "@/components/common";
+import { Combobox, Form, Select } from "@/components/ui";
+import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
+import { nigeriaStatesAndLGA } from "@/lib/constants/nigeria";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
+import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
+import { Main } from "@/pages/admin/school/dashboard/-components/Main";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toFormData } from "@zayne-labs/callapi/utils";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-import { For, IconBox } from "@/components/common";
-import { Combobox, Form, Select } from "@/components/ui";
-import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
-import { nigeriaStatesAndLGA } from "@/lib/api/nigeria";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
-import { Main } from "@/pages/admin/school/dashboard/-components/Main";
 
 function AddressPage() {
 	const {
@@ -46,10 +47,13 @@ function AddressPage() {
 		}
 
 		await callBackendApi("@post/school/register", {
-			body: {
-				...formStepData,
-				...stepTwoData,
-			},
+			body: toFormData(
+				{
+					...formStepData,
+					...stepTwoData,
+				},
+				{ returnType: "inputType" }
+			),
 			meta: {
 				auth: { skipHeaderAddition: true },
 				toast: { success: true },

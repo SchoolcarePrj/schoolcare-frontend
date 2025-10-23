@@ -1,1 +1,0 @@
-export { nigeriaStatesAndLGA } from "./nigeriaStatesAndLga";
