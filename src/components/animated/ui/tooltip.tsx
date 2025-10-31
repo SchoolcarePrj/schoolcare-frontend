@@ -1,13 +1,12 @@
-import { motion } from "motion/react";
 import * as TooltipPrimitive from "@/components/animated/primitives/tooltip";
 import { cnMerge } from "@/lib/utils/cn";
+import { motion } from "motion/react";
 
 type TooltipProviderProps = React.ComponentProps<typeof TooltipPrimitive.Provider>;
 
 function TooltipProvider(props: TooltipProviderProps) {
 	const { openDelay = 0, ...restOfProps } = props;
 
-	// eslint-disable-next-line react-x/no-context-provider
 	return <TooltipPrimitive.Provider openDelay={openDelay} {...restOfProps} />;
 }
 
@@ -52,9 +51,9 @@ function TooltipContent(props: TooltipContentProps) {
 
 			<TooltipPrimitive.Arrow
 				className={cnMerge(
-					`size-3 fill-shadcn-primary data-[side='bottom']:translate-y-[1px]
-					data-[side='left']:translate-x-[-1px] data-[side='right']:translate-x-[1px]
-					data-[side='top']:translate-y-[-1px]`,
+					`size-3 fill-shadcn-primary data-[side=bottom]:-translate-y-px
+					data-[side=left]:-translate-x-px data-[side=right]:-translate-x-px
+					data-[side=top]:-translate-y-px`,
 					classNames?.arrow
 				)}
 				tipRadius={2}

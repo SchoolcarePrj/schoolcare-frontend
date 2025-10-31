@@ -41,12 +41,12 @@ function DashboardSidebar(props: { className?: string; isOpen: boolean }) {
 					<ForWithWrapper
 						as="nav"
 						each={dashboardLinkItems}
-						className="flex grow flex-col gap-6"
+						className="flex grow flex-col"
 						renderItem={(item) => (
 							<NavLink
 								key={item.label}
 								to={item.link}
-								className="flex items-center gap-3 rounded-[8px] pl-9 data-[active=true]:h-12
+								className="flex h-12 items-center gap-3 rounded-[8px] pl-9
 									data-[active=true]:bg-school-blue-500 data-[active=true]:text-white"
 							>
 								<span className="inline-block size-6">

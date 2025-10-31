@@ -1,4 +1,4 @@
-import { defineSchema, fallBackRouteSchemaKey } from "@zayne-labs/callapi";
+import { defineSchema, fallBackRouteSchemaKey } from "@zayne-labs/callapi/utils";
 import { z } from "zod";
 
 const BaseSuccessResponseSchema = z.object({

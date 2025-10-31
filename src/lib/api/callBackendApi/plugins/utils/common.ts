@@ -26,7 +26,6 @@ export const isAuthTokenRelatedError = (
 		|| ("detail" in errorData && errorData.detail === "Authentication credentials were not provided.")
 	);
 };
-export type PossibleAuthToken = "getAccessToken" | "getRefreshToken";
 
 const refreshTokenKey = "admin-school-refreshToken";
 const accessTokenKey = "admin-school-accessToken";
@@ -62,6 +61,13 @@ export const authTokenStore = {
 	},
 };
 /* eslint-enable ts-eslint/no-unnecessary-condition */
+
+type SafeExtract<TUnion, TUnionSubset extends TUnion> = Extract<TUnion, TUnionSubset>;
+
+export type PossibleAuthTokenUnion = SafeExtract<
+	keyof typeof authTokenStore,
+	"getAccessToken" | "getRefreshToken"
+>;
 
 export const redirectTo = (route: string) => {
 	setTimeout(() => hardNavigate(route), 1500);

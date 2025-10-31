@@ -1,7 +1,8 @@
-import { createFetchClient, defineBaseConfig } from "@zayne-labs/callapi";
+import { createFetchClient } from "@zayne-labs/callapi";
 import { loggerPlugin } from "@zayne-labs/callapi-plugins";
+import { defineBaseConfig } from "@zayne-labs/callapi/utils";
 import { apiSchema } from "./apiSchema";
-import { type AuthPluginMeta, authPlugin, type ToastPluginMeta, toastPlugin } from "./plugins";
+import { type AuthPluginMeta, type ToastPluginMeta, authPlugin, toastPlugin } from "./plugins";
 import { isAuthTokenRelatedError } from "./plugins/utils";
 
 type GlobalMeta = AuthPluginMeta & ToastPluginMeta;
