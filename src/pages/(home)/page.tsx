@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import {
 	cardOne,
 	cardThree,
@@ -16,6 +15,7 @@ import { For, ForWithWrapper, IconBox, Image, NavLink } from "@/components/commo
 import { BrainIcon, LineGraphIcon, PageIcon, PieIcon, StudentIcon, UploadIcon } from "@/components/icons";
 import { Card, Carousel } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
+import { useQuery } from "@tanstack/react-query";
 import { AccordionFaqs } from "./-components/AccordionFaqs";
 import { ResultCheckForm } from "./-components/ResultCheckForm";
 
@@ -350,11 +350,14 @@ function HomePage() {
 						</Carousel.Context>
 					</div>
 
-					<Carousel.Content className="size-full cursor-grab justify-between gap-6.5">
+					<Carousel.Content className="size-full justify-between gap-6.5">
 						<For
 							each={blogPosts}
 							renderItem={(post, index) => (
-								<Carousel.Item key={index} className="max-w-[379px] lg:max-w-[408px]">
+								<Carousel.Item
+									key={index}
+									className="max-w-[379px] cursor-grab active:cursor-grabbing lg:max-w-[408px]"
+								>
 									<Card.Root className="size-full">
 										<div className="h-[258px]">
 											<Image
