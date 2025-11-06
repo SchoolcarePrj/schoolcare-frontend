@@ -59,9 +59,9 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 						!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
 
 						// == Turn off error toast if redirect is skipped
-						shouldSkipRouteFromRedirect
-							&& ctx.options.meta?.toast
-							&& (ctx.options.meta.toast.error = false);
+						ctx.options.meta ??= {};
+						ctx.options.meta.toast ??= {};
+						shouldSkipRouteFromRedirect && (ctx.options.meta.toast.error = false);
 
 						throw new Error(defaultRedirectionMessage);
 					}
