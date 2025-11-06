@@ -47,13 +47,10 @@ function AddressPage() {
 		}
 
 		await callBackendApi("@post/school/register", {
-			body: toFormData(
-				{
-					...formStepData,
-					...stepTwoData,
-				},
-				{ returnType: "inputType" }
-			),
+			body: toFormData({
+				...formStepData,
+				...stepTwoData,
+			}),
 			meta: {
 				auth: { skipHeaderAddition: true },
 				toast: { success: true },

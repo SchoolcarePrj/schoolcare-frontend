@@ -272,15 +272,12 @@ export const apiSchema = defineSchema(
 		},
 
 		"@post/school/register": {
-			body: z.object({
-				...PersonalInfoBodySchema.shape,
-				...AddressBodySchema.shape,
-			}),
+			body: z.instanceof(FormData),
 			data: withBaseSuccessResponse(SchoolDetailsDataSchema),
 		},
 
 		"@post/school/results": {
-			body: UploadResultBodySchema,
+			body: z.instanceof(FormData),
 		},
 
 		"@post/school/results/get-class-session-term": {

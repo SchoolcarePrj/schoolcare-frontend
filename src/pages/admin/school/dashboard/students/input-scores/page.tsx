@@ -1,6 +1,6 @@
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
-import { callBackendApi } from "@/lib/api/callBackendApi";
+import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import {
 	allClassesInSchoolQuery,
 	schoolSessionQuery,
@@ -10,17 +10,11 @@ import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { toFormData } from "@zayne-labs/callapi/utils";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { z } from "zod";
 import { Main } from "../../-components/Main";
 
-const AddScoresSchema = z.object({
-	school_class: z.string().min(1, "Class is required"),
-	session: z.string().min(1, "Session is required"),
-	term: z.string().min(1, "Term is required"),
-});
+const AddScoresSchema = apiSchema.routes["@post/school/results/get-class-session-term"].body;
 
 function AddScoresPage() {
 	const navigate = useNavigate();
@@ -42,7 +36,7 @@ function AddScoresPage() {
 
 	const onSubmit = form.handleSubmit(async (data) => {
 		await callBackendApi("@post/school/results/get-class-session-term", {
-			body: toFormData(data, { returnType: "inputType" }),
+			body: data,
 
 			onSuccess: (ctx) => {
 				useInputScoreFormStore.setState({ responseData: ctx.data.data });

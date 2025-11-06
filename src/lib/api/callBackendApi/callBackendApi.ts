@@ -16,10 +16,10 @@ declare module "@zayne-labs/callapi" {
 
 const REMOTE_BACKEND_HOST = "https://api.schoolcare.com.ng";
 
-// const BACKEND_HOST =
-// 	process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : REMOTE_BACKEND_HOST;
+const BACKEND_HOST =
+	process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : REMOTE_BACKEND_HOST;
 
-const BACKEND_HOST = REMOTE_BACKEND_HOST;
+// const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
 const BASE_API_URL = `${BACKEND_HOST}/api`;
 
