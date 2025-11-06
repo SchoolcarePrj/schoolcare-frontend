@@ -59,7 +59,6 @@ const SchoolDetailsDataSchema = z.object({
 	nationality: z.string(),
 	postal_code: z.number(),
 	school_ID: z.string(),
-	signature: z.string(),
 	state: z.string(),
 });
 
