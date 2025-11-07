@@ -100,8 +100,8 @@ function AddressPage() {
 								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger
 										classNames={{
-											base: `h-[48px] rounded-[8px] border border-school-gray-lighter bg-white
-											px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
+											base: `h-12 rounded-[8px] border border-school-gray-lighter bg-white px-4
+											text-[12px] data-placeholder:text-school-gray md:h-[75px]
 											md:rounded-[20px] md:px-8 md:text-base md:text-[14px]`,
 											icon: "text-school-gray group-data-[state=open]:rotate-180 md:size-6",
 										}}
@@ -137,9 +137,9 @@ function AddressPage() {
 
 						<Form.Input
 							placeholder="Enter school address"
-							className="h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
-								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
-								md:px-8 md:text-base"
+							className="h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white px-4
+								text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+								md:text-base"
 						/>
 
 						<Form.ErrorMessage control={form.control} className="text-red-600" />
@@ -159,7 +159,7 @@ function AddressPage() {
 									<Combobox.Trigger
 										classNames={{
 											base: cnJoin(
-												`flex h-[48px] items-center justify-between rounded-[8px] border
+												`flex h-12 items-center justify-between rounded-[8px] border
 												border-school-gray-lighter bg-white px-4 text-[12px]
 												data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
 												md:text-base md:text-[14px]`,
@@ -189,7 +189,7 @@ function AddressPage() {
 															<IconBox
 																icon="lucide:check"
 																className={cnJoin(
-																	"ml-auto size-[14px]",
+																	"ml-auto size-3.5",
 																	item.value === field.value ? "opacity-100" : "opacity-0"
 																)}
 															/>
@@ -221,7 +221,7 @@ function AddressPage() {
 										<Combobox.Trigger
 											classNames={{
 												base: cnJoin(
-													`flex h-[48px] items-center justify-between rounded-[8px] border
+													`flex h-12 items-center justify-between rounded-[8px] border
 													border-school-gray-lighter bg-white px-4 text-[12px]
 													data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
 													md:px-8 md:text-base md:text-[14px]`,
@@ -251,7 +251,7 @@ function AddressPage() {
 																<IconBox
 																	icon="lucide:check"
 																	className={cnJoin(
-																		"ml-auto size-[14px]",
+																		"ml-auto size-3.5",
 																		item.value === field.value ?
 																			"opacity-100"
 																		:	"opacity-0"
@@ -278,9 +278,9 @@ function AddressPage() {
 							<Form.Input
 								type="number"
 								placeholder="Enter school postal code"
-								className="h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter
-									bg-white px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
-									md:rounded-[20px] md:px-8 md:text-base"
+								className="h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
+									px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
+									md:px-8 md:text-base"
 							/>
 
 							<Form.ErrorMessage control={form.control} className="text-red-600" />
@@ -291,7 +291,7 @@ function AddressPage() {
 						<button
 							type="button"
 							className="flex max-w-fit items-center gap-3 rounded-[4px] border-2
-								border-[hsl(0,0%,26%)] px-3 py-[6px] text-[14px] font-semibold text-[hsl(0,0%,13%)]
+								border-[hsl(0,0%,26%)] px-3 py-1.5 text-[14px] font-semibold text-[hsl(0,0%,13%)]
 								md:rounded-[8px] md:px-5 md:py-2 md:text-[18px]"
 							onClick={() => void navigate("/auth/signup/personal-info")}
 						>
@@ -303,7 +303,7 @@ function AddressPage() {
 							disabled={form.formState.isSubmitting || !form.formState.isValid}
 							className={cnMerge(
 								`flex max-w-fit min-w-[77px] items-center justify-center gap-3 rounded-[4px]
-								bg-school-blue-500 px-3 py-[6px] text-[14px] font-semibold text-white
+								bg-school-blue-500 px-3 py-1.5 text-[14px] font-semibold text-white
 								md:rounded-[8px] md:px-5 md:py-2 md:text-[18px]`,
 								form.formState.isSubmitting && "grid",
 								!form.formState.isValid && "cursor-not-allowed bg-gray-400"

@@ -1,14 +1,14 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
-import { omitKeys } from "@zayne-labs/toolkit-core";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
 import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { authTokenStore } from "@/lib/api/callBackendApi/plugins/utils";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
+import { omitKeys } from "@zayne-labs/toolkit-core";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
 
 const SignInSchema = apiSchema.routes["@post/login"].body;
 
@@ -71,9 +71,9 @@ function LoginPage() {
 						<Form.Input
 							type="email"
 							placeholder="Enter school email"
-							className="h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
-								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
-								md:px-8 md:text-base"
+							className="h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white px-4
+								text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+								md:text-base"
 						/>
 
 						<Form.ErrorMessage className="text-red-600" />
@@ -88,9 +88,9 @@ function LoginPage() {
 							type="password"
 							placeholder="Enter school password"
 							classNames={{
-								inputGroup: `h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter
-								bg-white px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
-								md:rounded-[20px] md:px-8 md:text-base`,
+								inputGroup: `h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
+								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
+								md:px-8 md:text-base`,
 							}}
 						/>
 
@@ -102,7 +102,7 @@ function LoginPage() {
 							<Form.Label className="text-[13px] font-medium md:text-base">
 								Keep me signed in
 							</Form.Label>
-							<Form.InputPrimitive type="checkbox" className="size-4 md:size-[20px]" />
+							<Form.InputPrimitive type="checkbox" className="size-4 md:size-5" />
 						</Form.Field>
 
 						<Link to="#" className="text-[13px] text-school-blue-500 md:text-base">

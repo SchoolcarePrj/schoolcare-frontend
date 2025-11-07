@@ -24,7 +24,12 @@ export type AuthPluginMeta = {
 
 const defaultSignInRoute = "/auth/signin";
 
-const defaultRedirectionMessage = "Session is missing! Redirecting to login...";
+const defaultRedirectionMessage = "Session is missing! Automatically redirecting to login...";
+
+const defaultErrorMessage = "Session is missing!";
+
+const defaultRedirectionMessageOnHTTPError =
+	"Session is invalid or expired! Automatically redirecting to login...";
 
 export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 	return definePlugin({
@@ -56,14 +61,17 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 					const refreshToken = authTokenStore.getRefreshToken();
 
 					if (refreshToken === null) {
-						!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
-
 						// == Turn off error toast if redirect is skipped
 						ctx.options.meta ??= {};
 						ctx.options.meta.toast ??= {};
 						shouldSkipRouteFromRedirect && (ctx.options.meta.toast.error = false);
 
-						throw new Error(defaultRedirectionMessage);
+						// == Redirect if redirect is not skipped
+						!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
+
+						throw new Error(
+							shouldSkipRouteFromRedirect ? defaultErrorMessage : defaultRedirectionMessage
+						);
 					}
 
 					const selectedAuthToken = authTokenStore[authMeta?.tokenToAdd ?? "getAccessToken"]();
@@ -93,7 +101,7 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 					if (isHTTPError(result.error)) {
 						!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);
 
-						throw new Error("Session invalid or expired! Redirecting to login...");
+						throw new Error(defaultRedirectionMessageOnHTTPError);
 					}
 
 					result.data?.data && authTokenStore.setAccessToken({ access: result.data.data.access });
