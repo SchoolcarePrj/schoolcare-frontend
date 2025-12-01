@@ -1,5 +1,4 @@
 export default {
-	"*.{ts,tsx}": () => "pnpm lint:check-types",
-	// eslint-disable-next-line perfectionist/sort-objects
-	"*.{js,ts,tsx,mjs}": "pnpm lint:eslint",
+	"*.{ts,tsx, _parallel-1}": () => ["pnpm lint:check-types"],
+	"*.{ts,tsx, _parallel-2}": () => ["pnpm lint:eslint"],
 };
