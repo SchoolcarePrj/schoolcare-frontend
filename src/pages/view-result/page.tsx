@@ -33,8 +33,9 @@ function ResultSheetPage() {
 
 	return (
 		<Main className="gap-7 md:gap-13">
-			<section className="flex flex-col gap-6">
+			<section className="flex flex-col gap-8">
 				<h2 className="text-center text-[24px] font-medium uppercase">Cognitive Ability</h2>
+
 				<Table.Root className="border-separate rounded-[20px] border-2 border-school-gray">
 					<Table.Header>
 						<Table.Row>
