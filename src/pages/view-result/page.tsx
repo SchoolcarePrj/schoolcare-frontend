@@ -5,7 +5,16 @@ import { useStorageState } from "@zayne-labs/toolkit-react";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Main } from "../admin/school/dashboard/-components/Main";
 
-const columns = defineEnum(["Subject", "First CA", "Second CA", "Exam", "Total", "Grade", "Remark"]);
+const columns = defineEnum([
+	"Subject",
+	"First CA",
+	"Second CA",
+	"Exam",
+	"Total",
+	"Grade",
+	"Class Average",
+	"Remark",
+]);
 
 function ResultSheetPage() {
 	const [data] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
@@ -18,12 +27,14 @@ function ResultSheetPage() {
 			[columns[3]]: result.exam,
 			[columns[4]]: result.total,
 			[columns[5]]: result.grade,
-			[columns[6]]: result.remark,
+			[columns[6]]: "",
+			[columns[7]]: result.remark,
 		})) ?? [];
 
 	return (
 		<Main className="gap-7 md:gap-13">
 			<section className="flex flex-col gap-6">
+				<h2 className="text-center text-[24px] font-medium uppercase">Cognitive Ability</h2>
 				<Table.Root className="border-separate rounded-[20px] border-2 border-school-gray">
 					<Table.Header>
 						<Table.Row>
@@ -37,7 +48,7 @@ function ResultSheetPage() {
 										column === "Remark" && "min-w-[120px]"
 									)}
 								>
-									{column.toUpperCase()}
+									<div className="wrap-break-word">{column.toUpperCase()}</div>
 								</Table.Head>
 							))}
 						</Table.Row>
@@ -46,7 +57,7 @@ function ResultSheetPage() {
 					<Table.Body className="relative">
 						{tableData.length === 0 && (
 							<div className="h-[56px] w-full">
-								<p className="absolute inset-0 flex items-center justify-center">
+								<p className="absolute inset-0 flex items-center justify-center text-base">
 									No results found
 								</p>
 							</div>

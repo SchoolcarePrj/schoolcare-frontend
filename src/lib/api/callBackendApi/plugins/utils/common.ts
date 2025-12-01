@@ -5,13 +5,15 @@ import { isObject } from "@zayne-labs/toolkit-type-helpers";
 import type { BaseApiErrorResponse } from "../../apiSchema";
 
 type ErrorWithCodeAndDetail = CallApiResultErrorVariant<BaseApiErrorResponse>["error"] & {
-	errorData: {
-		code: string;
-		detail: string;
-	} | {
-		code?: never;
-		detail: string;
-	};
+	errorData:
+		| {
+				code: string;
+				detail: string;
+		  }
+		| {
+				code?: never;
+				detail: string;
+		  };
 };
 
 export const isAuthTokenRelatedError = (
