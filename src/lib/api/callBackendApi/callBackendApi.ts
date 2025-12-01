@@ -1,4 +1,4 @@
-import { createFetchClient } from "@zayne-labs/callapi";
+import { createFetchClientWithContext } from "@zayne-labs/callapi";
 import { loggerPlugin } from "@zayne-labs/callapi-plugins";
 import { defineBaseConfig } from "@zayne-labs/callapi/utils";
 import { apiSchema } from "./apiSchema";
@@ -7,18 +7,17 @@ import { isAuthTokenRelatedError } from "./plugins/utils";
 
 type GlobalMeta = AuthPluginMeta & ToastPluginMeta;
 
-declare module "@zayne-labs/callapi" {
-	// eslint-disable-next-line ts-eslint/consistent-type-definitions
-	interface Register {
-		meta: GlobalMeta;
-	}
-}
+// declare module "@zayne-labs/callapi" {
+// 	// eslint-disable-next-line ts-eslint/consistent-type-definitions
+// 	interface Register {
+// 		meta: GlobalMeta;
+// 	}
+// }
 
 const REMOTE_BACKEND_HOST = "https://api.schoolcare.com.ng";
+const LOCAL_BACKEND_HOST = "http://127.0.0.1:8000";
 
-const BACKEND_HOST =
-	process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : REMOTE_BACKEND_HOST;
-
+const BACKEND_HOST = process.env.NODE_ENV === "development" ? LOCAL_BACKEND_HOST : REMOTE_BACKEND_HOST;
 // const BACKEND_HOST = REMOTE_BACKEND_HOST;
 
 const BASE_API_URL = `${BACKEND_HOST}/api`;
@@ -53,6 +52,8 @@ const sharedBaseCallApiConfig = defineBaseConfig({
 
 	schema: apiSchema,
 });
+
+const createFetchClient = createFetchClientWithContext<{ Meta: GlobalMeta }>();
 
 export const callBackendApi = createFetchClient(sharedBaseCallApiConfig);
 

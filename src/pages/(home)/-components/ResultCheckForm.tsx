@@ -1,13 +1,13 @@
+import { For, IconBox } from "@/components/common";
+import { Form, Select } from "@/components/ui";
+import { apiSchema, callBackendApi, type CheckResultResponseData } from "@/lib/api/callBackendApi";
+import { schoolSessionQuery, schoolTermQuery } from "@/lib/react-query/queryOptions";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
 import { useStorageState } from "@zayne-labs/toolkit-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { For, IconBox } from "@/components/common";
-import { Form, Select } from "@/components/ui";
-import { apiSchema, type CheckResultResponseData, callBackendApi } from "@/lib/api/callBackendApi";
-import { schoolSessionQuery, schoolTermQuery } from "@/lib/react-query/queryOptions";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
 
 const ResultCheckFormSchema = apiSchema.routes["@post/check-result"].body;
 
@@ -47,7 +47,7 @@ function ResultCheckForm() {
 			onSuccess: (ctx) => {
 				storageActions.setState(ctx.data.data);
 
-				void navigate("/student-result");
+				void navigate("/view-result");
 			},
 		});
 	});
@@ -56,8 +56,8 @@ function ResultCheckForm() {
 		<Form.Root
 			methods={form}
 			onSubmit={(event) => void onSubmit(event)}
-			className="w-full max-w-[600px] rounded-[24px] border-[2px] border-white px-9 py-11
-				lg:border-[3px] lg:px-10 lg:py-14"
+			className="w-full max-w-[600px] rounded-[24px] border-2 border-white px-9 py-11 lg:border-[3px]
+				lg:px-10 lg:py-14"
 		>
 			<h3 className="text-center text-[14px] font-semibold lg:text-[24px]">Check Result</h3>
 
@@ -66,9 +66,9 @@ function ResultCheckForm() {
 					<Form.Label className="text-[12px] font-medium lg:text-base">School ID</Form.Label>
 					<Form.Input
 						placeholder="Enter school ID"
-						className="h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-							text-[11px] data-invalid:border-[hsl(2,84%,59%)] lg:h-[48px] lg:rounded-[12px]
-							lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]"
+						className="h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3 text-[11px]
+							data-invalid:border-school-red-500 lg:h-12 lg:rounded-[12px] lg:border-2 lg:px-6
+							lg:py-4 lg:text-[14px]"
 					/>
 				</Form.Field>
 
@@ -76,9 +76,9 @@ function ResultCheckForm() {
 					<Form.Label className="text-[12px] font-medium lg:text-base">Reg. Number</Form.Label>
 					<Form.Input
 						placeholder="e.g: 20246..."
-						className="h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-							text-[11px] data-invalid:border-[hsl(2,84%,59%)] lg:h-[48px] lg:rounded-[12px]
-							lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]"
+						className="h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3 text-[11px]
+							data-invalid:border-school-red-500 lg:h-12 lg:rounded-[12px] lg:border-2 lg:px-6
+							lg:py-4 lg:text-[14px]"
 					/>
 				</Form.Field>
 
@@ -86,9 +86,9 @@ function ResultCheckForm() {
 					<Form.Label className="text-[12px] font-medium lg:text-base">Class</Form.Label>
 					<Form.Input
 						placeholder="e.g: JSS1"
-						className="h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-							text-[11px] data-invalid:border-[hsl(2,84%,59%)] lg:h-[48px] lg:rounded-[12px]
-							lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]"
+						className="h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3 text-[11px]
+							data-invalid:border-school-red-500 lg:h-12 lg:rounded-[12px] lg:border-2 lg:px-6
+							lg:py-4 lg:text-[14px]"
 					/>
 				</Form.Field>
 
@@ -96,9 +96,9 @@ function ResultCheckForm() {
 					<Form.Label className="text-[12px] font-medium lg:text-base">Class Grade</Form.Label>
 					<Form.Input
 						placeholder="e.g: A"
-						className="h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-							text-[11px] data-invalid:border-[hsl(2,84%,59%)] lg:h-[48px] lg:rounded-[12px]
-							lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]"
+						className="h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3 text-[11px]
+							data-invalid:border-school-red-500 lg:h-12 lg:rounded-[12px] lg:border-2 lg:px-6
+							lg:py-4 lg:text-[14px]"
 					/>
 				</Form.Field>
 
@@ -110,10 +110,10 @@ function ResultCheckForm() {
 							<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 								<Select.Trigger
 									classNames={{
-										base: `h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-										text-[11px] group-data-invalid:border-[hsl(2,84%,59%)]
-										data-placeholder:text-shadcn-muted-foreground lg:h-[48px] lg:rounded-[12px]
-										lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]`,
+										base: `h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3
+										text-[11px] group-data-invalid:border-school-red-500
+										data-placeholder:text-shadcn-muted-foreground lg:h-12 lg:rounded-[12px]
+										lg:border-2 lg:px-6 lg:py-4 lg:text-[14px]`,
 										icon: "text-school-gray group-data-[state=open]:rotate-180 md:size-6",
 									}}
 								>
@@ -153,10 +153,10 @@ function ResultCheckForm() {
 							<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 								<Select.Trigger
 									classNames={{
-										base: `h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-										text-[11px] group-data-invalid:border-[hsl(2,84%,59%)]
-										data-placeholder:text-shadcn-muted-foreground lg:h-[48px] lg:rounded-[12px]
-										lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]`,
+										base: `h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3
+										text-[11px] group-data-invalid:border-school-red-500
+										data-placeholder:text-shadcn-muted-foreground lg:h-12 lg:rounded-[12px]
+										lg:border-2 lg:px-6 lg:py-4 lg:text-[14px]`,
 										icon: "text-school-gray group-data-[state=open]:rotate-180 md:size-6",
 									}}
 								>
@@ -192,9 +192,9 @@ function ResultCheckForm() {
 					<Form.Label className="text-[12px] font-medium lg:text-base">Card Pin</Form.Label>
 					<Form.Input
 						placeholder="Enter card pin"
-						className="h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-							text-[11px] data-invalid:border-[hsl(2,84%,59%)] lg:h-[48px] lg:rounded-[12px]
-							lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]"
+						className="h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3 text-[11px]
+							data-invalid:border-school-red-500 lg:h-12 lg:rounded-[12px] lg:border-2 lg:px-6
+							lg:py-4 lg:text-[14px]"
 					/>
 				</Form.Field>
 
@@ -202,9 +202,9 @@ function ResultCheckForm() {
 					<Form.Label className="text-[12px] font-medium lg:text-base">Card Serial No.</Form.Label>
 					<Form.Input
 						placeholder="e.g: 12348..."
-						className="h-[40px] rounded-[8px] border-[2px] border-[hsl(0,0%,98%)] px-4 py-3
-							text-[11px] data-invalid:border-[hsl(2,84%,59%)] lg:h-[48px] lg:rounded-[12px]
-							lg:border-[2px] lg:px-6 lg:py-4 lg:text-[14px]"
+						className="h-10 rounded-[8px] border-2 border-[hsl(0,0%,98%)] px-4 py-3 text-[11px]
+							data-invalid:border-school-red-500 lg:h-12 lg:rounded-[12px] lg:border-2 lg:px-6
+							lg:py-4 lg:text-[14px]"
 					/>
 				</Form.Field>
 			</div>

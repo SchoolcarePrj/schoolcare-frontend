@@ -1,14 +1,14 @@
+import { CollapsibleAnimated } from "@/components/animated/ui";
+import { ForWithWrapper, IconBox, NavLink } from "@/components/common";
+import { AvatarWithTooltip } from "@/components/common/AvatarWithTooltip";
+import { sessionQuery } from "@/lib/react-query/queryOptions";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { lockScroll } from "@zayne-labs/toolkit-core";
 import { useToggle } from "@zayne-labs/toolkit-react";
 import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { AvatarGroupAnimated, CollapsibleAnimated } from "@/components/animated/ui";
-import { ForWithWrapper, IconBox, Image, NavLink, Show } from "@/components/common";
-import { Avatar } from "@/components/ui";
-import { sessionQuery } from "@/lib/react-query/queryOptions";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
 
 export function NavBar() {
@@ -74,36 +74,10 @@ function DesktopNavContent(props: { className?: string }) {
 			<div className="flex items-center gap-6">
 				<IconBox icon="material-symbols:notifications-outline-rounded" className="size-8" />
 
-				<AvatarGroupAnimated.Root translate="5%">
-					<Avatar.Root className="size-[70px]">
-						<Show.Root when={sessionQueryResult.data?.data.logo}>
-							{(logo) => (
-								<>
-									<Image
-										src={logo}
-										width={70}
-										height={70}
-										className="size-full rounded-full object-cover"
-									/>
-
-									<Show.Otherwise>
-										<span
-											className="inline-flex size-full shrink-0 items-center justify-center
-												rounded-full bg-[hsl(0,0%,85%)] text-[18px]"
-										>
-											{sessionQueryResult.data?.data.school[0]}
-											{sessionQueryResult.data?.data.school[1]}
-										</span>
-									</Show.Otherwise>
-								</>
-							)}
-						</Show.Root>
-
-						<AvatarGroupAnimated.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
-							{sessionQueryResult.data?.data.school}
-						</AvatarGroupAnimated.Tooltip>
-					</Avatar.Root>
-				</AvatarGroupAnimated.Root>
+				<AvatarWithTooltip
+					logo={sessionQueryResult.data?.data.logo}
+					name={sessionQueryResult.data?.data.school}
+				/>
 			</div>
 		</section>
 	);

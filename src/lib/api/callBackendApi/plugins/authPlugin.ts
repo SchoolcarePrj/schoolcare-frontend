@@ -2,6 +2,7 @@ import type { RequestContext, ResponseErrorContext } from "@zayne-labs/callapi";
 import { definePlugin, isHTTPError } from "@zayne-labs/callapi/utils";
 import type { Awaitable, CallbackFn } from "@zayne-labs/toolkit-type-helpers";
 import type { BaseApiErrorResponse } from "../apiSchema";
+import type { ToastPluginMeta } from "./toastPlugin";
 import {
 	authTokenStore,
 	isAuthTokenRelatedError,
@@ -32,7 +33,7 @@ const defaultRedirectionMessageOnHTTPError =
 	"Session is invalid or expired! Automatically redirecting to login...";
 
 export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
-	const getAuthMetaAndDerivatives = (ctx: RequestContext) => {
+	const getAuthMetaAndDerivatives = (ctx: RequestContext<{ Meta: AuthPluginMeta }>) => {
 		const authMeta =
 			authOptions ? { ...authOptions, ...ctx.options.meta?.auth } : ctx.options.meta?.auth;
 
@@ -64,7 +65,7 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 
 		// eslint-disable-next-line perfectionist/sort-objects
 		hooks: {
-			onRequest: (ctx) => {
+			onRequest: (ctx: RequestContext<{ Meta: AuthPluginMeta & ToastPluginMeta }>) => {
 				const {
 					authMeta,
 					redirectFn,
@@ -96,7 +97,7 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 				ctx.options.auth = selectedAuthToken;
 			},
 
-			onResponseError: async (ctx: ResponseErrorContext<BaseApiErrorResponse>) => {
+			onResponseError: async (ctx: ResponseErrorContext<{ ErrorData: BaseApiErrorResponse }>) => {
 				const { redirectFn, shouldSkipAuthHeaderAddition, shouldSkipRouteFromRedirect, signInRoute } =
 					getAuthMetaAndDerivatives(ctx);
 

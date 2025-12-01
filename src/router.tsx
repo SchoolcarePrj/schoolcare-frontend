@@ -7,8 +7,8 @@ import {
 	RouterProvider,
 } from "react-router";
 import { dashboardLoader, sessionLoader } from "./lib/react-query/loaders";
-import { Providers } from "./Providers";
 import RootLayout from "./pages/layout";
+import { Providers } from "./Providers";
 
 /* Layouts */
 const PrimaryLayout = lazy(() => import("./pages/(primary)/layout"));
@@ -17,7 +17,7 @@ const ProtectionLayout = lazy(() => import("./pages/layout.protect"));
 const AuthLayout = lazy(() => import("./pages/auth/layout"));
 const RegisterLayout = lazy(() => import("./pages/auth/signup/layout"));
 const AdminSchoolDashboardLayout = lazy(() => import("./pages/admin/school/dashboard/layout"));
-const StudentResultLayout = lazy(() => import("./pages/student-result/layout"));
+const ResultViewLayout = lazy(() => import("./pages/view-result/layout"));
 const AdminSchoolRegisterLayout = lazy(() => import("./pages/admin/school/register/layout"));
 const AdminSuperDashboardLayout = lazy(() => import("./pages/admin/super/dashboard/layout"));
 
@@ -31,8 +31,8 @@ const routes = createRoutesFromElements(
 			<Route path="/" Component={lazy(() => import("./pages/(home)/page"))} />
 		</Route>
 
-		<Route Component={StudentResultLayout}>
-			<Route path="/student-result" Component={lazy(() => import("./pages/student-result/page"))} />
+		<Route Component={ResultViewLayout}>
+			<Route path="/view-result" Component={lazy(() => import("./pages/view-result/page"))} />
 		</Route>
 
 		<Route Component={PrimaryLayout}>

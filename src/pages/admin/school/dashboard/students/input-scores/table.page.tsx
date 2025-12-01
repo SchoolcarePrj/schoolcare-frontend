@@ -1,9 +1,9 @@
+import { Table } from "@/components/ui";
+import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { download, generateCsv, mkConfig } from "export-to-csv";
 import { Navigate, useNavigate } from "react-router";
 import { toast } from "sonner";
-import { Table } from "@/components/ui";
-import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
 import { Main } from "../../-components/Main";
 
 const columns = defineEnum(["Name", "Reg. No", "First CA", "Second CA", "Exam", "Total", "Grade"]);
@@ -47,7 +47,7 @@ function TablePage() {
 	return (
 		<Main className="flex flex-col bg-white pt-12">
 			<section>
-				<Table.Root className="border-separate rounded-[20px] border-2 border-[hsl(313,0%,42%)]">
+				<Table.Root className="border-separate rounded-[20px] border-2 border-school-gray">
 					<Table.Header>
 						<Table.Row>
 							{columns.map((column) => (

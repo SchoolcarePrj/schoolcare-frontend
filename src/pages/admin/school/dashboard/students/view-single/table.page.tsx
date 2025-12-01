@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Table } from "@/components/ui";
 import { studentsByIDQuery } from "@/lib/react-query/queryOptions";
 import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
+import { useQuery } from "@tanstack/react-query";
+import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Main } from "../../-components/Main";
 
 const columns = defineEnum(["Name", "Gender", "Reg. No"]);
@@ -23,7 +23,7 @@ function TablePage() {
 	return (
 		<Main className="flex flex-col bg-white pt-12">
 			<section>
-				<Table.Root className="border-separate rounded-[20px] border-2 border-[hsl(313,0%,42%)]">
+				<Table.Root className="border-separate rounded-[20px] border-2 border-school-gray">
 					<Table.Header>
 						<Table.Row>
 							{columns.map((column) => (

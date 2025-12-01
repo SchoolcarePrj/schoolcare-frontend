@@ -1,4 +1,5 @@
-import { ForWithWrapper, IconBox, NavLink } from "@/components/common";
+import { logo } from "@/assets/images/primary";
+import { ForWithWrapper, IconBox, Image, NavLink } from "@/components/common";
 import { Drawer } from "@/components/ui";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
@@ -22,7 +23,7 @@ function DashboardSidebar(props: { className?: string; isOpen: boolean }) {
 					className
 				)}
 			>
-				<Drawer.Header className="sr-only p-0">
+				<Drawer.Header className="sr-only">
 					<Drawer.Title>Super Admin Dashboard Sidebar</Drawer.Title>
 					<Drawer.Description>Super Admin Dashboard Sidebar</Drawer.Description>
 				</Drawer.Header>
@@ -34,14 +35,16 @@ function DashboardSidebar(props: { className?: string; isOpen: boolean }) {
 						// NOTE - These classes allow the sidebar to scroll only within itself
 						"absolute flex size-full grow flex-col",
 
-						`rounded-[24px] border border-[hsl(0,0%,84%)] bg-white px-3.5 py-[90px] font-medium
-						outline-hidden data-vaul-drawer:[animation-duration:1300ms]`
+						`items-center gap-2.5 rounded-[24px] border border-[hsl(0,0%,84%)] bg-white px-3.5
+						py-[90px] font-medium outline-hidden data-vaul-drawer:[animation-duration:1300ms]`
 					)}
 				>
+					<Image src={logo} width={118} height={36} className="h-9 w-[118px] object-cover" />
+
 					<ForWithWrapper
 						as="nav"
 						each={dashboardLinkItems}
-						className="flex grow flex-col"
+						className="flex w-full grow flex-col"
 						renderItem={(item) => (
 							<NavLink
 								key={item.label}
