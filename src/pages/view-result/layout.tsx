@@ -43,7 +43,7 @@ function StudentResultLayout() {
 			},
 			{
 				label: "Number of Pupils",
-				value: "",
+				value: data?.class_students_count,
 			},
 
 			{

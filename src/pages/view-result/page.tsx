@@ -43,13 +43,14 @@ function ResultSheetPage() {
 								<Table.Head
 									key={column}
 									className={cnMerge(
-										`h-[70px] min-w-[80px] border-b-2 border-b-[hsl(0,0%,68%)] text-center
+										`h-[84px] min-w-[80px] border-b-2 border-b-[hsl(0,0%,68%)] text-center
 										font-medium not-last:border-r-2 not-last:border-r-[hsl(0,0%,68%)]`,
-										column === "Subject" && "min-w-[200px] px-6 text-left",
+										column === "Class Average" && "max-w-[100px]",
+										column === "Subject" && "min-w-[150px] px-6 text-left",
 										column === "Remark" && "min-w-[120px]"
 									)}
 								>
-									<div className="wrap-break-word">{column.toUpperCase()}</div>
+									{column.toUpperCase()}
 								</Table.Head>
 							))}
 						</Table.Row>
@@ -57,7 +58,7 @@ function ResultSheetPage() {
 
 					<Table.Body className="relative">
 						{tableData.length === 0 && (
-							<div className="h-[56px] w-full">
+							<div className="h-[65px] w-full">
 								<p className="absolute inset-0 flex items-center justify-center text-base">
 									No results found
 								</p>
@@ -73,12 +74,70 @@ function ResultSheetPage() {
 									[&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
 							>
 								{columns.map((column) => (
-									<Table.Cell key={column} className="h-[56px] px-7">
+									<Table.Cell key={column} className="h-[65px] px-7">
 										{result[column]}
 									</Table.Cell>
 								))}
 							</Table.Row>
 						))}
+					</Table.Body>
+				</Table.Root>
+			</section>
+
+			<section className="flex flex-col gap-[18px]">
+				<div>
+					<Table.Root className="border-separate rounded-[8px] border border-school-gray">
+						<Table.Body>
+							<Table.Row
+								className="text-[24px] leading-8 font-medium uppercase
+									[&_td:not(:last-child)]:border-r
+									[&_td:not(:last-child)]:border-r-[hsl(0,0%,68%)]
+									[&:not(:last-child)_td]:border-b
+									[&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
+							>
+								<Table.Cell className="h-[125px]">
+									<p className="mx-auto max-w-[219px]">
+										STUDENT’S TOTAL SCORE = {data?.total_score}
+									</p>
+								</Table.Cell>
+								<Table.Cell className="h-[125px]">
+									<p className="mx-auto max-w-[256px]">
+										STUDENT’S AVERAGE SCORE = {data?.average}
+									</p>
+								</Table.Cell>
+								<Table.Cell className="h-[125px]">
+									<p className="mx-auto max-w-[198px]">CLASS AVERAGE SCORE = {}</p>
+								</Table.Cell>
+							</Table.Row>
+						</Table.Body>
+					</Table.Root>
+				</div>
+
+				<h3 className="text-center text-[24px] font-medium">GRADE SCALES</h3>
+
+				<Table.Root className="border-separate rounded-[8px] border border-school-gray">
+					<Table.Body>
+						<Table.Row
+							className="text-center text-[24px] leading-8 font-medium uppercase
+								[&_td:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r-[hsl(0,0%,68%)]
+								[&:not(:last-child)_td]:border-b [&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
+						>
+							<Table.Cell className="h-[70px]">90 - 100 = A+</Table.Cell>
+							<Table.Cell className="h-[70px]">80 - 89 = A6</Table.Cell>
+							<Table.Cell className="h-[70px]">70 - 79 = B</Table.Cell>
+							<Table.Cell className="h-[70px]">60 - 69 = C</Table.Cell>
+						</Table.Row>
+
+						<Table.Row
+							className="text-center text-[24px] leading-8 font-medium uppercase
+								[&_td:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r-[hsl(0,0%,68%)]
+								[&:not(:last-child)_td]:border-b [&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
+						>
+							<Table.Cell className="h-[70px]">50 - 59 = B</Table.Cell>
+							<Table.Cell className="h-[70px]">40 - 49 = E</Table.Cell>
+							<Table.Cell className="h-[70px]">30 - 39 = F</Table.Cell>
+							<Table.Cell className="h-[70px]">Below 30 = U</Table.Cell>
+						</Table.Row>
 					</Table.Body>
 				</Table.Root>
 			</section>
