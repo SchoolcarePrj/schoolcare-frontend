@@ -53,24 +53,24 @@ function TablePage() {
 							{columns.map((column) => (
 								<Table.Head
 									key={column}
-									className="min-w-[60px] border-b border-b-[hsl(0,0%,3%)] p-4 text-center
-										font-bold text-black not-last:border-r not-last:border-r-[hsl(0,0%,3%)]"
+									className="h-[84px] min-w-[80px] border-b-2 border-b-[hsl(0,0%,68%)] text-center
+										font-medium not-last:border-r-2 not-last:border-r-[hsl(0,0%,68%)]"
 								>
 									{column}
 								</Table.Head>
 							))}
 						</Table.Row>
 					</Table.Header>
+
 					<Table.Body>
 						{tableData.map((student) => (
-							<Table.Row
-								key={student["Reg. No"]}
-								className="[&_td:not(:last-child)]:border-r
-									[&_td:not(:last-child)]:border-r-[hsl(0,0%,3%)] [&:not(:last-child)_td]:border-b
-									[&:not(:last-child)_td]:border-b-[hsl(0,0%,3%)]"
-							>
+							<Table.Row key={student["Reg. No"]}>
 								{columns.map((column) => (
-									<Table.Cell key={column} className="h-[56px] px-7">
+									<Table.Cell
+										key={column}
+										className="h-[65px] border-b-2 border-b-[hsl(0,0%,68%)] px-7
+											not-last:border-r-2 not-last:border-r-[hsl(0,0%,68%)]"
+									>
 										{student[column]}
 									</Table.Cell>
 								))}

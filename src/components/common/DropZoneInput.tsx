@@ -1,7 +1,7 @@
+import { cnMerge } from "@/lib/utils/cn";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { isFile } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
-import { cnMerge } from "@/lib/utils/cn";
 import { DropZone } from "../ui/drop-zone";
 import { IconBox } from "./IconBox";
 
@@ -62,10 +62,10 @@ export function DropZoneInputImagePreview(props: ImagePreviewProps) {
 					className={cnMerge("justify-between text-xs", classNames?.listItem)}
 				>
 					<DropZone.FileItemPreview
-						className="h-[48px] gap-4 md:h-[66px]"
+						className="h-12 gap-4 md:h-[66px]"
 						renderPreview={{
 							default: (
-								<span className="block size-[40px]">
+								<span className="block size-10">
 									<IconBox icon="solar:file-outline" className="size-full" />
 								</span>
 							),
@@ -77,7 +77,7 @@ export function DropZoneInputImagePreview(props: ImagePreviewProps) {
 							},
 							text: {
 								node: (
-									<span className="block size-[40px]">
+									<span className="block size-10">
 										<IconBox icon="solar:document-medicine-linear" className="size-full" />
 									</span>
 								),
@@ -88,7 +88,7 @@ export function DropZoneInputImagePreview(props: ImagePreviewProps) {
 					<DropZone.FileItemMetadata />
 
 					<DropZone.FileItemDelete>
-						<IconBox icon="lucide:trash-2" className="size-[20px] text-red-600 active:scale-[1.1]" />
+						<IconBox icon="lucide:trash-2" className="size-5 text-red-600 active:scale-[1.1]" />
 					</DropZone.FileItemDelete>
 				</DropZone.FileItem>
 			)}

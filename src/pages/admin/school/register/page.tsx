@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { Main } from "@/pages/admin/school/dashboard/-components/Main";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 const AdminRegisterSchema = apiSchema.routes["@post/school/admin/register"].body;
 
@@ -45,9 +45,9 @@ function AdminRegisterPage() {
 
 						<Form.Input
 							placeholder="Enter school name"
-							className="h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
-								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
-								md:px-8 md:text-base"
+							className="h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white px-4
+								text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+								md:text-base"
 						/>
 
 						<Form.ErrorMessage className="text-red-600" />
@@ -58,9 +58,9 @@ function AdminRegisterPage() {
 
 						<Form.Input
 							placeholder="Enter school email"
-							className="h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
-								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
-								md:px-8 md:text-base"
+							className="h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white px-4
+								text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+								md:text-base"
 						/>
 
 						<Form.ErrorMessage className="text-red-600" />
@@ -73,9 +73,9 @@ function AdminRegisterPage() {
 							type="password"
 							placeholder="Enter password"
 							classNames={{
-								inputGroup: `h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter
-								bg-white px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
-								md:rounded-[20px] md:px-8 md:text-base`,
+								inputGroup: `h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
+								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
+								md:px-8 md:text-base`,
 							}}
 						/>
 

@@ -1,14 +1,14 @@
+import { getElementList, IconBox } from "@/components/common";
+import { Form, Select } from "@/components/ui";
+import { allClassesInSchoolQuery, studentsByClassQuery } from "@/lib/react-query/queryOptions";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
+import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
-import { getElementList, IconBox } from "@/components/common";
-import { Form, Select } from "@/components/ui";
-import { allClassesInSchoolQuery, studentsByClassQuery } from "@/lib/react-query/queryOptions";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
 import { Main } from "../../-components/Main";
 
 const ViewAllStudentsSchema = z.object({
@@ -68,8 +68,8 @@ export function ViewAllStudentsPage() {
 								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger
 										classNames={{
-											base: `h-[48px] rounded-[8px] border border-school-gray-lighter bg-white
-											px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
+											base: `h-12 rounded-[8px] border border-school-gray-lighter bg-white px-4
+											text-[12px] data-placeholder:text-school-gray md:h-[75px]
 											md:rounded-[20px] md:px-8 md:text-base md:text-[14px]`,
 											icon: "text-school-gray group-data-[state=open]:rotate-180 md:size-6",
 										}}

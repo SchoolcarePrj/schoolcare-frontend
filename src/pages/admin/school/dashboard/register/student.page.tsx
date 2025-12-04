@@ -1,7 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
@@ -11,6 +7,10 @@ import {
 	studentsByClassQuery,
 } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Main } from "../-components/Main";
 
 const RegisterStudentSchema = z.object({
@@ -79,9 +79,9 @@ function RegisterStudentPage() {
 
 						<Form.Input
 							placeholder="Enter student's surname"
-							className="h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
-								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
-								md:px-8 md:text-base"
+							className="h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white px-4
+								text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+								md:text-base"
 						/>
 
 						<Form.ErrorMessage />
@@ -92,9 +92,9 @@ function RegisterStudentPage() {
 
 						<Form.Input
 							placeholder="Enter student's other names"
-							className="h-[48px] gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white
-								px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px]
-								md:px-8 md:text-base"
+							className="h-12 gap-3.5 rounded-[8px] border border-school-gray-lighter bg-white px-4
+								text-[12px] data-placeholder:text-school-gray md:h-[75px] md:rounded-[20px] md:px-8
+								md:text-base"
 						/>
 
 						<Form.ErrorMessage />
@@ -113,8 +113,8 @@ function RegisterStudentPage() {
 									>
 										<Select.Trigger
 											classNames={{
-												base: `h-[48px] rounded-[8px] border border-school-gray-lighter
-												bg-white px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
+												base: `h-12 rounded-[8px] border border-school-gray-lighter bg-white
+												px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
 												md:rounded-[20px] md:px-8 md:text-base md:text-[14px]`,
 												icon: "text-school-gray group-data-[state=open]:rotate-180 md:size-6",
 											}}
@@ -162,8 +162,8 @@ function RegisterStudentPage() {
 									>
 										<Select.Trigger
 											classNames={{
-												base: `h-[48px] rounded-[8px] border border-school-gray-lighter
-												bg-white px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
+												base: `h-12 rounded-[8px] border border-school-gray-lighter bg-white
+												px-4 text-[12px] data-placeholder:text-school-gray md:h-[75px]
 												md:rounded-[20px] md:px-8 md:text-base md:text-[14px]`,
 												icon: "text-school-gray group-data-[state=open]:rotate-180 md:size-6",
 											}}

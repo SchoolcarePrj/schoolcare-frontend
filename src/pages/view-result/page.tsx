@@ -12,7 +12,7 @@ const columns = defineEnum([
 	"Exam",
 	"Total",
 	"Grade",
-	"Class Average",
+	"Class Subject Average",
 	"Remark",
 ]);
 
@@ -44,9 +44,10 @@ function ResultSheetPage() {
 									key={column}
 									className={cnMerge(
 										`h-[84px] min-w-[80px] border-b-2 border-b-[hsl(0,0%,68%)] text-center
-										font-medium not-last:border-r-2 not-last:border-r-[hsl(0,0%,68%)]`,
-										column === "Class Average" && "max-w-[100px]",
+										font-medium not-last:border-r-2 not-last:border-r-[hsl(0,0%,68%)]
+										first:rounded-tl-[20px] last:rounded-tr-[20px]`,
 										column === "Subject" && "min-w-[150px] px-6 text-left",
+										column === "Class Subject Average" && "max-w-[80px]",
 										column === "Remark" && "min-w-[120px]"
 									)}
 								>
@@ -66,15 +67,13 @@ function ResultSheetPage() {
 						)}
 
 						{tableData.map((result) => (
-							<Table.Row
-								key={result.Subject}
-								className="[&_td:not(:last-child)]:border-r-2
-									[&_td:not(:last-child)]:border-r-[hsl(0,0%,68%)]
-									[&:not(:last-child)_td]:border-b-2
-									[&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
-							>
+							<Table.Row key={result.Subject}>
 								{columns.map((column) => (
-									<Table.Cell key={column} className="h-[65px] px-7">
+									<Table.Cell
+										key={column}
+										className="h-[65px] border-b-2 border-b-[hsl(0,0%,68%)] px-7
+											not-last:border-r-2 not-last:border-r-[hsl(0,0%,68%)]"
+									>
 										{result[column]}
 									</Table.Cell>
 								))}
