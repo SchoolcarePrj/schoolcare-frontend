@@ -15,6 +15,6 @@ export const checkResultMutation = () => {
 
 			return data.data;
 		},
-		mutationKey: ["result-view"],
+		mutationKey: ["check-result"],
 	});
 };
