@@ -45,7 +45,6 @@ function StudentResultLayout() {
 				label: "Number of Pupils",
 				value: data?.class_students_count,
 			},
-
 			{
 				label: "Academic Year",
 				value: schoolSession,
@@ -57,8 +56,8 @@ function StudentResultLayout() {
 	return (
 		<div className="flex grow flex-col">
 			<header className="mt-[50px] flex flex-col gap-8">
-				<section className="flex flex-col items-center justify-center text-center">
-					<div className="flex items-center justify-center gap-7">
+				<section className="mx-auto flex max-w-[369px] flex-col gap-2 text-center">
+					<div className="flex items-center justify-center gap-4">
 						<AvatarWithTooltip
 							logo={data?.logo}
 							name={data?.school}
@@ -68,11 +67,9 @@ function StudentResultLayout() {
 						<h1 className="text-[28px] font-semibold">{data?.school}</h1>
 					</div>
 
-					<div className="flex flex-col gap-3">
-						<p className="max-w-[369px]">{data?.school_address}</p>
+					<p>{data?.school_address}</p>
 
-						<p>Email: {data?.school_email}</p>
-					</div>
+					<p>Email: {data?.school_email}</p>
 				</section>
 
 				<section className="flex flex-col items-center gap-4">
@@ -82,8 +79,8 @@ function StudentResultLayout() {
 						each={reportInfoArray}
 						className="flex max-w-[690px] flex-wrap gap-x-9 gap-y-4"
 						renderItem={(item) => (
-							<li className="uppercase">
-								<span>{item.label}</span>: {item.value}
+							<li className="inline-flex gap-2 uppercase">
+								<span className="font-medium">{item.label}:</span> {item.value}
 							</li>
 						)}
 					/>

@@ -34,7 +34,7 @@ function CollapsibleRoot(props: InferProps<typeof CollapsiblePrimitive.Root>) {
 			// == Otherwise, toggle the internal open state
 			const selectedOpenChange = openProp ? savedSetOpenProp : toggleInternalOpen;
 
-			selectedOpenChange(resolvedValue);
+			selectedOpenChange?.(resolvedValue);
 		},
 		[isOpen, openProp, savedSetOpenProp, toggleInternalOpen]
 	);

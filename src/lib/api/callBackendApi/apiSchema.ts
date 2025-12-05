@@ -64,6 +64,7 @@ const SchoolDetailsDataSchema = z.object({
 
 const ResultDataSchema = z.object({
 	class_session_term: z.string(),
+	class_subject_average: z.number(),
 	exam: z.number(),
 	first_ca: z.number(),
 	grade: z.string(),
@@ -207,6 +208,7 @@ export const apiSchema = defineSchema(
 			data: withBaseSuccessResponse(
 				z.object({
 					average: z.number(),
+					class_average_score: z.number(),
 					class_session_term: z.string(),
 					class_students_count: z.number(),
 					comment: z.string(),
