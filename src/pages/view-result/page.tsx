@@ -71,8 +71,9 @@ function ResultSheetPage() {
 								{columns.map((column) => (
 									<Table.Cell
 										key={column}
-										className="h-[65px] border-b-2 border-b-[hsl(0,0%,68%)] px-7
-											not-last:border-r-2 not-last:border-r-[hsl(0,0%,68%)]"
+										className="h-[65px] px-7 not-last:border-r-2
+											not-last:border-r-[hsl(0,0%,68%)] not-in-[tr:last-child]:border-b-2
+											not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
 									>
 										{result[column]}
 									</Table.Cell>

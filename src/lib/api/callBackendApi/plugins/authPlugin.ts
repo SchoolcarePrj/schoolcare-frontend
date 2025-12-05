@@ -33,7 +33,7 @@ const defaultRedirectionMessageOnHTTPError =
 	"Session is invalid or expired! Automatically redirecting to login...";
 
 export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
-	const getAuthMetaAndDerivatives = (ctx: RequestContext<{ Meta: AuthPluginMeta }>) => {
+	const getAuthMetaAndDerivatives = (ctx: RequestContext<{ Meta: AuthPluginMeta & ToastPluginMeta }>) => {
 		const authMeta =
 			authOptions ? { ...authOptions, ...ctx.options.meta?.auth } : ctx.options.meta?.auth;
 
@@ -50,12 +50,19 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 			isPathnameMatchingRoute(route)
 		);
 
+		const turnOffErrorToast = () => {
+			ctx.options.meta ??= {};
+			ctx.options.meta.toast ??= {};
+			ctx.options.meta.toast.error = false;
+		};
+
 		return {
 			authMeta,
 			redirectFn,
 			shouldSkipAuthHeaderAddition,
 			shouldSkipRouteFromRedirect,
 			signInRoute,
+			turnOffErrorToast,
 		};
 	};
 
@@ -65,13 +72,14 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 
 		// eslint-disable-next-line perfectionist/sort-objects
 		hooks: {
-			onRequest: (ctx: RequestContext<{ Meta: AuthPluginMeta & ToastPluginMeta }>) => {
+			onRequest: (ctx: RequestContext<{ Meta: AuthPluginMeta }>) => {
 				const {
 					authMeta,
 					redirectFn,
 					shouldSkipAuthHeaderAddition,
 					shouldSkipRouteFromRedirect,
 					signInRoute,
+					turnOffErrorToast,
 				} = getAuthMetaAndDerivatives(ctx);
 
 				if (shouldSkipAuthHeaderAddition) return;
@@ -80,9 +88,7 @@ export const authPlugin = (authOptions?: AuthPluginMeta["auth"]) => {
 
 				if (refreshToken === null) {
 					// == Turn off error toast if redirect is skipped
-					ctx.options.meta ??= {};
-					ctx.options.meta.toast ??= {};
-					shouldSkipRouteFromRedirect && (ctx.options.meta.toast.error = false);
+					shouldSkipRouteFromRedirect && turnOffErrorToast();
 
 					// == Redirect if redirect is not skipped
 					!shouldSkipRouteFromRedirect && void redirectFn(signInRoute);

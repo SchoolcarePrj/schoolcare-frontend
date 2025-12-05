@@ -8,11 +8,11 @@ const usePageBlocker = (options: { condition: boolean; message: string; redirect
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!condition) return;
-
 		const timeout = setTimeout(() => {
-			void navigate(redirectPath, { replace: true });
+			if (!condition) return;
+
 			toast.error(message);
+			void navigate(redirectPath, { replace: true });
 		}, 300);
 
 		return () => clearTimeout(timeout);
