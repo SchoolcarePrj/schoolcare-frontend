@@ -1,7 +1,8 @@
 import { Table } from "@/components/ui";
 import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
+import { checkResultMutation } from "@/lib/react-query/mutationOptions";
 import { cnMerge } from "@/lib/utils/cn";
-import { useStorageState } from "@zayne-labs/toolkit-react";
+import { useMutationState } from "@tanstack/react-query";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Main } from "../admin/school/dashboard/-components/Main";
 
@@ -17,10 +18,15 @@ const columns = defineEnum([
 ]);
 
 function ResultSheetPage() {
-	const [data] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
+	// const [resultData] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
+
+	const [resultData] = useMutationState({
+		filters: { mutationKey: checkResultMutation().mutationKey },
+		select: (data) => data.state.data as CheckResultResponseData,
+	});
 
 	const tableData =
-		data?.results.map((result) => ({
+		resultData?.results.map((result) => ({
 			[columns[0]]: result.subject,
 			[columns[1]]: result.first_ca,
 			[columns[2]]: result.second_ca,
@@ -58,13 +64,13 @@ function ResultSheetPage() {
 						</Table.Row>
 					</Table.Header>
 
-					<Table.Body className="relative">
+					<Table.Body>
 						{tableData.length === 0 && (
-							<div className="h-[65px] w-full">
-								<p className="absolute inset-0 flex items-center justify-center text-base">
+							<Table.Row className="relative h-[65px]">
+								<Table.Cell className="absolute inset-0 flex items-center justify-center text-base">
 									No results found
-								</p>
-							</div>
+								</Table.Cell>
+							</Table.Row>
 						)}
 
 						{tableData.map((result) => (
@@ -98,17 +104,17 @@ function ResultSheetPage() {
 							>
 								<Table.Cell className="h-[125px]">
 									<p className="mx-auto max-w-[219px]">
-										STUDENT’S TOTAL SCORE = {data?.total_score}
+										STUDENT’S TOTAL SCORE = {resultData?.total_score}
 									</p>
 								</Table.Cell>
 								<Table.Cell className="h-[125px]">
 									<p className="mx-auto max-w-[256px]">
-										STUDENT’S AVERAGE SCORE = {data?.average}
+										STUDENT’S AVERAGE SCORE = {resultData?.average}
 									</p>
 								</Table.Cell>
 								<Table.Cell className="h-[125px]">
 									<p className="mx-auto max-w-[198px]">
-										CLASS AVERAGE SCORE = {data?.class_average_score}
+										CLASS AVERAGE SCORE = {resultData?.class_average_score}
 									</p>
 								</Table.Cell>
 							</Table.Row>
@@ -152,22 +158,22 @@ function ResultSheetPage() {
 					</p>
 
 					<p className="mt-[9px] flex grow flex-col flex-wrap gap-0.5 text-[18px]">
-						<span className="leading-4">{data?.comment}</span>
-						<hr className="w-full border border-school-body-color/70" />
+						<span className="leading-4">{resultData?.comment}</span>
+						<span className="w-full border border-school-body-color/70" />
 					</p>
 
-					<hr className="col-span-2 w-full border border-school-body-color/70" />
+					<span className="col-span-2 w-full border border-school-body-color/70" />
 				</article>
 
 				<article className="flex gap-[100px]">
 					<div className="flex w-full items-center gap-1.5">
 						<p className="text-[24px] font-medium whitespace-nowrap">Signature:</p>
-						<hr className="mt-4 w-full border border-school-body-color/70" />
+						<span className="mt-4 w-full border border-school-body-color/70" />
 					</div>
 
 					<div className="flex w-full items-center gap-1.5">
 						<p className="text-[24px] font-medium whitespace-nowrap">Date:</p>
-						<hr className="mt-4 w-full border border-school-body-color/70" />
+						<span className="mt-4 w-full border border-school-body-color/70" />
 					</div>
 				</article>
 			</section>

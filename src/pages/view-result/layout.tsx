@@ -1,15 +1,21 @@
 import { ForWithWrapper } from "@/components/common";
 import { AvatarWithTooltip } from "@/components/common/AvatarWithTooltip";
 import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
-import { useStorageState } from "@zayne-labs/toolkit-react";
+import { checkResultMutation } from "@/lib/react-query/mutationOptions";
+import { useMutationState } from "@tanstack/react-query";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Outlet } from "react-router";
 import { toOrdinal } from "./utils";
 
 function StudentResultLayout() {
-	const [data] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
+	// const [data] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
 
-	const classSessionTerm = data?.class_session_term.split(" - ");
+	const [resultData] = useMutationState({
+		filters: { mutationKey: checkResultMutation().mutationKey },
+		select: (data) => data.state.data as CheckResultResponseData,
+	});
+
+	const classSessionTerm = resultData?.class_session_term.split(" - ");
 
 	const schoolClass = classSessionTerm?.[0];
 	const schoolSession = classSessionTerm?.[1];
@@ -19,7 +25,7 @@ function StudentResultLayout() {
 		[
 			{
 				label: "Student's Name",
-				value: data?.student_name,
+				value: resultData?.student_name,
 			},
 			{
 				label: "Class",
@@ -27,15 +33,15 @@ function StudentResultLayout() {
 			},
 			{
 				label: "Position",
-				value: toOrdinal(data?.position),
+				value: toOrdinal(resultData?.position),
 			},
 			{
 				label: "Student's Registration Number",
-				value: data?.student_reg_number,
+				value: resultData?.student_reg_number,
 			},
 			{
 				label: "Sex",
-				value: data?.gender,
+				value: resultData?.gender,
 			},
 			{
 				label: "Term",
@@ -43,7 +49,7 @@ function StudentResultLayout() {
 			},
 			{
 				label: "Number of Pupils",
-				value: data?.class_students_count,
+				value: resultData?.class_students_count,
 			},
 			{
 				label: "Academic Year",
@@ -59,17 +65,17 @@ function StudentResultLayout() {
 				<section className="mx-auto flex max-w-[369px] flex-col gap-2 text-center">
 					<div className="flex items-center justify-center gap-4">
 						<AvatarWithTooltip
-							logo={data?.logo}
-							name={data?.school}
+							logo={resultData?.logo}
+							name={resultData?.school}
 							classNames={{ base: "size-9" }}
 						/>
 
-						<h1 className="text-[28px] font-semibold">{data?.school}</h1>
+						<h1 className="text-[28px] font-semibold">{resultData?.school}</h1>
 					</div>
 
-					<p>{data?.school_address}</p>
+					<p>{resultData?.school_address}</p>
 
-					<p>Email: {data?.school_email}</p>
+					<p>Email: {resultData?.school_email}</p>
 				</section>
 
 				<section className="flex flex-col items-center gap-4">
@@ -79,7 +85,7 @@ function StudentResultLayout() {
 						each={reportInfoArray}
 						className="flex max-w-[690px] flex-wrap gap-x-9 gap-y-4"
 						renderItem={(item) => (
-							<li className="inline-flex gap-2 uppercase">
+							<li key={item.label} className="inline-flex gap-2 uppercase">
 								<span className="font-medium">{item.label}:</span> {item.value}
 							</li>
 						)}

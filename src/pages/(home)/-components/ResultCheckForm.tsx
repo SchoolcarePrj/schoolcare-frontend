@@ -1,21 +1,21 @@
 import { For, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
-import { apiSchema, callBackendApi, type CheckResultResponseData } from "@/lib/api/callBackendApi";
+import { apiSchema } from "@/lib/api/callBackendApi";
+import { checkResultMutation } from "@/lib/react-query/mutationOptions";
 import { schoolSessionQuery, schoolTermQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
-import { useStorageState } from "@zayne-labs/toolkit-react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 const ResultCheckFormSchema = apiSchema.routes["@post/check-result"].body;
 
 function ResultCheckForm() {
-	const { 1: storageActions } = useStorageState<CheckResultResponseData | null>(
-		"scratch-card-result",
-		null
-	);
+	// const { 1: storageActions } = useStorageState<CheckResultResponseData | null>(
+	// 	"scratch-card-result",
+	// 	null
+	// );
 
 	const schoolSessionQueryResult = useQuery(schoolSessionQuery({ meta: { toast: { error: false } } }));
 	const schoolTermQueryResult = useQuery(schoolTermQuery({ meta: { toast: { error: false } } }));
@@ -36,17 +36,11 @@ function ResultCheckForm() {
 
 	const navigate = useNavigate();
 
+	const resultViewMutationResult = useMutation(checkResultMutation());
+
 	const onSubmit = form.handleSubmit(async (data) => {
-		await callBackendApi("@post/check-result", {
-			body: data,
-			meta: {
-				auth: { skipHeaderAddition: true },
-				toast: { success: true },
-			},
-
-			onSuccess: (ctx) => {
-				storageActions.setState(ctx.data.data);
-
+		await resultViewMutationResult.mutateAsync(data, {
+			onSuccess: () => {
 				void navigate("/view-result");
 			},
 		});
