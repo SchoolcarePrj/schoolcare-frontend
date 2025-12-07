@@ -345,10 +345,6 @@ export const apiSchema = defineSchema(
 	{ strict: true }
 );
 
-export type CheckResultResponseData = z.infer<
-	(typeof apiSchema)["routes"]["@post/check-result"]["data"]
->["data"];
-
 export type InputScoresResponseData = z.infer<
 	(typeof apiSchema)["routes"]["@post/school/results/get-class-session-term"]["data"]
 >["data"];

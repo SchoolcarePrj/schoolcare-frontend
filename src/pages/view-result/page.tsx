@@ -1,6 +1,8 @@
 import { Table } from "@/components/ui";
-import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
-import { checkResultMutation } from "@/lib/react-query/mutationOptions";
+import {
+	checkResultMutation,
+	type CheckResultMutationResultType,
+} from "@/lib/react-query/mutationOptions";
 import { cnMerge } from "@/lib/utils/cn";
 import { useMutationState } from "@tanstack/react-query";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
@@ -22,7 +24,7 @@ function ResultSheetPage() {
 
 	const [resultData] = useMutationState({
 		filters: { mutationKey: checkResultMutation().mutationKey },
-		select: (data) => data.state.data as CheckResultResponseData,
+		select: (data) => data.state.data as CheckResultMutationResultType,
 	});
 
 	const tableData =
@@ -95,24 +97,30 @@ function ResultSheetPage() {
 				<div>
 					<Table.Root className="border-separate rounded-[8px] border border-school-gray">
 						<Table.Body>
-							<Table.Row
-								className="text-[24px] leading-8 font-medium uppercase
-									[&_td:not(:last-child)]:border-r
-									[&_td:not(:last-child)]:border-r-[hsl(0,0%,68%)]
-									[&:not(:last-child)_td]:border-b
-									[&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
-							>
-								<Table.Cell className="h-[125px]">
+							<Table.Row className="text-[24px] leading-8 font-medium uppercase">
+								<Table.Cell
+									className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+										not-in-[tr:last-child]:border-b
+										not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+								>
 									<p className="mx-auto max-w-[219px]">
 										STUDENT’S TOTAL SCORE = {resultData?.total_score}
 									</p>
 								</Table.Cell>
-								<Table.Cell className="h-[125px]">
+								<Table.Cell
+									className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+										not-in-[tr:last-child]:border-b
+										not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+								>
 									<p className="mx-auto max-w-[256px]">
 										STUDENT’S AVERAGE SCORE = {resultData?.average}
 									</p>
 								</Table.Cell>
-								<Table.Cell className="h-[125px]">
+								<Table.Cell
+									className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+										not-in-[tr:last-child]:border-b
+										not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+								>
 									<p className="mx-auto max-w-[198px]">
 										CLASS AVERAGE SCORE = {resultData?.class_average_score}
 									</p>
@@ -126,26 +134,58 @@ function ResultSheetPage() {
 
 				<Table.Root className="border-separate rounded-[8px] border border-school-gray">
 					<Table.Body>
-						<Table.Row
-							className="text-center text-[24px] leading-8 font-medium uppercase
-								[&_td:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r-[hsl(0,0%,68%)]
-								[&:not(:last-child)_td]:border-b [&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
-						>
-							<Table.Cell className="h-[70px]">90 - 100 = A+</Table.Cell>
-							<Table.Cell className="h-[70px]">80 - 89 = A6</Table.Cell>
-							<Table.Cell className="h-[70px]">70 - 79 = B</Table.Cell>
-							<Table.Cell className="h-[70px]">60 - 69 = C</Table.Cell>
+						<Table.Row className="text-center text-[24px] leading-8 font-medium uppercase">
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								90 - 100 = A+
+							</Table.Cell>
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								80 - 89 = A6
+							</Table.Cell>
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								70 - 79 = B
+							</Table.Cell>
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								60 - 69 = C
+							</Table.Cell>
 						</Table.Row>
 
-						<Table.Row
-							className="text-center text-[24px] leading-8 font-medium uppercase
-								[&_td:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r-[hsl(0,0%,68%)]
-								[&:not(:last-child)_td]:border-b [&:not(:last-child)_td]:border-b-[hsl(0,0%,68%)]"
-						>
-							<Table.Cell className="h-[70px]">50 - 59 = B</Table.Cell>
-							<Table.Cell className="h-[70px]">40 - 49 = E</Table.Cell>
-							<Table.Cell className="h-[70px]">30 - 39 = F</Table.Cell>
-							<Table.Cell className="h-[70px]">Below 30 = U</Table.Cell>
+						<Table.Row className="text-center text-[24px] leading-8 font-medium uppercase">
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								50 - 59 = B
+							</Table.Cell>
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								40 - 49 = E
+							</Table.Cell>
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								30 - 39 = F
+							</Table.Cell>
+							<Table.Cell
+								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+							>
+								Below 30 = U
+							</Table.Cell>
 						</Table.Row>
 					</Table.Body>
 				</Table.Root>

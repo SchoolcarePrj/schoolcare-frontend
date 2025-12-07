@@ -18,3 +18,7 @@ export const checkResultMutation = () => {
 		mutationKey: ["check-result"],
 	});
 };
+
+export type CheckResultMutationResultType = Awaited<
+	ReturnType<NonNullable<ReturnType<typeof checkResultMutation>["mutationFn"]>>
+>;

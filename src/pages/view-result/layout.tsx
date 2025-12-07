@@ -1,7 +1,9 @@
 import { ForWithWrapper } from "@/components/common";
 import { AvatarWithTooltip } from "@/components/common/AvatarWithTooltip";
-import type { CheckResultResponseData } from "@/lib/api/callBackendApi";
-import { checkResultMutation } from "@/lib/react-query/mutationOptions";
+import {
+	checkResultMutation,
+	type CheckResultMutationResultType,
+} from "@/lib/react-query/mutationOptions";
 import { useMutationState } from "@tanstack/react-query";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Outlet } from "react-router";
@@ -12,7 +14,7 @@ function StudentResultLayout() {
 
 	const [resultData] = useMutationState({
 		filters: { mutationKey: checkResultMutation().mutationKey },
-		select: (data) => data.state.data as CheckResultResponseData,
+		select: (data) => data.state.data as CheckResultMutationResultType,
 	});
 
 	const classSessionTerm = resultData?.class_session_term.split(" - ");
