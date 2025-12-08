@@ -20,7 +20,7 @@ const columns = defineEnum([
 ]);
 
 function ResultSheetPage() {
-	// const [resultData] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
+	// const [resultData] = useStorageState<CheckResultMutationResultType | null>("scratch-card-result", null);
 
 	const [resultData] = useMutationState({
 		filters: { mutationKey: checkResultMutation().mutationKey },
@@ -35,12 +35,12 @@ function ResultSheetPage() {
 			[columns[3]]: result.exam,
 			[columns[4]]: result.total,
 			[columns[5]]: result.grade,
-			[columns[6]]: result.class_subject_average,
+			[columns[6]]: result.class_subject_average.toFixed(2),
 			[columns[7]]: result.remark,
 		})) ?? [];
 
 	return (
-		<Main className="gap-7 pb-[70px] md:gap-13 md:px-8">
+		<Main className="gap-7 pb-[70px] md:gap-13 md:px-8 lg:px-[100px]">
 			<section className="flex flex-col gap-8">
 				<h2 className="text-center text-[24px] font-medium uppercase">Cognitive Ability</h2>
 
@@ -80,9 +80,12 @@ function ResultSheetPage() {
 								{columns.map((column) => (
 									<Table.Cell
 										key={column}
-										className="h-[65px] px-7 not-last:border-r-2
+										className={cnMerge(
+											`h-[65px] px-7 text-center not-last:border-r-2
 											not-last:border-r-[hsl(0,0%,68%)] not-in-[tr:last-child]:border-b-2
-											not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+											not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]`,
+											column === "Subject" && "text-left"
+										)}
 									>
 										{result[column]}
 									</Table.Cell>
@@ -93,128 +96,59 @@ function ResultSheetPage() {
 				</Table.Root>
 			</section>
 
-			<section className="flex flex-col gap-[18px]">
-				<div>
-					<Table.Root className="border-separate rounded-[8px] border border-school-gray">
-						<Table.Body>
-							<Table.Row className="text-[24px] leading-8 font-medium uppercase">
-								<Table.Cell
-									className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-										not-in-[tr:last-child]:border-b
-										not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-								>
-									<p className="mx-auto max-w-[219px]">
-										STUDENT’S TOTAL SCORE = {resultData?.total_score}
-									</p>
-								</Table.Cell>
-								<Table.Cell
-									className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-										not-in-[tr:last-child]:border-b
-										not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-								>
-									<p className="mx-auto max-w-[256px]">
-										STUDENT’S AVERAGE SCORE = {resultData?.average}
-									</p>
-								</Table.Cell>
-								<Table.Cell
-									className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-										not-in-[tr:last-child]:border-b
-										not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-								>
-									<p className="mx-auto max-w-[198px]">
-										CLASS AVERAGE SCORE = {resultData?.class_average_score}
-									</p>
-								</Table.Cell>
-							</Table.Row>
-						</Table.Body>
-					</Table.Root>
-				</div>
-
-				<h3 className="text-center text-[24px] font-medium">GRADE SCALES</h3>
-
+			<section>
 				<Table.Root className="border-separate rounded-[8px] border border-school-gray">
 					<Table.Body>
-						<Table.Row className="text-center text-[24px] leading-8 font-medium uppercase">
+						<Table.Row className="text-[24px] leading-8 font-medium uppercase">
 							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+								className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
 									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
 							>
-								90 - 100 = A+
+								<p className="mx-auto w-[219px]">
+									STUDENT'S TOTAL SCORE = {resultData?.total_score}
+								</p>
 							</Table.Cell>
 							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+								className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
 									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
 							>
-								80 - 89 = A6
+								<p className="mx-auto w-[256px]">
+									STUDENT'S AVERAGE SCORE = {resultData?.average}
+								</p>
 							</Table.Cell>
 							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+								className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
 									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
 							>
-								70 - 79 = B
-							</Table.Cell>
-							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-							>
-								60 - 69 = C
-							</Table.Cell>
-						</Table.Row>
-
-						<Table.Row className="text-center text-[24px] leading-8 font-medium uppercase">
-							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-							>
-								50 - 59 = B
-							</Table.Cell>
-							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-							>
-								40 - 49 = E
-							</Table.Cell>
-							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-							>
-								30 - 39 = F
-							</Table.Cell>
-							<Table.Cell
-								className="h-[70px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
-							>
-								Below 30 = U
+								<p className="mx-auto w-[198px]">
+									CLASS AVERAGE SCORE = {resultData?.class_average_score}
+								</p>
 							</Table.Cell>
 						</Table.Row>
 					</Table.Body>
 				</Table.Root>
 			</section>
 
-			<section className="flex flex-col gap-5">
-				<article className="grid grid-cols-[auto_1fr] gap-x-1.5 gap-y-4">
-					<p className="text-[24px] font-medium whitespace-nowrap">
-						Headmaster’s / Teacher’s Comment:
-					</p>
-
-					<p className="mt-[9px] flex grow flex-col flex-wrap gap-0.5 text-[18px]">
-						<span className="leading-4">{resultData?.comment}</span>
-						<span className="w-full border border-school-body-color/70" />
-					</p>
-
-					<span className="col-span-2 w-full border border-school-body-color/70" />
-				</article>
+			<section className="flex flex-col gap-6">
+				<p className="flex w-full items-baseline gap-1.5 text-[18px]">
+					<span className="text-[24px] font-medium whitespace-nowrap">
+						Headmaster's / Teacher's Comment:
+					</span>
+					<span className="grow border-b border-school-body-color/70 box-decoration-clone">
+						{resultData?.comment}
+					</span>
+				</p>
 
 				<article className="flex gap-[100px]">
-					<div className="flex w-full items-center gap-1.5">
-						<p className="text-[24px] font-medium whitespace-nowrap">Signature:</p>
-						<span className="mt-4 w-full border border-school-body-color/70" />
-					</div>
+					<p className="flex w-full items-baseline gap-1.5">
+						<span className="text-[24px] font-medium whitespace-nowrap">Signature:</span>
+						<span className="grow border-b border-school-body-color/70" />
+					</p>
 
-					<div className="flex w-full items-center gap-1.5">
-						<p className="text-[24px] font-medium whitespace-nowrap">Date:</p>
-						<span className="mt-4 w-full border border-school-body-color/70" />
-					</div>
+					<p className="flex w-full items-baseline gap-1.5">
+						<span className="text-[24px] font-medium whitespace-nowrap">Date:</span>
+						<span className="grow border-b border-school-body-color/70" />
+					</p>
 				</article>
 			</section>
 		</Main>

@@ -62,7 +62,7 @@ function StudentResultLayout() {
 	);
 
 	return (
-		<div className="flex grow flex-col">
+		<div className="flex min-w-[800px] grow flex-col">
 			<header className="mt-[50px] flex flex-col gap-8">
 				<section className="mx-auto flex max-w-[369px] flex-col gap-2 text-center">
 					<div className="flex items-center justify-center gap-4">
@@ -85,7 +85,7 @@ function StudentResultLayout() {
 
 					<ForWithWrapper
 						each={reportInfoArray}
-						className="flex max-w-[690px] flex-wrap gap-x-9 gap-y-4"
+						className="flex w-full max-w-[690px] flex-wrap gap-x-9 gap-y-4"
 						renderItem={(item) => (
 							<li key={item.label} className="inline-flex gap-2 uppercase">
 								<span className="font-medium">{item.label}:</span> {item.value}
