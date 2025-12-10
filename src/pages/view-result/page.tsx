@@ -41,7 +41,7 @@ function ResultSheetPage() {
 		})) ?? [];
 
 	return (
-		<Main className="gap-7 pb-[70px] md:gap-13 md:px-8 lg:px-[100px]">
+		<Main className="gap-7 pb-[50px] md:gap-13 md:px-8 lg:px-[100px]">
 			<section className="flex flex-col gap-8">
 				<h2 className="text-center text-[24px] font-medium uppercase">Cognitive Ability</h2>
 
