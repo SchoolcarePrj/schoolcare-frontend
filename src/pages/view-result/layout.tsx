@@ -1,20 +1,29 @@
 import { ForWithWrapper } from "@/components/common";
 import { AvatarWithTooltip } from "@/components/common/AvatarWithTooltip";
+import { usePageBlocker } from "@/lib/hooks";
 import {
 	checkResultMutation,
 	type CheckResultMutationResultType,
 } from "@/lib/react-query/mutationOptions";
 import { useMutationState } from "@tanstack/react-query";
+// import { useStorageState } from "@zayne-labs/toolkit-react";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Outlet } from "react-router";
 import { toOrdinal } from "./utils";
 
 function StudentResultLayout() {
-	// const [data] = useStorageState<CheckResultResponseData | null>("scratch-card-result", null);
+	// const [resultData] = useStorageState<CheckResultMutationResultType | null>("scratch-card-result", null);
 
 	const [resultData] = useMutationState({
 		filters: { mutationKey: checkResultMutation().mutationKey },
 		select: (data) => data.state.data as CheckResultMutationResultType,
+	});
+
+	usePageBlocker({
+		condition: !resultData,
+		message: "No result data found! Redirecting to home...",
+		redirectDelay: 500,
+		redirectPath: "/",
 	});
 
 	const classSessionTerm = resultData?.class_session_term.split(" - ");
@@ -62,7 +71,7 @@ function StudentResultLayout() {
 	);
 
 	return (
-		<div className="flex min-w-[800px] grow flex-col">
+		<div className="flex grow flex-col max-md:-mt-[50px] max-md:scale-[0.85]">
 			<header className="mt-[50px] flex flex-col gap-8">
 				<section className="mx-auto flex max-w-[369px] flex-col gap-2 text-center">
 					<div className="flex items-center justify-center gap-4">
@@ -72,7 +81,9 @@ function StudentResultLayout() {
 							classNames={{ base: "size-9" }}
 						/>
 
-						<h1 className="text-[28px] font-semibold">{resultData?.school}</h1>
+						{resultData?.school && (
+							<h1 className="text-[28px] font-semibold">{resultData.school}</h1>
+						)}
 					</div>
 
 					<p>{resultData?.school_address}</p>
@@ -85,7 +96,7 @@ function StudentResultLayout() {
 
 					<ForWithWrapper
 						each={reportInfoArray}
-						className="flex w-full max-w-[690px] flex-wrap gap-x-9 gap-y-4"
+						className="flex w-full max-w-[690px] flex-wrap justify-center gap-x-9 gap-y-4"
 						renderItem={(item) => (
 							<li key={item.label} className="inline-flex gap-2 uppercase">
 								<span className="font-medium">{item.label}:</span> {item.value}

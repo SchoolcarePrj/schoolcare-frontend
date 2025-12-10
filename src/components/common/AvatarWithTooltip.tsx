@@ -45,9 +45,11 @@ function AvatarWithTooltip(props: AvatarWithTooltipProps) {
 					</Show.Fallback>
 				</Show.Root>
 
-				<AvatarGroupAnimated.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
-					{name}
-				</AvatarGroupAnimated.Tooltip>
+				{name && (
+					<AvatarGroupAnimated.Tooltip classNames={{ base: "bg-school-dark-blue-500 text-white" }}>
+						{name}
+					</AvatarGroupAnimated.Tooltip>
+				)}
 			</Avatar.Root>
 		</AvatarGroupAnimated.Root>
 	);

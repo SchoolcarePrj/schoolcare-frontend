@@ -2,8 +2,15 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
-const usePageBlocker = (options: { condition: boolean; message: string; redirectPath: string }) => {
-	const { condition, message, redirectPath } = options;
+type PageBlockerOptions = {
+	condition: boolean;
+	message: string;
+	redirectDelay?: number;
+	redirectPath: string;
+};
+
+const usePageBlocker = (options: PageBlockerOptions) => {
+	const { condition, message, redirectDelay = 300, redirectPath } = options;
 
 	const navigate = useNavigate();
 
@@ -13,10 +20,10 @@ const usePageBlocker = (options: { condition: boolean; message: string; redirect
 
 			toast.error(message);
 			void navigate(redirectPath, { replace: true });
-		}, 300);
+		}, redirectDelay);
 
 		return () => clearTimeout(timeout);
-	}, [navigate, condition, message, redirectPath]);
+	}, [navigate, condition, message, redirectPath, redirectDelay]);
 };
 
 export { usePageBlocker };

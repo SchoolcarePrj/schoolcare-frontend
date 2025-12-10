@@ -5,6 +5,7 @@ import {
 } from "@/lib/react-query/mutationOptions";
 import { cnMerge } from "@/lib/utils/cn";
 import { useMutationState } from "@tanstack/react-query";
+// import { useStorageState } from "@zayne-labs/toolkit-react";
 import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Main } from "../admin/school/dashboard/-components/Main";
 
@@ -99,7 +100,7 @@ function ResultSheetPage() {
 			<section>
 				<Table.Root className="border-separate rounded-[8px] border border-school-gray">
 					<Table.Body>
-						<Table.Row className="text-[24px] leading-8 font-medium uppercase">
+						<Table.Row className="text-[20px] leading-8 font-medium uppercase">
 							<Table.Cell
 								className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
 									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
@@ -121,7 +122,7 @@ function ResultSheetPage() {
 									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
 							>
 								<p className="mx-auto w-[198px]">
-									CLASS AVERAGE SCORE = {resultData?.class_average_score}
+									CLASS AVERAGE SCORE = {resultData?.class_average_score.toFixed(2)}
 								</p>
 							</Table.Cell>
 						</Table.Row>
@@ -129,11 +130,9 @@ function ResultSheetPage() {
 				</Table.Root>
 			</section>
 
-			<section className="flex flex-col gap-6">
+			<section className="mt-10 flex flex-col gap-6">
 				<p className="flex w-full items-baseline gap-1.5 text-[18px]">
-					<span className="text-[24px] font-medium whitespace-nowrap">
-						Headmaster's / Teacher's Comment:
-					</span>
+					<span className="text-[20px] font-medium">Headmaster's / Teacher's Comment:</span>
 					<span className="grow border-b border-school-body-color/70 box-decoration-clone">
 						{resultData?.comment}
 					</span>
@@ -141,15 +140,26 @@ function ResultSheetPage() {
 
 				<article className="flex gap-[100px]">
 					<p className="flex w-full items-baseline gap-1.5">
-						<span className="text-[24px] font-medium whitespace-nowrap">Signature:</span>
+						<span className="text-[20px] font-medium">Signature:</span>
 						<span className="grow border-b border-school-body-color/70" />
 					</p>
 
 					<p className="flex w-full items-baseline gap-1.5">
-						<span className="text-[24px] font-medium whitespace-nowrap">Date:</span>
+						<span className="text-[20px] font-medium">Date:</span>
 						<span className="grow border-b border-school-body-color/70" />
 					</p>
 				</article>
+			</section>
+
+			<section className="mt-12 self-end">
+				<button
+					type="button"
+					className="max-w-fit rounded-[10px] bg-school-blue-500 px-8 py-3 text-[18px] font-bold
+						text-white"
+					onClick={() => window.print()}
+				>
+					Print result
+				</button>
 			</section>
 		</Main>
 	);
