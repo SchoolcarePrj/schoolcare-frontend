@@ -1,14 +1,17 @@
 import { cnMerge } from "@/lib/utils/cn";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 
-function TableRoot(props: InferProps<"table">) {
-	const { className, ...restOfProps } = props;
+function TableRoot(props: InferProps<"table"> & { classNames?: { container?: string; table?: string } }) {
+	const { className, classNames, ...restOfProps } = props;
 
 	return (
-		<div data-slot="table-container" className="relative w-full overflow-auto">
+		<div
+			data-slot="table-container"
+			className={cnMerge("relative w-full overflow-auto", classNames?.container)}
+		>
 			<table
 				data-slot="table-root"
-				className={cnMerge("w-full caption-bottom text-sm", className)}
+				className={cnMerge("w-full caption-bottom text-sm", className, classNames?.table)}
 				{...restOfProps}
 			/>
 		</div>

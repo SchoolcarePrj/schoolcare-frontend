@@ -4,6 +4,7 @@ import { callBackendApiForQuery, type apiSchema } from "../api/callBackendApi";
 
 export const checkResultMutation = () => {
 	return mutationOptions({
+		gcTime: 24 * 60 * 60 * 1000,
 		mutationFn: async (bodyData: z.infer<(typeof apiSchema.routes)["@post/check-result"]["body"]>) => {
 			const data = await callBackendApiForQuery("@post/check-result", {
 				body: bodyData,

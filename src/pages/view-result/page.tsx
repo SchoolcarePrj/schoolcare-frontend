@@ -43,9 +43,16 @@ function ResultSheetPage() {
 	return (
 		<Main className="gap-7 pb-[50px] md:gap-13 md:px-8 lg:px-[100px]">
 			<section className="flex flex-col gap-8">
-				<h2 className="text-center text-[24px] font-medium uppercase">Cognitive Ability</h2>
+				<h2 className="text-center text-[18px] font-medium uppercase md:text-[24px]">
+					Cognitive Ability
+				</h2>
 
-				<Table.Root className="border-separate rounded-[20px] border-2 border-school-gray">
+				<Table.Root
+					classNames={{
+						container: "print:overflow-visible",
+						table: "border-separate rounded-[20px] border-2 border-school-gray",
+					}}
+				>
 					<Table.Header>
 						<Table.Row>
 							{columns.map((column) => (
@@ -98,28 +105,36 @@ function ResultSheetPage() {
 			</section>
 
 			<section>
-				<Table.Root className="border-separate rounded-[8px] border border-school-gray">
+				<Table.Root
+					classNames={{
+						container: "print:overflow-visible",
+						table: "border-separate rounded-[8px] border border-school-gray",
+					}}
+				>
 					<Table.Body>
-						<Table.Row className="text-[20px] leading-8 font-medium uppercase">
+						<Table.Row className="leading-8 font-medium uppercase md:text-[20px]">
 							<Table.Cell
-								className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+								className="not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]
+									md:h-[100px]"
 							>
 								<p className="mx-auto w-[219px]">
 									STUDENT'S TOTAL SCORE = {resultData?.total_score}
 								</p>
 							</Table.Cell>
 							<Table.Cell
-								className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+								className="not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]
+									md:h-[100px]"
 							>
 								<p className="mx-auto w-[256px]">
 									STUDENT'S AVERAGE SCORE = {resultData?.average}
 								</p>
 							</Table.Cell>
 							<Table.Cell
-								className="h-[125px] not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
-									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]"
+								className="not-last:border-r not-last:border-r-[hsl(0,0%,68%)]
+									not-in-[tr:last-child]:border-b not-in-[tr:last-child]:border-b-[hsl(0,0%,68%)]
+									md:h-[100px]"
 							>
 								<p className="mx-auto w-[198px]">
 									CLASS AVERAGE SCORE = {resultData?.class_average_score.toFixed(2)}
@@ -130,32 +145,34 @@ function ResultSheetPage() {
 				</Table.Root>
 			</section>
 
-			<section className="mt-10 flex flex-col gap-6">
-				<p className="flex w-full items-baseline gap-1.5 text-[18px]">
-					<span className="text-[20px] font-medium">Headmaster's / Teacher's Comment:</span>
+			<section className="mt-6 flex flex-col gap-4 md:mt-10 md:gap-6">
+				<p className="flex w-full flex-wrap gap-1 text-sm md:items-baseline md:gap-1.5 md:text-[18px]">
+					<span className="text-base font-medium md:text-[20px]">
+						Headmaster's / Teacher's Comment:
+					</span>
 					<span className="grow border-b border-school-body-color/70 box-decoration-clone">
 						{resultData?.comment}
 					</span>
 				</p>
 
-				<article className="flex gap-[100px]">
+				<article className="flex gap-4 md:gap-[100px]">
 					<p className="flex w-full items-baseline gap-1.5">
-						<span className="text-[20px] font-medium">Signature:</span>
+						<span className="text-base font-medium md:text-[20px]">Signature:</span>
 						<span className="grow border-b border-school-body-color/70" />
 					</p>
 
 					<p className="flex w-full items-baseline gap-1.5">
-						<span className="text-[20px] font-medium">Date:</span>
+						<span className="text-base font-medium md:text-[20px]">Date:</span>
 						<span className="grow border-b border-school-body-color/70" />
 					</p>
 				</article>
 			</section>
 
-			<section className="mt-12 self-end">
+			<section className="mt-8 self-center md:mt-12 md:self-end">
 				<button
 					type="button"
-					className="max-w-fit rounded-[10px] bg-school-blue-500 px-8 py-3 text-[18px] font-bold
-						text-white"
+					className="max-w-fit rounded-[10px] bg-school-blue-500 px-6 py-2.5 text-base font-bold
+						text-white md:px-8 md:py-3 md:text-[18px] print:hidden"
 					onClick={() => window.print()}
 				>
 					Print result

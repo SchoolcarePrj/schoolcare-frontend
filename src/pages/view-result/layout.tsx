@@ -71,8 +71,8 @@ function StudentResultLayout() {
 	);
 
 	return (
-		<div className="flex grow flex-col max-md:-mt-[50px] max-md:scale-[0.85]">
-			<header className="mt-[50px] flex flex-col gap-8">
+		<div className="flex grow flex-col">
+			<header className="mt-6 flex flex-col gap-5 px-4 md:mt-[50px] md:gap-8">
 				<section className="mx-auto flex max-w-[369px] flex-col gap-2 text-center">
 					<div className="flex items-center justify-center gap-4">
 						<AvatarWithTooltip
@@ -82,23 +82,26 @@ function StudentResultLayout() {
 						/>
 
 						{resultData?.school && (
-							<h1 className="text-[28px] font-semibold">{resultData.school}</h1>
+							<h1 className="text-[18px] font-semibold md:text-[28px]">{resultData.school}</h1>
 						)}
 					</div>
 
-					<p>{resultData?.school_address}</p>
+					<p className="text-sm md:text-base">{resultData?.school_address}</p>
 
-					<p>Email: {resultData?.school_email}</p>
+					<p className="text-sm md:text-base">Email: {resultData?.school_email}</p>
 				</section>
 
 				<section className="flex flex-col items-center gap-4">
-					<h2 className="text-center text-[24px] font-medium">REPORT SHEET</h2>
+					<h2 className="text-center text-[18px] font-medium md:text-[24px]">REPORT SHEET</h2>
 
 					<ForWithWrapper
 						each={reportInfoArray}
-						className="flex w-full max-w-[690px] flex-wrap justify-center gap-x-9 gap-y-4"
+						className="flex w-full max-w-[690px] flex-wrap justify-center gap-4 md:gap-x-9"
 						renderItem={(item) => (
-							<li key={item.label} className="inline-flex gap-2 uppercase">
+							<li
+								key={item.label}
+								className="inline-flex gap-1 text-xs uppercase md:gap-2 md:text-base"
+							>
 								<span className="font-medium">{item.label}:</span> {item.value}
 							</li>
 						)}
