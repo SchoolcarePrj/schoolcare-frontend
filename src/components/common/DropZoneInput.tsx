@@ -1,7 +1,7 @@
-import { cnMerge } from "@/lib/utils/cn";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { isFile } from "@zayne-labs/toolkit-type-helpers";
 import { toast } from "sonner";
+import { cnMerge } from "@/lib/utils/cn";
 import { DropZone } from "../ui/drop-zone";
 import { IconBox } from "./IconBox";
 

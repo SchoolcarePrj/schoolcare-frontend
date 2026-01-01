@@ -1,7 +1,7 @@
 import { createCustomContext, useCallbackRef, useToggle } from "@zayne-labs/toolkit-react";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { isFunction } from "@zayne-labs/toolkit-type-helpers";
-import { AnimatePresence, type HTMLMotionProps, motion, type Transition } from "motion/react";
+import { AnimatePresence, motion, type HTMLMotionProps, type Transition } from "motion/react";
 import { Collapsible as CollapsiblePrimitive } from "radix-ui";
 import { useCallback, useMemo } from "react";
 

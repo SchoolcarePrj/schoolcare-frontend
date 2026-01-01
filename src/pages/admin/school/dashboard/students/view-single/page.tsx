@@ -1,13 +1,13 @@
-import { IconBox } from "@/components/common";
-import { Form } from "@/components/ui";
-import { studentsByIDQuery } from "@/lib/react-query/queryOptions";
-import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { z } from "zod";
+import { IconBox } from "@/components/common";
+import { Form } from "@/components/ui";
+import { studentsByIDQuery } from "@/lib/react-query/queryOptions";
+import { cnJoin, cnMerge } from "@/lib/utils/cn";
+import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
 import { Main } from "../../-components/Main";
 
 const ViewSingleStudentsSchema = z.object({

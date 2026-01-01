@@ -1,11 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm, useWatch } from "react-hook-form";
 import { For, IconBox } from "@/components/common";
 import { Combobox, Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { allClassesInSchoolQuery, allClassesQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm, useWatch } from "react-hook-form";
 import { Main } from "../-components/Main";
 
 const RegisterClassSchema = apiSchema.routes["@post/school/classes"].body;
@@ -58,11 +58,7 @@ function RegisterClassPage() {
 			</header>
 
 			<section>
-				<Form.Root
-					form={form}
-					className="gap-6 md:gap-8"
-					onSubmit={(event) => void onSubmit(event)}
-				>
+				<Form.Root form={form} className="gap-6 md:gap-8" onSubmit={(event) => void onSubmit(event)}>
 					<Form.Field<typeof form.control> name="school_class" className="gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Class Name</Form.Label>
 

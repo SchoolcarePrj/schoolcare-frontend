@@ -1,14 +1,14 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { toFormData } from "@zayne-labs/callapi/utils";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { DropZoneInput, DropZoneInputImagePreview, For, IconBox } from "@/components/common";
 import { DropZone, Form, Select } from "@/components/ui";
 import { callBackendApi, UploadResultBodySchema } from "@/lib/api/callBackendApi";
 import { allSubjectsInSchoolQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
-import { toFormData } from "@zayne-labs/callapi/utils";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { Main } from "../../-components/Main";
 
 function UploadPage() {

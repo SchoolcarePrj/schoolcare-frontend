@@ -1,3 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
@@ -8,10 +12,6 @@ import {
 } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useInputScoreFormStore } from "@/lib/zustand/inputScoresFormStore";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { Main } from "../../-components/Main";
 
 const AddScoresSchema = apiSchema.routes["@post/school/results/get-class-session-term"].body;

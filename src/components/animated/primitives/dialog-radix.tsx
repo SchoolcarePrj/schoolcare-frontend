@@ -2,7 +2,7 @@
 "use client";
 
 import { createCustomContext, useControllableState } from "@zayne-labs/toolkit-react";
-import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
+import { AnimatePresence, motion, type HTMLMotionProps } from "motion/react";
 import { Dialog as DialogPrimitive } from "radix-ui";
 
 type DialogContextType = {

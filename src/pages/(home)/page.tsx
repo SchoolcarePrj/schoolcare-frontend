@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
 	cardOne,
 	cardThree,
@@ -15,7 +16,6 @@ import { For, ForWithWrapper, IconBox, Image, NavLink } from "@/components/commo
 import { BrainIcon, LineGraphIcon, PageIcon, PieIcon, StudentIcon, UploadIcon } from "@/components/icons";
 import { Card, Carousel } from "@/components/ui";
 import { sessionQuery } from "@/lib/react-query/queryOptions";
-import { useQuery } from "@tanstack/react-query";
 import { AccordionFaqs } from "./-components/AccordionFaqs";
 import { ResultCheckForm } from "./-components/ResultCheckForm";
 

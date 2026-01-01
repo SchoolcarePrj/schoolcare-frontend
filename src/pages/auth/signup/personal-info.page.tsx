@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { DropZoneInput, IconBox } from "@/components/common";
 import { EditIcon } from "@/components/icons";
 import { DropZone, Form } from "@/components/ui";
@@ -5,9 +8,6 @@ import { PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
 import { cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
 import { Main } from "@/pages/admin/school/dashboard/-components/Main";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 
 function PersonalInfoPage() {
 	const {

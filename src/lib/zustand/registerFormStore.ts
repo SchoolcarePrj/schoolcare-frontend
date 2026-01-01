@@ -1,6 +1,6 @@
 /* eslint-disable perfectionist/sort-object-types */
 import type { Prettify } from "@zayne-labs/toolkit-type-helpers";
-import { type StateCreator, create } from "zustand";
+import { create, type StateCreator } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type StepOneData = {

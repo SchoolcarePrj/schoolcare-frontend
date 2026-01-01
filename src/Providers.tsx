@@ -1,4 +1,4 @@
-import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Awaitable } from "@zayne-labs/toolkit-type-helpers";
 import { getQueryClient } from "@/lib/react-query/queryClient";

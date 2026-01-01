@@ -1,3 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { getElementList, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
@@ -7,10 +11,6 @@ import {
 	studentsByClassQuery,
 } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Main } from "../-components/Main";
 
 const RegisterStudentSchema = z.object({
@@ -69,11 +69,7 @@ function RegisterStudentPage() {
 			</header>
 
 			<section>
-				<Form.Root
-					form={form}
-					className="gap-6 md:gap-8"
-					onSubmit={(event) => void onSubmit(event)}
-				>
+				<Form.Root form={form} className="gap-6 md:gap-8" onSubmit={(event) => void onSubmit(event)}>
 					<Form.Field<typeof form.control> name="surname" className="gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Surname*</Form.Label>
 

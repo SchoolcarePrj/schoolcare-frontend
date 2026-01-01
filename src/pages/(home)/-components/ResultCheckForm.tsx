@@ -1,13 +1,13 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { For, IconBox } from "@/components/common";
 import { Form, Select } from "@/components/ui";
 import { apiSchema } from "@/lib/api/callBackendApi";
 import { checkResultMutation } from "@/lib/react-query/mutationOptions";
 import { schoolSessionQuery, schoolTermQuery } from "@/lib/react-query/queryOptions";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 
 const ResultCheckFormSchema = apiSchema.routes["@post/check-result"].body;
 

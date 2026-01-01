@@ -1,8 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
+import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Table } from "@/components/ui";
 import { studentsByIDQuery } from "@/lib/react-query/queryOptions";
 import { useViewStudentFormStore } from "@/lib/zustand/viewStudentFormStore";
-import { useQuery } from "@tanstack/react-query";
-import { defineEnum } from "@zayne-labs/toolkit-type-helpers";
 import { Main } from "../../-components/Main";
 
 const columns = defineEnum(["Name", "Gender", "Reg. No"]);

@@ -1,7 +1,7 @@
 "use client";
 
 import { createCustomContext, useControllableState } from "@zayne-labs/toolkit-react";
-import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
+import { AnimatePresence, motion, type HTMLMotionProps } from "motion/react";
 import { Tooltip as TooltipPrimitive } from "radix-ui";
 import { useMemo } from "react";
 

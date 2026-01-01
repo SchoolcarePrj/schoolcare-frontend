@@ -1,7 +1,7 @@
-import { cnMerge } from "@/lib/utils/cn";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import { Fragment as ReactFragment, useLayoutEffect } from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
+import { cnMerge } from "@/lib/utils/cn";
 
 function DrawerTrigger(props: InferProps<typeof DrawerPrimitive.Trigger>) {
 	return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;

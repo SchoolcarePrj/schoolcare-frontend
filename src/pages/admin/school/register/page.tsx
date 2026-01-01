@@ -1,11 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { IconBox } from "@/components/common";
 import { Form } from "@/components/ui";
 import { apiSchema, callBackendApi } from "@/lib/api/callBackendApi";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { Main } from "@/pages/admin/school/dashboard/-components/Main";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 
 const AdminRegisterSchema = apiSchema.routes["@post/school/admin/register"].body;
 
