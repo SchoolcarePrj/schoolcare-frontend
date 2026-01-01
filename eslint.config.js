@@ -15,4 +15,8 @@ export default zayne(
 			"react-hooks/preserve-manual-memoization": "off",
 		},
 	}
-);
+).overrides({
+	"zayne/react/you-might-not-need-an-effect/recommended": {
+		ignores: ["./src/components/animated/primitives/**.tsx"],
+	},
+});

@@ -49,14 +49,14 @@ function UploadPage() {
 
 			<section>
 				<Form.Root
-					methods={form}
+					form={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
 					<Form.Field<typeof form.control> name="subject" className="w-full gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Subject</Form.Label>
 
-						<Form.FieldController
+						<Form.FieldBoundController
 							render={({ field }) => (
 								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger
@@ -100,7 +100,7 @@ function UploadPage() {
 							Upload CSV Result file
 						</Form.Label>
 
-						<Form.FieldController
+						<Form.FieldBoundController
 							render={({ field }) => (
 								<DropZoneInput
 									allowedFileTypes={["text/csv"]}

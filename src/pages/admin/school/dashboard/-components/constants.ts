@@ -24,13 +24,12 @@ export const dashboardLinkItems = [
 		link: "/admin/school/dashboard/register/student",
 	},
 	{
-		icon: "streamline:interface-edit-view-eye-eyeball-open-view",
-		items: [
+		children: [
 			{ label: "View all Students", link: "/admin/school/dashboard/students/view-all" },
 			{ label: "View a Student", link: "/admin/school/dashboard/students/view-single" },
 		],
+		icon: "streamline:interface-edit-view-eye-eyeball-open-view",
 		label: "View Student",
-		link: null,
 	},
 	{
 		icon: "solar:upload-minimalistic-linear",

@@ -10,7 +10,7 @@ type PageBlockerOptions = {
 };
 
 const usePageBlocker = (options: PageBlockerOptions) => {
-	const { condition, message, redirectDelay = 300, redirectPath } = options;
+	const { condition, message, redirectDelay = 500, redirectPath } = options;
 
 	const navigate = useNavigate();
 

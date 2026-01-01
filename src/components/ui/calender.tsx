@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker";
 import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common";
-import { type ShadcnButtonProps, shadcnButtonVariants } from "./constants";
+import { shadcnButtonVariants, type ShadcnButtonProps } from "./constants";
 
 export function Calendar(
 	props: InferProps<typeof DayPicker> & {
@@ -34,8 +34,10 @@ export function Calendar(
 				`group/calendar bg-shadcn-background p-3 [--cell-size:--spacing(8)]
 				in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent`,
 				// prettier-ignore
+				// eslint-disable-next-line react-hooks/todo
 				String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
 				// prettier-ignore
+				// eslint-disable-next-line react-hooks/todo
 				String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
 				className,
 				classNames?.base
@@ -225,18 +227,18 @@ export function CalendarDayButton(props: InferProps<typeof DayButton> & ShadcnBu
 
 	const defaultClassNames = getDefaultClassNames();
 
-	const ref = useRef<HTMLButtonElement>(null);
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
 		if (!modifiers.focused) return;
 
-		ref.current?.focus();
+		buttonRef.current?.focus();
 	}, [modifiers.focused]);
 
 	return (
 		<button
 			type="button"
-			ref={ref}
+			ref={buttonRef}
 			data-day={day.date.toLocaleDateString()}
 			data-selected-single={
 				modifiers.selected && !modifiers.range_start && !modifiers.range_end && !modifiers.range_middle

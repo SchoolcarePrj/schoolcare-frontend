@@ -39,7 +39,7 @@ function AdminRegisterPage() {
 			</header>
 
 			<section>
-				<Form.Root methods={form} className="gap-10" onSubmit={(event) => void onSubmit(event)}>
+				<Form.Root form={form} className="gap-10" onSubmit={(event) => void onSubmit(event)}>
 					<Form.Field control={form.control} name="school" className="w-full gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">School Name</Form.Label>
 

@@ -4,7 +4,7 @@
 
 import { toArray } from "@zayne-labs/toolkit-core";
 import { createCustomContext } from "@zayne-labs/toolkit-react";
-import { type HTMLMotionProps, motion, type Transition } from "motion/react";
+import { motion, type HTMLMotionProps, type Transition } from "motion/react";
 import {
 	isValidElement,
 	useCallback,
@@ -51,7 +51,7 @@ function TabsRoot(props: TabsProps) {
 	const { children, defaultValue, onValueChange, value, ...restOfProps } = props;
 	const [activeValue, setActiveValue] = useState<string | undefined>(defaultValue);
 	const triggersRef = useRef(new Map<string, HTMLElement>());
-	const initialSet = useRef(false);
+	const initialSetRef = useRef(false);
 	const isControlled = value !== undefined;
 
 	useEffect(() => {
@@ -59,12 +59,12 @@ function TabsRoot(props: TabsProps) {
 			!isControlled
 			&& activeValue === undefined
 			&& triggersRef.current.size > 0
-			&& !initialSet.current
+			&& !initialSetRef.current
 		) {
 			const firstTab = triggersRef.current.keys().next().value;
 			if (firstTab !== undefined) {
 				setActiveValue(firstTab);
-				initialSet.current = true;
+				initialSetRef.current = true;
 			}
 		}
 	}, [activeValue, isControlled]);
@@ -73,9 +73,9 @@ function TabsRoot(props: TabsProps) {
 		(val: string, node: HTMLElement | null) => {
 			if (node) {
 				triggersRef.current.set(val, node);
-				if (!isControlled && activeValue === undefined && !initialSet.current) {
+				if (!isControlled && activeValue === undefined && !initialSetRef.current) {
 					setActiveValue(val);
-					initialSet.current = true;
+					initialSetRef.current = true;
 				}
 			} else {
 				triggersRef.current.delete(val);
@@ -195,12 +195,12 @@ function TabsContentList(props: TabsContentsProps) {
 	);
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
+	const itemRef = useRef<Array<HTMLDivElement | null>>([]);
 	const [height, setHeight] = useState(0);
 	const roRef = useRef<ResizeObserver | null>(null);
 
 	const measure = useCallback(() => {
-		const pane = itemRefs.current[activeIndex];
+		const pane = itemRef.current[activeIndex];
 		const container = containerRef.current;
 		if (!pane || !container) return 0;
 
@@ -229,7 +229,7 @@ function TabsContentList(props: TabsContentsProps) {
 			roRef.current = null;
 		}
 
-		const pane = itemRefs.current[activeIndex];
+		const pane = itemRef.current[activeIndex];
 		const container = containerRef.current;
 		if (!pane || !container) return;
 
@@ -276,7 +276,7 @@ function TabsContentList(props: TabsContentsProps) {
 						// eslint-disable-next-line react-x/no-array-index-key
 						key={index}
 						ref={(el) => {
-							itemRefs.current[index] = el;
+							itemRef.current[index] = el;
 						}}
 						className="size-full shrink-0 px-2"
 					>

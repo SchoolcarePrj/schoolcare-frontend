@@ -59,14 +59,14 @@ function RegisterClassPage() {
 
 			<section>
 				<Form.Root
-					methods={form}
+					form={form}
 					className="gap-6 md:gap-8"
 					onSubmit={(event) => void onSubmit(event)}
 				>
 					<Form.Field<typeof form.control> name="school_class" className="gap-3 md:gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">Class Name</Form.Label>
 
-						<Form.FieldController
+						<Form.FieldBoundController
 							render={({ field }) => (
 								<Combobox.Root
 									data={formattedClasses}

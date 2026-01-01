@@ -39,12 +39,12 @@ function PersonalInfoPage() {
 
 			<section>
 				<Form.Root
-					methods={form}
+					form={form}
 					className="mt-3 gap-8 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
 					<Form.Field<typeof form.control> name="logo">
-						<Form.FieldController
+						<Form.FieldBoundController
 							render={({ field }) => (
 								<DropZoneInput
 									onChange={field.onChange}

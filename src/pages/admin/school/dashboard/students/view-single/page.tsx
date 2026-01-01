@@ -47,7 +47,7 @@ function ViewSingleStudent() {
 
 			<section>
 				<Form.Root
-					methods={form}
+					form={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>

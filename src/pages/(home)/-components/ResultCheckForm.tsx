@@ -48,7 +48,7 @@ function ResultCheckForm() {
 
 	return (
 		<Form.Root
-			methods={form}
+			form={form}
 			onSubmit={(event) => void onSubmit(event)}
 			className="w-full max-w-[600px] rounded-[24px] border-2 border-white px-9 py-11 lg:border-[3px]
 				lg:px-10 lg:py-14"
@@ -99,7 +99,7 @@ function ResultCheckForm() {
 				<Form.Field<typeof form.control> name="session" className="group flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Result Session</Form.Label>
 
-					<Form.FieldController
+					<Form.FieldBoundController
 						render={({ field }) => (
 							<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 								<Select.Trigger
@@ -142,7 +142,7 @@ function ResultCheckForm() {
 				<Form.Field<typeof form.control> name="term" className="group flex flex-col gap-3">
 					<Form.Label className="text-[12px] font-medium lg:text-base">Term</Form.Label>
 
-					<Form.FieldController
+					<Form.FieldBoundController
 						render={({ field }) => (
 							<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 								<Select.Trigger
@@ -203,7 +203,7 @@ function ResultCheckForm() {
 				</Form.Field>
 			</div>
 
-			<Form.WatchFormState
+			<Form.StateSubscribe
 				render={(formState) => (
 					<Form.Submit
 						disabled={formState.isSubmitting}

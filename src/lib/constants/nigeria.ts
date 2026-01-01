@@ -1,5 +1,5 @@
 /* eslint-disable perfectionist/sort-objects */
-export const nigeriaStatesAndLGA = [
+export const getNigeriaStatesAndLGA = () => [
 	{
 		state: "Abia",
 		lgas: [

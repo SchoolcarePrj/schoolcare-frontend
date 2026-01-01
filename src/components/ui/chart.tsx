@@ -119,6 +119,7 @@ export function ChartStyle(props: { config: ChartConfig; id: string }) {
 	}
 
 	const cssStringArray = Object.entries(THEMES).map(
+		// eslint-disable-next-line react-hooks/todo
 		([theme, prefix]) => css`
 			${prefix} [data-chart=${id}] {
 				${colorConfig

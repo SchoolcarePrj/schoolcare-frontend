@@ -3,7 +3,7 @@ import { isFunction, isString } from "@zayne-labs/toolkit-type-helpers";
 import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { CollapsibleAnimated } from "@/components/animated/ui";
-import { ForWithWrapper, IconBox, NavLink } from "@/components/common";
+import { For, ForWithWrapper, IconBox, NavLink } from "@/components/common";
 import { Drawer } from "@/components/ui";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { dashboardLinkItems } from "./constants";
@@ -64,10 +64,10 @@ function DashboardSidebar(props: { className?: string }) {
 									</NavLink>
 								)}
 
-								{item.link === null && (
+								{item.children && (
 									<CollapsibleAnimated.Root
 										className="group/collapsible"
-										defaultOpen={item.items.some((innerItem) => innerItem.link === pathname)}
+										defaultOpen={item.children.some((innerItem) => innerItem.link === pathname)}
 									>
 										<CollapsibleAnimated.Trigger
 											className="flex items-center gap-3 rounded-r-[10px] pl-6"
@@ -81,22 +81,25 @@ function DashboardSidebar(props: { className?: string }) {
 											/>
 										</CollapsibleAnimated.Trigger>
 
-										<ForWithWrapper
-											each={item.items}
-											className="flex flex-col gap-6 group-data-[state=open]/collapsible:mt-6"
-											renderItem={(innerItem) => (
-												<CollapsibleAnimated.Content key={innerItem.label} asChild={true}>
+										<CollapsibleAnimated.Content
+											key={item.label}
+											className="flex flex-col gap-6"
+										>
+											<For
+												each={item.children}
+												renderItem={(childItem) => (
 													<NavLink
-														to={innerItem.link}
+														key={childItem.label}
+														to={childItem.link}
 														className="mx-7.5 flex h-[38px] items-center gap-3 rounded-[8px]
-															border border-white pl-6
+															border border-white pl-6 first:mt-6
 															data-[active=true]:bg-school-blue-500"
 													>
-														{innerItem.label}
+														{childItem.label}
 													</NavLink>
-												</CollapsibleAnimated.Content>
-											)}
-										/>
+												)}
+											/>
+										</CollapsibleAnimated.Content>
 									</CollapsibleAnimated.Root>
 								)}
 

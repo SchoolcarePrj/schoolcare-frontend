@@ -3,7 +3,7 @@
 import { useControllableState } from "@zayne-labs/toolkit-react";
 import { createContext, use, useEffect, useMemo, useRef, useState } from "react";
 import * as Command from "@/components/ui/command";
-import { type ShadcnButtonProps, shadcnButtonVariants } from "@/components/ui/constants";
+import { shadcnButtonVariants, type ShadcnButtonProps } from "@/components/ui/constants";
 import * as Popover from "@/components/ui/popover";
 import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common";
@@ -105,7 +105,7 @@ function ComboboxTrigger(props: ShadcnButtonProps & { classNames?: { base?: stri
 
 	const { data, setWidth, type, value } = use(ComboboxContext);
 
-	const ref = useRef<HTMLButtonElement>(null);
+	const elementRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
 		// Create a ResizeObserver to detect width changes
@@ -119,8 +119,8 @@ function ComboboxTrigger(props: ShadcnButtonProps & { classNames?: { base?: stri
 			}
 		});
 
-		if (ref.current) {
-			resizeObserver.observe(ref.current);
+		if (elementRef.current) {
+			resizeObserver.observe(elementRef.current);
 		}
 
 		// Clean up the observer when component unmounts
@@ -135,7 +135,7 @@ function ComboboxTrigger(props: ShadcnButtonProps & { classNames?: { base?: stri
 				type="button"
 				{...restOfProps}
 				className={cnMerge(shadcnButtonVariants({ className, variant: "outline" }), classNames?.base)}
-				ref={ref}
+				ref={elementRef}
 			>
 				{children ?? (
 					<span className="flex w-full items-center justify-between gap-2">

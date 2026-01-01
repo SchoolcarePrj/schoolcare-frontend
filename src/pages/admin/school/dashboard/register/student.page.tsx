@@ -70,7 +70,7 @@ function RegisterStudentPage() {
 
 			<section>
 				<Form.Root
-					methods={form}
+					form={form}
 					className="gap-6 md:gap-8"
 					onSubmit={(event) => void onSubmit(event)}
 				>
@@ -104,7 +104,7 @@ function RegisterStudentPage() {
 						<Form.Field<typeof form.control> name="gender" className="w-full min-w-0 gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">Gender</Form.Label>
 
-							<Form.FieldController
+							<Form.FieldBoundController
 								render={({ field }) => (
 									<Select.Root
 										name={field.name}
@@ -153,7 +153,7 @@ function RegisterStudentPage() {
 						<Form.Field<typeof form.control> name="school_class" className="w-full min-w-0 gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">Class</Form.Label>
 
-							<Form.FieldController
+							<Form.FieldBoundController
 								render={({ field }) => (
 									<Select.Root
 										name={field.name}

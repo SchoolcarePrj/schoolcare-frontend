@@ -53,7 +53,7 @@ function AddScoresPage() {
 
 			<section>
 				<Form.Root
-					methods={form}
+					form={form}
 					className="gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
@@ -61,7 +61,7 @@ function AddScoresPage() {
 						<Form.Field<typeof form.control> name="session" className="w-full min-w-0 gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">Session</Form.Label>
 
-							<Form.FieldController
+							<Form.FieldBoundController
 								render={({ field }) => (
 									<Select.Root
 										name={field.name}
@@ -108,7 +108,7 @@ function AddScoresPage() {
 						<Form.Field<typeof form.control> name="term" className="w-full min-w-0 gap-4">
 							<Form.Label className="font-medium">Term</Form.Label>
 
-							<Form.FieldController
+							<Form.FieldBoundController
 								render={({ field }) => (
 									<Select.Root
 										name={field.name}
@@ -156,7 +156,7 @@ function AddScoresPage() {
 					<Form.Field<typeof form.control> name="school_class" className="w-full gap-4">
 						<Form.Label className="font-medium">Choose class</Form.Label>
 
-						<Form.FieldController
+						<Form.FieldBoundController
 							render={({ field }) => (
 								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger

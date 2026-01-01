@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable react-you-might-not-need-an-effect/no-derived-state */
 /* eslint-disable react-x/no-unstable-default-props */
 "use client";
 
@@ -444,7 +443,9 @@ function MotionHighlightItem<T extends React.ElementType = "div">(props: Highlig
 		if (isActive) {
 			updateBounds();
 			setActiveClassName(activeClassName ?? "");
-		} else if (!activeValue) clearBounds();
+		} else if (!activeValue) {
+			clearBounds();
+		}
 
 		if (!shouldUpdateBounds) return;
 

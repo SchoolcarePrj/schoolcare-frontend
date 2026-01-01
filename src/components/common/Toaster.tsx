@@ -4,7 +4,7 @@ import { useThemeStore } from "@/lib/zustand/themeStore";
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 function SonnerToaster(props: ToasterProps) {
-	const { theme = "dark" } = useThemeStore((state) => state);
+	const { theme } = useThemeStore((state) => state);
 
 	return (
 		<Sonner

@@ -1,7 +1,7 @@
 import { For, IconBox } from "@/components/common";
 import { Combobox, Form, Select } from "@/components/ui";
 import { AddressBodySchema, callBackendApi, PersonalInfoBodySchema } from "@/lib/api/callBackendApi";
-import { nigeriaStatesAndLGA } from "@/lib/constants/nigeria";
+import { getNigeriaStatesAndLGA } from "@/lib/constants/nigeria";
 import { cnJoin, cnMerge } from "@/lib/utils/cn";
 import { useRegisterFormStore } from "@/lib/zustand/registerFormStore";
 import { Main } from "@/pages/admin/school/dashboard/-components/Main";
@@ -65,6 +65,8 @@ function AddressPage() {
 
 	const watchedState = useWatch({ control: form.control, name: "state" });
 
+	const nigeriaStatesAndLGA = getNigeriaStatesAndLGA();
+
 	const formattedNigeriaStatesAndLGA = nigeriaStatesAndLGA.map((item) => ({
 		label: item.state,
 		value: item.state,
@@ -86,7 +88,7 @@ function AddressPage() {
 
 			<section>
 				<Form.Root
-					methods={form}
+					form={form}
 					className="mt-3 gap-10 md:gap-[56px]"
 					onSubmit={(event) => void onSubmit(event)}
 				>
@@ -95,7 +97,7 @@ function AddressPage() {
 							School nationality
 						</Form.Label>
 
-						<Form.FieldController
+						<Form.FieldBoundController
 							render={({ field }) => (
 								<Select.Root name={field.name} value={field.value} onValueChange={field.onChange}>
 									<Select.Trigger
@@ -148,7 +150,7 @@ function AddressPage() {
 					<Form.Field<typeof form.control> name="state" className="w-full gap-4">
 						<Form.Label className="text-[14px] font-medium md:text-base">State</Form.Label>
 
-						<Form.FieldController
+						<Form.FieldBoundController
 							render={({ field }) => (
 								<Combobox.Root
 									data={formattedNigeriaStatesAndLGA}
@@ -210,7 +212,7 @@ function AddressPage() {
 						<Form.Field<typeof form.control> name="local_govt" className="w-full gap-3 md:gap-4">
 							<Form.Label className="text-[14px] font-medium md:text-base">LGA</Form.Label>
 
-							<Form.FieldController
+							<Form.FieldBoundController
 								render={({ field }) => (
 									<Combobox.Root
 										data={formattedLGAResult}
