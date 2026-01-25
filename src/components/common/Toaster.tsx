@@ -9,7 +9,7 @@ function SonnerToaster(props: ToasterProps) {
 	return (
 		<Sonner
 			theme={theme}
-			// eslint-disable-next-line tailwindcss-better/no-unregistered-classes
+			// eslint-disable-next-line tailwindcss-better/no-unknown-classes
 			className="toaster group"
 			richColors={true}
 			position="bottom-right"

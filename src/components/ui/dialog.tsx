@@ -1,4 +1,6 @@
-import { createCustomContext, useCallbackRef, useControllableState } from "@zayne-labs/toolkit-react";
+"use client";
+
+import { createCustomContext, useControllableState } from "@zayne-labs/toolkit-react";
 import type { DiscriminatedRenderProps, InferProps } from "@zayne-labs/toolkit-react/utils";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { useMemo } from "react";
@@ -6,41 +8,37 @@ import { cnMerge } from "@/lib/utils/cn";
 import { IconBox } from "../common";
 
 type ContextType = {
-	open: boolean;
-	setOpen: (open: boolean) => void;
-	toggleClose: () => void;
-	toggleOpen: () => void;
+	isOpen: boolean;
+	setIsOpen: (open: boolean) => void;
 };
 
 const [DialogStateContextProvider, useDialogStateContext] = createCustomContext<ContextType>();
 
 function DialogRoot(props: InferProps<typeof DialogPrimitive.Root>) {
-	// eslint-disable-next-line ts-eslint/unbound-method
-	const { defaultOpen, onOpenChange: onOpenChangeProp, open: openProp, ...restOfProps } = props;
+	const {
+		defaultOpen: defaultOpenProp,
+		// eslint-disable-next-line ts-eslint/unbound-method
+		onOpenChange: onOpenChangeProp,
+		open: openProp,
+		...restOfProps
+	} = props;
 
-	const [open, setOpen] = useControllableState({
-		defaultValue: defaultOpen,
+	const [isOpen, setIsOpen] = useControllableState({
+		defaultProp: defaultOpenProp,
 		onChange: onOpenChangeProp,
-		value: openProp,
+		prop: openProp,
 	});
 
-	const toggleClose = useCallbackRef(() => setOpen(false));
-	const toggleOpen = useCallbackRef(() => setOpen(true));
-
-	const contextValue = useMemo(
-		() =>
-			({
-				open,
-				setOpen,
-				toggleClose,
-				toggleOpen,
-			}) satisfies ContextType,
-		[toggleClose, toggleOpen, setOpen, open]
-	);
+	const contextValue = useMemo(() => ({ isOpen, setIsOpen }) satisfies ContextType, [setIsOpen, isOpen]);
 
 	return (
 		<DialogStateContextProvider value={contextValue}>
-			<DialogPrimitive.Root {...restOfProps} open={open} onOpenChange={setOpen} />
+			<DialogPrimitive.Root
+				data-slot="dialog-root"
+				{...restOfProps}
+				open={isOpen}
+				onOpenChange={setIsOpen}
+			/>
 		</DialogStateContextProvider>
 	);
 }
@@ -86,8 +84,7 @@ function DialogContent(props: InferProps<typeof DialogPrimitive.Content> & { wit
 					data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
 					data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]
 					data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
-					data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]
-					sm:rounded-lg`,
+					data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]`,
 					className
 				)}
 				{...restOfProps}
@@ -96,12 +93,13 @@ function DialogContent(props: InferProps<typeof DialogPrimitive.Content> & { wit
 
 				{withCloseButton && (
 					<DialogPrimitive.Close
-						className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-shadcn-background
+						className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-shadcn-background
 							transition-opacity hover:opacity-100 focus:ring-2 focus:ring-shadcn-ring
 							focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none
-							data-[state=open]:bg-shadcn-accent data-[state=open]:text-shadcn-muted-foreground"
+							data-[state=open]:bg-shadcn-accent data-[state=open]:text-shadcn-muted-foreground
+							[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
 					>
-						<IconBox icon="lucide:x" className="size-4" />
+						<IconBox icon="lucide:x" />
 						<span className="sr-only">Close</span>
 					</DialogPrimitive.Close>
 				)}

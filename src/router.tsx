@@ -37,7 +37,7 @@ const routes = createRoutesFromElements(
 
 		<Route Component={PrimaryLayout}>
 			<Route path="/who-we-are" Component={lazy(() => import("./pages/(primary)/who-we-are.page"))} />
-			<Route path="/faqs" Component={lazy(() => import("./pages/(primary)/faq.page"))} />
+			<Route path="/faqs" Component={lazy(() => import("./pages/(primary)/faqs.page"))} />
 			<Route path="/contact" Component={lazy(() => import("./pages/(primary)/contact.page"))} />
 			<Route
 				path="/how-it-works"

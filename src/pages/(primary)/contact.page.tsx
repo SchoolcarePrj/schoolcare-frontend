@@ -32,7 +32,7 @@ function ContactUs() {
 					</div>
 
 					<p className="sm:hidden md:block">Follow Us on Social Media</p>
-					<div className="mt-2 flex text-[24px] sm:hidden md:block">
+					<div className="mt-2 flex text-[24px]">
 						<IconBox icon="ri-facebook-circle-fill" />
 						<IconBox icon="ri-twitter-x-fill" />
 						<IconBox icon="ri-linkedin-box-fill" />

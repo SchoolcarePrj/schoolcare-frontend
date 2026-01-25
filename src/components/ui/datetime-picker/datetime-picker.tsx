@@ -37,14 +37,13 @@ export function DateTimePicker(props: DatePickerProps) {
 	} = props;
 
 	const [dateString, setDateString] = useControllableState({
-		defaultValue: defaultDateStringProp,
+		defaultProp: defaultDateStringProp,
+		isControlled: "dateString" in props,
 		onChange: onDateStringChangeProp,
-		value: dateStringProp,
+		prop: dateStringProp,
 	});
 
 	const date = getDateFromString(dateString);
-
-	const isDateSelected = dateString !== "";
 
 	const showTimePicker = variant === "time" || variant === "datetime";
 
@@ -55,9 +54,8 @@ export function DateTimePicker(props: DatePickerProps) {
 			<Popover.Trigger className={cnMerge("flex items-center justify-between text-[14px]", className)}>
 				<IconBox icon="solar:calendar-outline" className="size-5" />
 
-				<span className={cnJoin(!isDateSelected && "text-black/60")}>
-					{/* eslint-disable-next-line ts-eslint/prefer-nullish-coalescing */}
-					{isDateSelected ? format(date, formats?.visibleDate || "PPP") : placeholder}
+				<span className={cnJoin(!date && "text-black/60")}>
+					{date ? format(date, formats?.visibleDate ?? "PPP") : placeholder}
 				</span>
 			</Popover.Trigger>
 
@@ -99,7 +97,7 @@ export function DateTimePicker(props: DatePickerProps) {
 
 					{showTimePicker && (
 						<TimeScrollArea
-							dateValue={date}
+							dateValue={date ?? new Date()}
 							onChange={setDateString as typeof onDateStringChangeProp}
 							formats={formats}
 						/>

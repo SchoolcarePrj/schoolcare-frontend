@@ -63,15 +63,15 @@ function ComboboxRoot(props: ComboboxProps) {
 	} = props;
 
 	const [value, onValueChange] = useControllableState({
-		defaultValue: defaultValue ?? "",
+		defaultProp: defaultValue,
 		onChange: controlledOnValueChange,
-		value: controlledValue,
+		prop: controlledValue,
 	});
 
 	const [open, onOpenChange] = useControllableState({
-		defaultValue: defaultOpen,
+		defaultProp: defaultOpen,
 		onChange: controlledOnOpenChange,
-		value: controlledOpen,
+		prop: controlledOpen,
 	});
 
 	const [width, setWidth] = useState(200);
@@ -183,14 +183,14 @@ function ComboboxInput(
 	const { inputValue, setInputValue, type } = use(ComboboxContext);
 
 	const [value, onValueChange] = useControllableState({
-		defaultValue: defaultValue ?? inputValue,
+		defaultProp: defaultValue ?? inputValue,
 		onChange: (newValue) => {
 			// Sync with context state
 			setInputValue(newValue);
 			// Call external onChange if provided
 			controlledOnValueChange?.(newValue);
 		},
-		value: controlledValue,
+		prop: controlledValue,
 	});
 
 	return (
@@ -264,8 +264,8 @@ function ComboboxCreateNew(props: ComboboxCreateNewProps) {
 			className={cnMerge(
 				`relative flex w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm
 				outline-none select-none aria-selected:bg-shadcn-accent
-				aria-selected:text-shadcn-accent-foreground data-[disabled]:pointer-events-none
-				data-[disabled]:opacity-50`,
+				aria-selected:text-shadcn-accent-foreground data-disabled:pointer-events-none
+				data-disabled:opacity-50`,
 				className
 			)}
 			onClick={handleCreateNew}

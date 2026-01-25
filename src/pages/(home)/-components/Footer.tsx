@@ -53,7 +53,7 @@ function Footer() {
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="/about" className="transition-colors hover:text-gray-300">
+						<NavLink to="/who-we-are" className="transition-colors hover:text-gray-300">
 							About Us
 						</NavLink>
 					</li>
@@ -63,7 +63,7 @@ function Footer() {
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="/faq" className="transition-colors hover:text-gray-300">
+						<NavLink to="/faqs" className="transition-colors hover:text-gray-300">
 							FAQs
 						</NavLink>
 					</li>
