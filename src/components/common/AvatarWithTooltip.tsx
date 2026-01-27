@@ -19,7 +19,7 @@ function AvatarWithTooltip(props: AvatarWithTooltipProps) {
 
 	return (
 		<AvatarGroupAnimated.Root translate="5%">
-			<Avatar.Root className={cnMerge("size-70", classNames?.base)}>
+			<Avatar.Root className={cnMerge("size-70 rounded-full", classNames?.base)}>
 				<Show.Root control="content">
 					<Show.Content when={logo}>
 						{(definedLogo) => (
@@ -35,8 +35,8 @@ function AvatarWithTooltip(props: AvatarWithTooltipProps) {
 					<Show.Fallback>
 						<span
 							className={cnMerge(
-								`inline-flex size-full shrink-0 items-center justify-center rounded-full
-								bg-[hsl(0,0%,85%)] text-[18px]`,
+								`inline-flex size-full shrink-0 items-center justify-center bg-[hsl(0,0%,85%)]
+								text-[18px]`,
 								classNames?.fallback
 							)}
 						>

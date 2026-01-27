@@ -23,8 +23,7 @@ function DashboardSidebar(props: { className?: string }) {
 			<aside
 				className={cnMerge(
 					// NOTE - These classes allow the sidebar to scroll only within itself.
-					// NOTE - Also ensure the direct parent of this drawer is a flex container with the vertical axis set to flex-stretch (which is the default)
-					"relative flex overflow-y-auto",
+					"relative flex h-svh overflow-y-auto",
 
 					"custom-scrollbar w-[300px] shrink-0",
 					className
@@ -40,16 +39,16 @@ function DashboardSidebar(props: { className?: string }) {
 					withPortal={false}
 					className={cnJoin(
 						// NOTE - These classes allow the sidebar to scroll only within itself
-						"absolute flex size-full grow flex-col",
+						"absolute size-full grow",
 
-						`bg-school-darker-blue pt-[100px] pb-15 text-white outline-hidden
-						data-vaul-drawer:[animation-duration:1300ms]`
+						`bg-school-darker-blue text-white outline-hidden
+						data-vaul-drawer:animation-duration-[1300ms]`
 					)}
 				>
 					<ForWithWrapper
 						as="nav"
 						each={dashboardLinkItems}
-						className="flex flex-col gap-9 font-medium"
+						className="flex flex-col gap-9 bg-inherit pt-[100px] pb-[60px] font-medium"
 						renderItem={(item) => (
 							<Fragment key={item.label}>
 								{isString(item.link) && (

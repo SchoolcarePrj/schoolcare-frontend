@@ -13,8 +13,7 @@ function DashboardSidebar(props: { className?: string; isOpen: boolean }) {
 			<aside
 				className={cnMerge(
 					// NOTE - These classes allow the sidebar to scroll only within itself.
-					// NOTE - Also ensure the direct parent of this drawer is a flex container with the vertical axis set to flex-stretch (which is the default)
-					"relative flex overflow-y-auto",
+					"relative flex h-svh overflow-y-auto",
 
 					"custom-scrollbar shrink-0 transition-[width] duration-500",
 
@@ -33,13 +32,13 @@ function DashboardSidebar(props: { className?: string; isOpen: boolean }) {
 					withPortal={false}
 					className={cnJoin(
 						// NOTE - These classes allow the sidebar to scroll only within itself
-						"absolute flex size-full grow flex-col",
+						"absolute size-full grow",
 
-						`items-center gap-2.5 rounded-[24px] border border-[hsl(0,0%,84%)] bg-white px-3.5
-						py-[90px] font-medium outline-hidden data-vaul-drawer:[animation-duration:1300ms]`
+						`gap-2.5 rounded-[24px] border border-[hsl(0,0%,84%)] bg-white px-3.5 py-[90px]
+						font-medium outline-hidden data-vaul-drawer:animation-duration-[1300ms]`
 					)}
 				>
-					<Image src={logo} width={118} height={36} className="h-9 w-[118px] object-cover" />
+					<Image src={logo} width={118} height={36} className="mx-auto h-9 w-[118px] object-cover" />
 
 					<ForWithWrapper
 						as="nav"
