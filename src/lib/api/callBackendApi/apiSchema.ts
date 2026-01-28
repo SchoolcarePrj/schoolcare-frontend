@@ -1,3 +1,4 @@
+import type { InferAllMainRouteKeys } from "@zayne-labs/callapi";
 import { fallBackRouteSchemaKey } from "@zayne-labs/callapi/constants";
 import { defineSchema } from "@zayne-labs/callapi/utils";
 import { z } from "zod";
@@ -348,3 +349,5 @@ export const apiSchema = defineSchema(
 export type InputScoresResponseData = z.infer<
 	(typeof apiSchema)["routes"]["@post/school/results/get-class-session-term"]["data"]
 >["data"];
+
+export type RouteSchemaKeys = InferAllMainRouteKeys<typeof apiSchema.routes, typeof apiSchema.config>;

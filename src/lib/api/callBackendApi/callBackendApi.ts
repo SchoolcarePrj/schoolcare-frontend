@@ -35,8 +35,8 @@ const sharedBaseCallApiConfig = defineBaseConfig({
 		}),
 		toastPlugin({
 			endpointsToSkip: {
-				errorAndSuccess: ["/token/refresh"],
-				success: ["/check-user-session"],
+				errorAndSuccess: ["@post/token/refresh"],
+				success: ["@get/check-user-session"],
 			},
 			error: true,
 			errorsToSkip: ["AbortError"],
