@@ -57,13 +57,13 @@ function AccordionFaqs() {
 							<div data-icon="true" className="relative flex items-center pr-4">
 								<IconBox
 									icon="material-symbols:add-2"
-									className="absolute size-3 origin-center transition-all duration-200 in-data-[state=open]:rotate-90
-										in-data-[state=open]:opacity-0 lg:size-6"
+									className="absolute size-3 origin-center transition-all duration-200
+										in-data-[state=open]:rotate-90 in-data-[state=open]:opacity-0 lg:size-6"
 								/>
 								<IconBox
 									icon="material-symbols:remove"
-									className="absolute size-3 origin-center transition-all duration-200 in-data-[state=close]:opacity-100
-										in-data-[state=open]:rotate-90 lg:size-6"
+									className="absolute size-3 origin-center transition-all duration-200
+										in-data-[state=close]:opacity-100 in-data-[state=open]:rotate-90 lg:size-6"
 								/>
 							</div>
 						</Accordion.Trigger>

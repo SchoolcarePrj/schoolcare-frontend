@@ -49,12 +49,12 @@ function CommandDialog(
 				withCloseButton={withCloseButton}
 			>
 				<CommandRoot
-					className="**:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0
-						[&_[cmdk-input-wrapper]_svg]:size-5
+					className="**:data-[slot=command-input-wrapper]:h-12
+						[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5
 						[&_[cmdk-item]_svg]:size-5 **:[[cmdk-group-heading]]:px-2
-						**:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-shadcn-muted-foreground
-						**:[[cmdk-group]]:px-2 **:[[cmdk-input]]:h-12 **:[[cmdk-item]]:px-2
-						**:[[cmdk-item]]:py-3"
+						**:[[cmdk-group-heading]]:font-medium
+						**:[[cmdk-group-heading]]:text-shadcn-muted-foreground **:[[cmdk-group]]:px-2
+						**:[[cmdk-input]]:h-12 **:[[cmdk-item]]:px-2 **:[[cmdk-item]]:py-3"
 				>
 					{children}
 				</CommandRoot>
