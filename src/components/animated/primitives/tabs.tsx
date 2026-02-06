@@ -1,3 +1,8 @@
+/* eslint-disable react-you-might-not-need-an-effect/no-derived-state */
+/* eslint-disable react-you-might-not-need-an-effect/no-chain-state-updates */
+/* eslint-disable react-you-might-not-need-an-effect/no-pass-ref-to-parent */
+/* eslint-disable react-you-might-not-need-an-effect/no-pass-data-to-parent */
+/* eslint-disable react-you-might-not-need-an-effect/no-event-handler */
 /* eslint-disable react-x/no-unstable-default-props */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
@@ -221,6 +226,7 @@ function TabsContentList(props: TabsContentsProps) {
 		total = Math.ceil(total * dpr) / dpr;
 
 		return total;
+		// eslint-disable-next-line react-hooks/preserve-manual-memoization
 	}, [activeIndex]);
 
 	useEffect(() => {

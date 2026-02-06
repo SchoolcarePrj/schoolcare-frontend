@@ -1,4 +1,4 @@
-export * from "./DropZoneInput";
+export * as DropZoneInput from "./DropZoneInput";
 export * from "./For";
 export { IconBox } from "./IconBox";
 export { Image } from "./Image";

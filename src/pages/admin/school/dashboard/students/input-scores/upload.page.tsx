@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toFormData } from "@zayne-labs/callapi/utils";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { DropZoneInput, DropZoneInputImagePreview, For, IconBox } from "@/components/common";
+import { DropZoneInput, For, IconBox } from "@/components/common";
 import { DropZone, Form, Select } from "@/components/ui";
 import { callBackendApi, UploadResultBodySchema } from "@/lib/api/callBackendApi";
 import { allSubjectsInSchoolQuery } from "@/lib/react-query/queryOptions";
@@ -102,7 +102,7 @@ function UploadPage() {
 
 						<Form.FieldBoundController
 							render={({ field }) => (
-								<DropZoneInput
+								<DropZoneInput.Root
 									allowedFileTypes={["text/csv"]}
 									maxFileSize={{ mb: 6 }}
 									onChange={field.onChange}
@@ -121,8 +121,8 @@ function UploadPage() {
 										</p>
 									</DropZone.Area>
 
-									<DropZoneInputImagePreview classNames={{ listItem: "px-3 md:px-6" }} />
-								</DropZoneInput>
+									<DropZoneInput.ImagePreview classNames={{ listItem: "px-3 md:px-6" }} />
+								</DropZoneInput.Root>
 							)}
 						/>
 					</Form.Field>

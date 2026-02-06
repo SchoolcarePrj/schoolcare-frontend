@@ -137,6 +137,7 @@ export function ChartStyle(props: { config: ChartConfig; id: string }) {
 	return <style>{cssStringArray.join("\n")}</style>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ChartTooltip = RechartsPrimitive.Tooltip;
 
 /* eslint-disable ts-eslint/no-unsafe-assignment */
@@ -283,6 +284,7 @@ export function ChartTooltipContent(
 	);
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ChartLegend = RechartsPrimitive.Legend;
 
 export function ChartLegendContent(

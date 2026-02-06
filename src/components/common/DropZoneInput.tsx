@@ -9,7 +9,7 @@ type DropZoneInputProps = InferProps<typeof DropZone.Root> & {
 	onChange: (file: File) => void;
 };
 
-export function DropZoneInput(props: DropZoneInputProps) {
+function DropZoneInputRoot(props: DropZoneInputProps) {
 	const { onChange, onFilesChange, onValidationError, onValidationSuccess, ...restOfProps } = props;
 
 	const handleFileUpload: DropZoneInputProps["onFilesChange"] = (ctx) => {
@@ -44,7 +44,7 @@ type ImagePreviewProps = {
 	};
 };
 
-export function DropZoneInputImagePreview(props: ImagePreviewProps) {
+function DropZoneInputImagePreview(props: ImagePreviewProps) {
 	const { classNames } = props;
 
 	return (
@@ -95,3 +95,7 @@ export function DropZoneInputImagePreview(props: ImagePreviewProps) {
 		</DropZone.FileList>
 	);
 }
+
+export const Root = DropZoneInputRoot;
+
+export const ImagePreview = DropZoneInputImagePreview;

@@ -257,13 +257,6 @@
 		font-family: var(--font-outfit);
 		color: var(--color-school-body-color);
 	}
-
-	body {
-		--scrollbar-padding: 0px;
-		--overflow-y: auto;
-		overflow-y: var(--overflow-y);
-		padding-right: var(--scrollbar-padding);
-	}
 }
 
 @utility input {

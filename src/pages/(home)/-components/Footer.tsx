@@ -9,7 +9,7 @@ function Footer() {
 			<article className="flex flex-col gap-5 lg:gap-8">
 				<h3 className="text-[18px] font-semibold">SCHOOL CARE</h3>
 
-				<p className="text-base leading-relaxed text-gray-200">
+				<p className="text-base/relaxed text-gray-200">
 					Get access to all academic results with ease. Whether you're eagerly anticipating your final
 					exam results or need to track your performance throughout the semester,
 				</p>

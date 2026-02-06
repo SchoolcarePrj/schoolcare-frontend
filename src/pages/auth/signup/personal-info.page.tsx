@@ -46,7 +46,7 @@ function PersonalInfoPage() {
 					<Form.Field<typeof form.control> name="logo">
 						<Form.FieldBoundController
 							render={({ field }) => (
-								<DropZoneInput
+								<DropZoneInput.Root
 									onChange={field.onChange}
 									allowedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
 									onFilesChange={(ctx) => {
@@ -70,7 +70,7 @@ function PersonalInfoPage() {
 											/>
 										</DropZone.Trigger>
 									</DropZone.Area>
-								</DropZoneInput>
+								</DropZoneInput.Root>
 							)}
 						/>
 

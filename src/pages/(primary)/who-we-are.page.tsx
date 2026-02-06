@@ -28,7 +28,7 @@ const WhoWeAre = () => {
 			<section
 				className="grid gap-12 bg-bgTestimonials-65 px-10 py-12 md:grid-cols-2 md:gap-10 md:px-12"
 			>
-				<div className="rounded-xl bg-cosWhite px-6 py-12 text-center md:h-72 md:py-7 lg:w-[100%]">
+				<div className="rounded-xl bg-cosWhite px-6 py-12 text-center md:h-72 md:py-7 lg:w-full">
 					<div>
 						<IconBox
 							icon="ri-lightbulb-flash-line"
@@ -45,7 +45,7 @@ const WhoWeAre = () => {
 				<div>
 					<div
 						className="rounded-xl bg-cosWhite px-6 py-7 text-center md:flex md:h-48 md:items-center
-							md:px-4 lg:w-[100%] xl:w-[90%]"
+							md:px-4 lg:w-full xl:w-[90%]"
 					>
 						<div className="mr-3">
 							<IconBox
@@ -64,7 +64,7 @@ const WhoWeAre = () => {
 
 					<div
 						className="mt-12 rounded-xl bg-cosWhite px-6 py-7 text-center md:col-start-2 md:mt-6
-							md:flex md:h-48 md:grid-rows-1 md:items-center md:px-4 lg:w-[100%] xl:w-[90%]"
+							md:flex md:h-48 md:grid-rows-1 md:items-center md:px-4 lg:w-full xl:w-[90%]"
 					>
 						<div className="mr-3">
 							<IconBox icon="ri-team-line" className="text-[56px] text-cosBlue md:text-[44px]" />

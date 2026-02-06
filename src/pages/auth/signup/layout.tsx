@@ -10,7 +10,7 @@ function RegisterLayout() {
 				<NavLink
 					onClick={(event) => event.preventDefault()}
 					to="/auth/signup/personal-info"
-					className="pointer-events-none underline-offset-8 md:underline-offset-[10px]
+					className="pointer-events-none underline-offset-8 md:underline-offset-10
 						[&.active]:underline"
 				>
 					Personal Information
@@ -19,7 +19,7 @@ function RegisterLayout() {
 				<NavLink
 					onClick={(event) => event.preventDefault()}
 					to="/auth/signup/address"
-					className="pointer-events-none underline-offset-8 md:underline-offset-[10px]
+					className="pointer-events-none underline-offset-8 md:underline-offset-10
 						[&.active]:underline"
 				>
 					Address
