@@ -1,7 +1,7 @@
 import { dataAttr, lockScroll } from "@zayne-labs/toolkit-core";
 import { useToggle } from "@zayne-labs/toolkit-react";
 import { IconBox, NavLink } from "@/components/common";
-import { getElementList } from "@/components/common/For";
+import { ForWithWrapper } from "@/components/common/For";
 import { cnMerge } from "@/lib/utils/cn";
 
 function NavBar(props: {
@@ -13,33 +13,11 @@ function NavBar(props: {
 }) {
 	const { classNames } = props;
 
-	const [isNavShow, toggleNavShow] = useToggle(false);
-
-	const handleToggleNavShow = () => {
-		const newIsNavShow = !isNavShow;
-
-		lockScroll({ lock: newIsNavShow });
-
-		toggleNavShow(newIsNavShow);
-	};
-
 	return (
-		<header
-			className={cnMerge(
-				`absolute z-500 flex w-full flex-col pt-7 [--padding-x-value:--spacing(6)]
-				max-lg:px-(--padding-x-value)`,
-				isNavShow && "max-lg:pr-[calc(var(--padding-x-value)+var(--scrollbar-padding))]",
-				classNames?.base
-			)}
-		>
+		<header className={cnMerge("absolute z-500 flex w-full pt-7 max-lg:px-6", classNames?.base)}>
 			<DesktopNavigation className="max-lg:hidden" classNames={classNames?.desktop} />
 
-			<MobileNavigation
-				className="lg:hidden"
-				isNavShow={isNavShow}
-				toggleNavShow={handleToggleNavShow}
-				classNames={classNames?.mobile}
-			/>
+			<MobileNavigation className="lg:hidden" classNames={classNames?.mobile} />
 		</header>
 	);
 }
@@ -54,8 +32,6 @@ const linkItems = [
 	{ href: "/contact", title: "Contact us" },
 ];
 
-const [NavLinksList] = getElementList();
-
 type DesktopNavigationProps = {
 	className?: string;
 	classNames?: {
@@ -67,15 +43,15 @@ function DesktopNavigation(props: DesktopNavigationProps) {
 	const { className, classNames } = props;
 
 	return (
-		<article
+		<section
 			className={cnMerge(
-				`mx-[80px] flex items-center justify-between rounded-[24px] bg-white px-[78px] py-5
+				`mx-[80px] flex w-full items-center justify-between rounded-[24px] bg-white px-[78px] py-5
 				shadow-[0_4px_8px_hsl(150,20%,25%,0.25)]`,
 				className,
 				classNames?.base
 			)}
 		>
-			<NavLinksList
+			<ForWithWrapper
 				as="nav"
 				className="flex w-fit gap-14 font-medium"
 				each={linkItems}
@@ -94,23 +70,31 @@ function DesktopNavigation(props: DesktopNavigationProps) {
 					Register
 				</NavLink>
 			</button>
-		</article>
+		</section>
 	);
 }
 
 type MobileNavigationProps = {
 	className?: string;
 	classNames?: { base?: string; hamburgerButton?: string };
-	isNavShow: boolean;
-	toggleNavShow: () => void;
 };
 
 function MobileNavigation(props: MobileNavigationProps) {
-	const { className, classNames, isNavShow, toggleNavShow } = props;
+	const { className, classNames } = props;
+
+	const [isNavShow, toggleNavShow] = useToggle(false);
+
+	const handleToggleNavShow = () => {
+		const newIsNavShow = !isNavShow;
+
+		lockScroll({ lock: newIsNavShow });
+
+		toggleNavShow(newIsNavShow);
+	};
 
 	return (
 		<>
-			<article
+			<section
 				className={cnMerge(
 					`fixed inset-[0_0_0_auto] w-full overflow-x-hidden bg-school-darker-blue pt-[72px]
 					text-white transition-[width,translate] duration-300`,
@@ -122,15 +106,11 @@ function MobileNavigation(props: MobileNavigationProps) {
 				onClick={(event) => {
 					const element = event.target as HTMLElement;
 
-					element.tagName === "A" && toggleNavShow();
+					element.tagName === "A" && handleToggleNavShow();
 				}}
 			>
-				<div
-					className="flex flex-col gap-[58px]
-						pr-[calc(var(--padding-x-value)+var(--scrollbar-padding))] pl-(--padding-x-value)
-						[--padding-x-value:--spacing(6)]"
-				>
-					<NavLinksList
+				<div className="mr-(--scrollbar-width) flex flex-col gap-[58px] px-6">
+					<ForWithWrapper
 						as="nav"
 						className="flex flex-col gap-6 text-[14px] text-nowrap"
 						each={linkItems}
@@ -154,13 +134,16 @@ function MobileNavigation(props: MobileNavigationProps) {
 						</NavLink>
 					</button>
 				</div>
-			</article>
+			</section>
 
 			<button
 				type="button"
 				data-nav-show={dataAttr(isNavShow)}
-				className={cnMerge("z-10 w-6 self-end text-white lg:hidden", classNames?.hamburgerButton)}
-				onClick={toggleNavShow}
+				className={cnMerge(
+					"z-10 mr-(--scrollbar-width) ml-auto w-6 text-white lg:hidden",
+					classNames?.hamburgerButton
+				)}
+				onClick={handleToggleNavShow}
 			>
 				{isNavShow ?
 					<IconBox icon="ri:close-line" className="size-full" />

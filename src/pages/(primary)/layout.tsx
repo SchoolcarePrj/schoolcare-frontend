@@ -1,11 +1,10 @@
-import { Outlet, ScrollRestoration } from "react-router";
+import { Outlet } from "react-router";
 import { Footer } from "../(home)/-components/Footer";
 import { NavBar } from "../(home)/-components/NavBar";
 
 function PrimaryLayout() {
 	return (
 		<>
-			<ScrollRestoration />
 			<NavBar
 				classNames={{
 					desktop: { base: "mx-0 shadow-none" },
