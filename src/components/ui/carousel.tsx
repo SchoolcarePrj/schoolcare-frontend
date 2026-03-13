@@ -94,7 +94,6 @@ function CarouselRoot(props: CarouselProps & InferProps<"div">) {
 	useEffect(() => {
 		if (!carouselApi || !setApi) return;
 
-		// eslint-disable-next-line react-you-might-not-need-an-effect/no-pass-data-to-parent
 		setApi(carouselApi);
 	}, [carouselApi, setApi]);
 

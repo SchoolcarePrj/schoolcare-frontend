@@ -1,7 +1,5 @@
 /* eslint-disable react-you-might-not-need-an-effect/no-derived-state */
 /* eslint-disable react-you-might-not-need-an-effect/no-chain-state-updates */
-/* eslint-disable react-you-might-not-need-an-effect/no-pass-ref-to-parent */
-/* eslint-disable react-you-might-not-need-an-effect/no-pass-data-to-parent */
 /* eslint-disable react-you-might-not-need-an-effect/no-event-handler */
 /* eslint-disable react-x/no-unstable-default-props */
 /* eslint-disable react-hooks/set-state-in-effect */

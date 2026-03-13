@@ -2,9 +2,7 @@ import { zayne } from "@zayne-labs/eslint-config";
 
 export default zayne({
 	react: true,
-	tailwindcssBetter: {
-		enforceCanonicalClasses: true,
-	},
+	tailwindcssBetter: true,
 	tanstack: {
 		query: true,
 	},

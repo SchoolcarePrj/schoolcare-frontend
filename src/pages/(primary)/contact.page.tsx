@@ -47,7 +47,7 @@ function ContactUs() {
 				</p>
 				<div
 					className="mt-4 rounded-lg border-2 border-[hsl(0,0%,78%)] bg-white px-4 py-7 md:order-2
-						md:pb-16 lg:h-[80vh] lg:w-full lg:px-8 lg:py-8"
+						md:pb-16 lg:h-[80vh] lg:w-full lg:p-8"
 				>
 					<h1 className="font-semibold">Name*</h1>
 

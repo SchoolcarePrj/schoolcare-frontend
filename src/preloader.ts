@@ -9,9 +9,9 @@ const removePreloader = () => {
 
 	preloaderElement.style.opacity = "0";
 
-	on("transitionend", preloaderElement, () => {
+	on(preloaderElement, "transitionend", () => {
 		preloaderElement.remove();
 	});
 };
 
-on("DOMContentLoaded", document, removePreloader);
+on(document, "DOMContentLoaded", removePreloader);
