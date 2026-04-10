@@ -168,7 +168,6 @@ function DashboardPage() {
 						<h3 className="text-[24px] font-medium">Recent Activities</h3>
 						<DateTimePicker
 							className="h-11 gap-1.5 rounded-[8px] border border-[hsl(0,0%,84%)] p-2.5 text-base"
-							defaultDateString={new Date().toDateString()}
 							startMonth={new Date(2025, 0)}
 							formats={{ visibleDate: "do MMMM" }}
 						/>

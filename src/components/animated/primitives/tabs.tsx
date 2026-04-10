@@ -1,8 +1,8 @@
+/* eslint-disable react/set-state-in-effect */
 /* eslint-disable react-you-might-not-need-an-effect/no-derived-state */
 /* eslint-disable react-you-might-not-need-an-effect/no-chain-state-updates */
-/* eslint-disable react-you-might-not-need-an-effect/no-event-handler */
-/* eslint-disable react-x/no-unstable-default-props */
-/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/preserve-manual-memoization */
+/* eslint-disable react/no-unstable-default-props */
 "use client";
 
 import { toArray } from "@zayne-labs/toolkit-core";
@@ -52,13 +52,14 @@ type TabsProps = ControlledTabsProps | UnControlledTabsProps;
 
 function TabsRoot(props: TabsProps) {
 	const { children, defaultValue, onValueChange, value, ...restOfProps } = props;
-	const [activeValue, setActiveValue] = useState<string | undefined>(defaultValue);
+	const [activeValue, setActiveValue] = useState(defaultValue);
 	const triggersRef = useRef(new Map<string, HTMLElement>());
 	const initialSetRef = useRef(false);
 	const isControlled = value !== undefined;
 
 	useEffect(() => {
 		if (
+			// eslint-disable-next-line react-you-might-not-need-an-effect/no-event-handler
 			!isControlled
 			&& activeValue === undefined
 			&& triggersRef.current.size > 0
@@ -198,12 +199,12 @@ function TabsContentList(props: TabsContentsProps) {
 	);
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	const itemRef = useRef<Array<HTMLDivElement | null>>([]);
+	const itemsRef = useRef<Array<HTMLDivElement | null>>([]);
 	const [height, setHeight] = useState(0);
 	const roRef = useRef<ResizeObserver | null>(null);
 
 	const measure = useCallback(() => {
-		const pane = itemRef.current[activeIndex];
+		const pane = itemsRef.current[activeIndex];
 		const container = containerRef.current;
 		if (!pane || !container) return 0;
 
@@ -224,7 +225,6 @@ function TabsContentList(props: TabsContentsProps) {
 		total = Math.ceil(total * dpr) / dpr;
 
 		return total;
-		// eslint-disable-next-line react-hooks/preserve-manual-memoization
 	}, [activeIndex]);
 
 	useEffect(() => {
@@ -233,7 +233,7 @@ function TabsContentList(props: TabsContentsProps) {
 			roRef.current = null;
 		}
 
-		const pane = itemRef.current[activeIndex];
+		const pane = itemsRef.current[activeIndex];
 		const container = containerRef.current;
 		if (!pane || !container) return;
 
@@ -277,10 +277,10 @@ function TabsContentList(props: TabsContentsProps) {
 			>
 				{childrenArray.map((child, index) => (
 					<div
-						// eslint-disable-next-line react-x/no-array-index-key
+						// eslint-disable-next-line react/no-array-index-key
 						key={index}
 						ref={(el) => {
-							itemRef.current[index] = el;
+							itemsRef.current[index] = el;
 						}}
 						className="size-full shrink-0 px-2"
 					>

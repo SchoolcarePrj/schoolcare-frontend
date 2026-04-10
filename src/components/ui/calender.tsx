@@ -1,4 +1,5 @@
-/* eslint-disable react-x/no-nested-component-definitions */
+/* eslint-disable react/component-hook-factories */
+/* eslint-disable react/no-nested-component-definitions */
 
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
 import type { ExtractUnion } from "@zayne-labs/toolkit-type-helpers";

@@ -67,16 +67,16 @@ function GenderRatioChart(props: { genderResponseData: StudentGenderRatioData | 
 											<div className="flex items-center gap-4">
 												<span
 													className="size-3.5 rounded-full"
-													style={{ backgroundColor: ctx.itemConfig?.color }}
+													style={{ backgroundColor: ctx.configItem?.color }}
 												/>
 
 												<span className="text-[18px] font-semibold">
-													{ctx.payloadItem.payload?.value}%
+													{(ctx.payloadItem.payload as { value: number } | undefined)?.value}%
 												</span>
 											</div>
 
 											<p className="text-[12px] font-medium text-school-gray">
-												{ctx.itemConfig?.label}
+												{ctx.configItem?.label}
 											</p>
 										</section>
 									)}

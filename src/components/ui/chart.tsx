@@ -1,12 +1,15 @@
+"use client";
+
 import { css } from "@zayne-labs/toolkit-core";
 import type { CssWithCustomProperties, InferProps } from "@zayne-labs/toolkit-react/utils";
-import type { ExtractUnion } from "@zayne-labs/toolkit-type-helpers";
 import { createContext, use, useId, useMemo } from "react";
 import * as RechartsPrimitive from "recharts";
 import { cnMerge } from "@/lib/utils/cn";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { dark: ".dark", light: "" } as const;
+
+const INITIAL_DIMENSION = { height: 200, width: 320 } as const;
 
 export type ChartConfig = Record<
 	string,
@@ -41,37 +44,17 @@ const useChart = () => {
 	return context;
 };
 
-// Helper to extract item config from a payload.
-const getConfigItemFromPayload = (config: ChartConfig, payload: unknown, key: string) => {
-	if (typeof payload !== "object" || payload === null) {
-		return;
-	}
-
-	const payloadPayload =
-		"payload" in payload && typeof payload.payload === "object" && payload.payload !== null ?
-			payload.payload
-		:	null;
-
-	let configLabelKey = key;
-
-	if (key in payload && typeof payload[key as never] === "string") {
-		configLabelKey = payload[key as never] as string;
-	}
-
-	if (payloadPayload && key in payloadPayload && typeof payloadPayload[key as never] === "string") {
-		configLabelKey = payloadPayload[key as never] as string;
-	}
-
-	return configLabelKey in config ? config[configLabelKey] : config[key];
-};
-
-export function ChartContainer(
+function ChartContainer(
 	props: InferProps<"div">
 		& Pick<InferProps<typeof RechartsPrimitive.ResponsiveContainer>, "children"> & {
 			config: ChartConfig;
+			initialDimension?: {
+				height: number;
+				width: number;
+			};
 		}
 ) {
-	const { children, className, config, id, ...restOfProps } = props;
+	const { children, className, config, id, initialDimension = INITIAL_DIMENSION, ...restOfProps } = props;
 
 	const uniqueId = useId();
 	const chartId = `chart-${id ?? uniqueId.replaceAll(":", "")}`;
@@ -101,13 +84,15 @@ export function ChartContainer(
 			>
 				<ChartStyle id={chartId} config={config} />
 
-				<RechartsPrimitive.ResponsiveContainer>{children}</RechartsPrimitive.ResponsiveContainer>
+				<RechartsPrimitive.ResponsiveContainer initialDimension={initialDimension}>
+					{children}
+				</RechartsPrimitive.ResponsiveContainer>
 			</div>
 		</ChartContext>
 	);
 }
 
-export function ChartStyle(props: { config: ChartConfig; id: string }) {
+function ChartStyle(props: { config: ChartConfig; id: string }) {
 	const { config, id } = props;
 
 	const colorConfig = Object.entries(config).filter(
@@ -137,14 +122,12 @@ export function ChartStyle(props: { config: ChartConfig; id: string }) {
 	return <style>{cssStringArray.join("\n")}</style>;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const ChartTooltip = RechartsPrimitive.Tooltip;
+const ChartTooltip = RechartsPrimitive.Tooltip;
 
-/* eslint-disable ts-eslint/no-unsafe-assignment */
-/* eslint-disable ts-eslint/no-unsafe-member-access */
-export function ChartTooltipContent(
+function ChartTooltipContent(
 	props: InferProps<"div">
-		& InferProps<typeof RechartsPrimitive.Tooltip> & {
+		& InferProps<typeof RechartsPrimitive.Tooltip>
+		& Omit<RechartsPrimitive.DefaultTooltipContentProps, "accessibilityLayer"> & {
 			hideIndicator?: boolean;
 			hideLabel?: boolean;
 			indicator?: "dashed" | "dot" | "line";
@@ -167,7 +150,6 @@ export function ChartTooltipContent(
 		nameKey,
 		payload,
 	} = props;
-
 	const { config } = useChart();
 
 	const tooltipLabel = useMemo(() => {
@@ -177,7 +159,7 @@ export function ChartTooltipContent(
 
 		const [item] = payload;
 
-		const key = `${labelKey ?? item?.dataKey ?? item?.name ?? "value"}`;
+		const key = String(labelKey ?? item?.dataKey ?? item?.name ?? "value");
 
 		const configItem = getConfigItemFromPayload(config, item, key);
 
@@ -206,7 +188,7 @@ export function ChartTooltipContent(
 	return (
 		<div
 			className={cnMerge(
-				`grid min-w-[128px] items-start gap-1.5 rounded-lg border border-shadcn-border/50
+				`grid min-w-32 items-start gap-1.5 rounded-lg border border-shadcn-border/50
 				bg-shadcn-background px-2.5 py-1.5 text-xs shadow-xl`,
 				className
 			)}
@@ -214,82 +196,86 @@ export function ChartTooltipContent(
 			{!nestLabel ? tooltipLabel : null}
 
 			<div className="grid gap-1.5">
-				{payload.map((item, index) => {
-					const key = `${nameKey ?? item.name ?? item.dataKey ?? "value"}`;
-					const configItem = getConfigItemFromPayload(config, item, key);
-					const indicatorColor = color ?? item.payload.fill ?? item.color;
+				{payload
+					.filter((item) => item.type !== "none")
+					.map((item, index) => {
+						const key = String(nameKey ?? item.name ?? item.dataKey ?? "value");
+						const configItem = getConfigItemFromPayload(config, item, key);
+						const indicatorColor =
+							color ?? (item.payload as Record<string, string> | undefined)?.fill ?? item.color;
 
-					return (
-						<div
-							key={item.dataKey}
-							className={cnMerge(
-								`flex w-full flex-wrap items-stretch gap-2 [&>svg]:size-2.5
-								[&>svg]:text-shadcn-muted-foreground`,
-								indicator === "dot" && "items-center"
-							)}
-						>
-							{formatter && item.value !== undefined && item.name ?
-								// eslint-disable-next-line ts-eslint/no-unsafe-argument
-								formatter(item.value, item.name, item, index, item.payload)
-							:	<>
-									{configItem?.icon ?
-										<configItem.icon />
-									:	!hideIndicator && (
-											<div
-												className={cnMerge(
-													"shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
-													indicator === "dot" && "size-2.5",
-													nestLabel && indicator === "dashed" && "my-0.5",
-													indicator === "dashed"
-														&& "w-0 border-[1.5px] border-dashed bg-transparent",
-													indicator === "line" && "w-1"
-												)}
-												style={
-													{
-														"--color-bg": indicatorColor,
-														"--color-border": indicatorColor,
-													} satisfies CssWithCustomProperties as CssWithCustomProperties
-												}
-											/>
-										)
-									}
-									<div
-										className={cnMerge(
-											"flex flex-1 justify-between leading-none",
-											nestLabel ? "items-end" : "items-center"
-										)}
-									>
-										<div className="grid gap-1.5">
-											{nestLabel ? tooltipLabel : null}
-											<span className="text-shadcn-muted-foreground">
-												{configItem?.label ?? item.name}
-											</span>
+						return (
+							<div
+								key={key}
+								className={cnMerge(
+									`flex w-full flex-wrap items-stretch gap-2 [&>svg]:size-2.5
+									[&>svg]:text-shadcn-muted-foreground`,
+									indicator === "dot" && "items-center"
+								)}
+							>
+								{formatter && item.value !== undefined && item.name ?
+									// eslint-disable-next-line ts-eslint/no-unsafe-argument
+									formatter(item.value, item.name, item, index, item.payload)
+								:	<>
+										{configItem?.icon ?
+											<configItem.icon />
+										:	!hideIndicator && (
+												<div
+													className={cnMerge(
+														"shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
+														indicator === "dot" && "size-2.5",
+														nestLabel && indicator === "dashed" && "my-0.5",
+														indicator === "dashed"
+															&& "w-0 border-[1.5px] border-dashed bg-transparent",
+														indicator === "line" && "w-1"
+													)}
+													style={
+														{
+															"--color-bg": indicatorColor as string,
+															"--color-border": indicatorColor as string,
+														} satisfies CssWithCustomProperties as CssWithCustomProperties
+													}
+												/>
+											)
+										}
+										<div
+											className={cnMerge(
+												"flex flex-1 justify-between leading-none",
+												nestLabel ? "items-end" : "items-center"
+											)}
+										>
+											<div className="grid gap-1.5">
+												{nestLabel ? tooltipLabel : null}
+												<span className="text-shadcn-muted-foreground">
+													{configItem?.label ?? item.name}
+												</span>
+											</div>
+											{item.value != null && (
+												<span
+													className="font-mono font-medium text-shadcn-foreground
+														tabular-nums"
+												>
+													{typeof item.value === "number" ?
+														item.value.toLocaleString()
+													:	String(item.value)}
+												</span>
+											)}
 										</div>
-
-										{Boolean(item.value) && (
-											<span
-												className="font-mono font-medium text-shadcn-foreground tabular-nums"
-											>
-												{item.value.toLocaleString()}
-											</span>
-										)}
-									</div>
-								</>
-							}
-						</div>
-					);
-				})}
+									</>
+								}
+							</div>
+						);
+					})}
 			</div>
 		</div>
 	);
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const ChartLegend = RechartsPrimitive.Legend;
+const ChartLegend = RechartsPrimitive.Legend;
 
-export function ChartLegendContent(
+function ChartLegendContent(
 	props: InferProps<"div">
-		& Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+		& RechartsPrimitive.DefaultLegendContentProps & {
 			classNames?: {
 				base?: string;
 				legendItem?: string;
@@ -298,9 +284,9 @@ export function ChartLegendContent(
 			};
 			nameKey?: string;
 			renderItem?: (context: {
+				configItem: ReturnType<typeof getConfigItemFromPayload>;
 				index: number;
-				itemConfig: ReturnType<typeof getConfigItemFromPayload>;
-				payloadItem: ExtractUnion<RechartsPrimitive.LegendProps["payload"]>;
+				payloadItem: RechartsPrimitive.LegendPayload;
 			}) => React.ReactNode;
 			withIcon?: boolean;
 		}
@@ -330,43 +316,67 @@ export function ChartLegendContent(
 				classNames?.base
 			)}
 		>
-			{payload.map((item, index) => {
-				const key = String(nameKey ?? item.dataKey ?? "value");
-				const itemConfig = getConfigItemFromPayload(config, item, key);
+			{payload
+				.filter((item) => item.type !== "none")
+				.map((item, index) => {
+					const key = String(nameKey ?? item.dataKey ?? "value");
+					const configItem = getConfigItemFromPayload(config, item, key);
 
-				if (renderItem) {
-					return renderItem({
-						index,
-						itemConfig,
-						payloadItem: item,
-					});
-				}
+					if (renderItem) {
+						return renderItem({
+							configItem,
+							index,
+							payloadItem: item,
+						});
+					}
 
-				return (
-					<div
-						key={key}
-						className={cnMerge(
-							"flex items-center gap-1.5 [&>svg]:size-3 [&>svg]:text-shadcn-muted-foreground",
-							classNames?.legendItem
-						)}
-					>
-						{itemConfig?.icon && withIcon ?
-							<itemConfig.icon />
-						:	<span
-								className={cnMerge("size-2 shrink-0 rounded-[2px]", classNames?.legendItemIcon)}
-								style={{ backgroundColor: item.color }}
-							/>
-						}
-
-						<span className={classNames?.legendItemLabel}>{itemConfig?.label}</span>
-					</div>
-				);
-			})}
+					return (
+						<div
+							key={key}
+							className={cnMerge(
+								"flex items-center gap-1.5 [&>svg]:size-3 [&>svg]:text-shadcn-muted-foreground",
+								classNames?.legendItem
+							)}
+						>
+							{configItem?.icon && withIcon ?
+								<configItem.icon />
+							:	<div
+									className="size-2 shrink-0 rounded-[2px]"
+									style={{
+										backgroundColor: item.color,
+									}}
+								/>
+							}
+							{configItem?.label}
+						</div>
+					);
+				})}
 		</div>
 	);
 }
-/* eslint-enable ts-eslint/no-unsafe-assignment */
-/* eslint-enable ts-eslint/no-unsafe-member-access */
+
+const getConfigItemFromPayload = (config: ChartConfig, payload: unknown, key: string) => {
+	if (typeof payload !== "object" || payload === null) {
+		return;
+	}
+
+	const payloadPayload =
+		"payload" in payload && typeof payload.payload === "object" && payload.payload !== null ?
+			payload.payload
+		:	null;
+
+	let configLabelKey = key;
+
+	if (key in payload && typeof payload[key as never] === "string") {
+		configLabelKey = payload[key as never] as string;
+	}
+
+	if (payloadPayload && key in payloadPayload && typeof payloadPayload[key as never] === "string") {
+		configLabelKey = payloadPayload[key as never] as string;
+	}
+
+	return configLabelKey in config ? config[configLabelKey] : config[key];
+};
 
 export const Container = ChartContainer;
 

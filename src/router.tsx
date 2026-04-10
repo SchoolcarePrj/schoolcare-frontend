@@ -23,8 +23,6 @@ const AdminSuperDashboardLayout = lazy(() => import("./pages/admin/super/dashboa
 
 const routes = createRoutesFromElements(
 	<Route Component={RootLayout}>
-		{/* eslint-disable react-x/no-nested-lazy-component-declarations */}
-
 		<Route path="/test" Component={lazy(() => import("./pages/page.test"))} />
 
 		<Route Component={HomeLayout} loader={sessionLoader}>
@@ -152,8 +150,6 @@ const routes = createRoutesFromElements(
 				/>
 			</Route>
 		</Route>
-
-		{/* eslint-enable react-x/no-nested-lazy-component-declarations */}
 	</Route>
 );
 

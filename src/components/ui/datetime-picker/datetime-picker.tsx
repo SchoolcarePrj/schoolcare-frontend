@@ -1,4 +1,5 @@
-/* eslint-disable react-x/no-nested-component-definitions */
+/* eslint-disable react/component-hook-factories */
+/* eslint-disable react/no-nested-component-definitions */
 
 import { useControllableState } from "@zayne-labs/toolkit-react";
 import type { InferProps } from "@zayne-labs/toolkit-react/utils";
@@ -24,11 +25,13 @@ type DatePickerProps = Pick<InferProps<typeof Calendar>, "endMonth" | "startMont
 	variant?: "date" | "datetime" | "time";
 };
 
+const TODAY = new Date().toDateString();
+
 export function DateTimePicker(props: DatePickerProps) {
 	const {
 		className,
 		dateString: dateStringProp,
-		defaultDateString: defaultDateStringProp = "",
+		defaultDateString: defaultDateStringProp = TODAY,
 		formats,
 		onDateStringChange: onDateStringChangeProp,
 		placeholder,
@@ -80,7 +83,7 @@ export function DateTimePicker(props: DatePickerProps) {
 										className={cnMerge(
 											`size-8.5 hover:bg-school-dark-blue-200 hover:text-school-body-color
 											data-[selected-single=true]:bg-school-blue-500`,
-											// eslint-disable-next-line react-x/prefer-destructuring-assignment
+											// eslint-disable-next-line react/prefer-destructuring-assignment
 											innerProps.className
 										)}
 									/>
@@ -97,6 +100,7 @@ export function DateTimePicker(props: DatePickerProps) {
 
 					{showTimePicker && (
 						<TimeScrollArea
+							// eslint-disable-next-line react/purity
 							dateValue={date ?? new Date()}
 							onChange={setDateString as typeof onDateStringChangeProp}
 							formats={formats}

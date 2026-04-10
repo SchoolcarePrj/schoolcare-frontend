@@ -60,7 +60,6 @@ export const studentsByClassQuery = (studentClass: string) => {
 				query: { class: studentClass },
 			});
 		},
-		// eslint-disable-next-line tanstack-query/exhaustive-deps
 		queryKey: ["students", "school", { class: studentClass.split(" ").join("") }],
 		staleTime: Infinity,
 	});
@@ -79,8 +78,7 @@ export const studentsByIDQuery = (
 				query: { reg: studentId },
 			});
 		},
-		// eslint-disable-next-line tanstack-query/exhaustive-deps
-		queryKey: ["students", "school", { studentId }],
+		queryKey: ["students", "school", { studentId }, onSuccess],
 		staleTime: Infinity,
 	});
 };
@@ -100,12 +98,12 @@ export type StudentGenderRatioData = Awaited<
 export const schoolSessionQuery = (options?: { meta?: CallApiExtraOptions["meta"] }) => {
 	const { meta } = options ?? {};
 
+	// eslint-disable-next-line tanstack-query/exhaustive-deps
 	return queryOptions({
 		queryFn: () =>
 			callBackendApiForQuery("@get/session", {
 				meta: { auth: { skipHeaderAddition: true }, ...meta },
 			}),
-		// eslint-disable-next-line tanstack-query/exhaustive-deps
 		queryKey: ["school-session"],
 		staleTime: Infinity,
 	});
@@ -114,12 +112,12 @@ export const schoolSessionQuery = (options?: { meta?: CallApiExtraOptions["meta"
 export const schoolTermQuery = (options?: { meta?: CallApiExtraOptions["meta"] }) => {
 	const { meta } = options ?? {};
 
+	// eslint-disable-next-line tanstack-query/exhaustive-deps
 	return queryOptions({
 		queryFn: () =>
 			callBackendApiForQuery("@get/term", {
 				meta: { auth: { skipHeaderAddition: true }, ...meta },
 			}),
-		// eslint-disable-next-line tanstack-query/exhaustive-deps
 		queryKey: ["school-term"],
 		staleTime: Infinity,
 	});
