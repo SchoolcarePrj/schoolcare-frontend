@@ -8,7 +8,7 @@
 		"build": "vite build",
 		"dev": "vite",
 		"lint:eslint": "eslint . --max-warnings=0",
-		"lint:format": "prettier --write=.",
+		"lint:format": "prettier --write .",
 		"lint:type-check": "tsc --pretty -p tsconfig.json",
 		"prepare": "husky",
 		"preview": "vite preview"
